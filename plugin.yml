@@ -1,0 +1,28 @@
+name: HarvestTime
+main: com.github.namrufus.harvest_time.HarvestTime
+version: 0.1
+
+commands:
+  ht-config-dump:
+    description: dumps configuration data to the console
+    usage: /ht-config-dump
+
+  ht-timecheck:
+    description: check the seasonal day and year index
+    usage: /ht-timecheck
+
+  ht-when-increment:
+    description: check the time at which the the plugin "seasonal day" will change
+    usage: /ht-when-increment
+
+  ht-next-increment:
+    description: check the time until the next seasonal day increment
+    usage: /ht-next-increment
+
+  ht-time-set:
+    description: set the current seasonal year and day. Updates timestamp file.
+    usage: /ht-timeset yearIndex dayIndex
+
+  ht-time-increment:
+    description: move the current plugin-time (negative to move backwards in time). Updates timestamp file.
+    usage: /ht-timemove increment {minutes, hours, days, weeks}
