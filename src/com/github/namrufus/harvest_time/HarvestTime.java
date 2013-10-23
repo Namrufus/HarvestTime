@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.github.namrufus.harvest_time.bonemeal.BonemealDisabledListener;
 import com.github.namrufus.harvest_time.configuration.ConfigurationLoader;
 import com.github.namrufus.harvest_time.configuration.FarmlandCreationConfiguration;
 import com.github.namrufus.harvest_time.configuration.SeasonalConfiguration;
@@ -63,9 +64,12 @@ public class HarvestTime extends JavaPlugin {
 		// -- Initialize listeners ------------------------------------------------------------------------------------
 		PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem();
 		
+		// bonemeal disabling listener
+		BonemealDisabledListener bonemealDisabledListener = new BonemealDisabledListener(configurationLoader.getBonemealDisabledConfiguration());
+		this.getServer().getPluginManager().registerEvents(bonemealDisabledListener, this);
+		
 		// farmland creation listener
-		FarmlandCreationConfiguration farmlandConfig = new FarmlandCreationConfiguration(config.getConfigurationSection("farmland_creation"), this.getLogger());
-		FarmlandCreationListener farmlandListener = new FarmlandCreationListener(playerTimerSystem, farmlandConfig);
+		FarmlandCreationListener farmlandListener = new FarmlandCreationListener(playerTimerSystem, configurationLoader.getFarmlandCreationConfiguration());
 		this.getServer().getPluginManager().registerEvents(farmlandListener, this);
 //		
 //		// crop growth info listener
