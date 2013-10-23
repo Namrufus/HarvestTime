@@ -1,5 +1,7 @@
 package com.github.namrufus.harvest_time.configuration.crop.environment;
 
+import java.util.logging.Logger;
+
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -23,5 +25,11 @@ public class CropFreshWaterConfiguration {
 			return multiplier;
 		else
 			return 1.0;
+	}
+	
+	// --------------------------------------------------------------------------------------------
+	public void dump(Logger log) {
+		log.info("  CropFreshWaterConfiguration:");
+		log.info("    multiplier: "+multiplier);
 	}
 }

@@ -41,13 +41,15 @@ harvest_time:
       DIAMOND_HOE: 3.0
       GOLD_HOE: 4.0
 
-  # -- harvesting ------------------------------------------
-  harvesting:
-    tool_harvest_multipliers:
+  # -- seasonal crop tending -------------------------------
+  tending:
+    radius: 2
+    base_time: 10.0
+    tool_multipliers:
       WOOD_HOE: 1.0
       STONE_HOE: 0.9
       IRON_HOE: 0.8
-      DIAMOND_HOE: 0.7
+      DIAMOND_HOE: 0.5
       GOLD_HOE: 0.6
 
   # == bonuses =============================================
@@ -153,294 +155,249 @@ harvest_time:
     alien: [HELL, SKY]
 
   # == crop listings =======================================
-  crop_list:
+  seasonal_crop_list:
     block_CROPS:
-      seasonal_growth:
-        requires_sunlight: true
-        start_day: 3
-        max_stage_difference: 2
+      requires_sunlight: true
+      start_day: 3
+      max_stage_difference: 2
 
-      harvesting:
-        requires_sunlight: true
-        base_tool_time: 5.0
+      base_tending_time: 5.0
 
-        custom_yield:
-          base_yield: 0.25
+      custom_yield:
+        base_yield: 0.25
 
-          fresh_water:
-            multiplier: 4.0
+        fresh_water:
+          multiplier: 4.0
 
-          regional:
-            nutrients: FAIR
-            ph: ACIDIC
-            compactness: LOOSE
+        regional:
+          nutrients: FAIR
+          ph: ACIDIC
+          compactness: LOOSE
 
-          biome:
-            cold_grassland: 0.125
-            cold_forest: 0.125
-            cold_mountain: 0.125
-            temperate_grassland: 1.0
-            temperate_forest: 0.75
-            temperate_mountain: 0.125
-            temperate_wet: 0.125
-            tropical_desert: 0.75
-            tropical_rainforest: 0.125
-            water: 0.0
-            mushroom: 0.125
-            HELL: 0.0
-            SKY: 0.125
+        biome:
+          cold_grassland: 0.125
+          cold_forest: 0.125
+          cold_mountain: 0.125
+          temperate_grassland: 1.0
+          temperate_forest: 0.75
+          temperate_mountain: 0.125
+          temperate_wet: 0.125
+          tropical_desert: 0.75
+          tropical_rainforest: 0.125
+          water: 0.0
+          mushroom: 0.125
+          HELL: 0.0
+          SKY: 0.125
 
     block_CARROT:
-      seasonal_growth:
-        requires_sunlight: true
-        start_day: 3
-        max_stage_difference: 1
+      requires_sunlight: true
+      start_day: 3
+      max_stage_difference: 1
 
-      harvesting:
-        requires_sunlight: true
-        base_tool_time: 5.0
+      custom_yield:
+        base_yield: 0.25
 
-        custom_yield:
-          base_yield: 0.25
+        fresh_water:
+          multiplier: 4.0
 
-          fresh_water:
-            multiplier: 4.0
+        regional:
+          nutrients: FAIR
+          ph: ACIDIC
+          compactness: COMPACT
 
-          regional:
-            nutrients: FAIR
-            ph: ACIDIC
-            compactness: COMPACT
-
-          biome:
-            cold_grassland: 0.125
-            cold_forest: 0.125
-            cold_mountain: 0.125
-            temperate_grassland: 0.125
-            temperate_forest: 0.5
-            temperate_mountain: 0.125
-            SWAMPLAND: 0.75
-            BEACH: 0.125
-            tropical_desert: 0.125
-            tropical_rainforest: 1.0
-            water: 0.0
-            mushroom: 0.125
-            HELL: 0.0
-            SKY: 0.0
+        biome:
+          cold_grassland: 0.125
+          cold_forest: 0.125
+          cold_mountain: 0.125
+          temperate_grassland: 0.125
+          temperate_forest: 0.5
+          temperate_mountain: 0.125
+          SWAMPLAND: 0.75
+          BEACH: 0.125
+          tropical_desert: 0.125
+          tropical_rainforest: 1.0
+          water: 0.0
+          mushroom: 0.125
+          HELL: 0.0
+          SKY: 0.0
 
     block_POTATO:
-      seasonal_growth:
-        requires_sunlight: true
-        start_day: 3
-        max_stage_difference: 3
+      requires_sunlight: true
+      start_day: 3
+      max_stage_difference: 3
 
-      harvesting:
-        requires_sunlight: true
-        base_tool_time: 5.0
+      base_tending_time: 5.0
 
-        custom_yield:
-          base_yield: 0.5
+      custom_yield:
+        base_yield: 0.5
 
-          fresh_water:
-            multiplier: 2.0
+        fresh_water:
+          multiplier: 2.0
 
-          regional:
-            nutrients: FAIR
-            ph: NEUTRAL
-            compactness: NONE
+        regional:
+          nutrients: FAIR
+          ph: NEUTRAL
+          compactness: NONE
 
-          biome:
-            cold_grassland: 0.125
-            cold_forest: 0.125
-            cold_mountain: 0.75
-            temperate_grassland: 0.5
-            temperate_forest: 0.5
-            temperate_mountain: 1.0
-            temperate_wet: 0.125
-            tropical_desert: 0.125
-            tropical_rainforest: 0.125
-            water: 0.0
-            mushroom: 0.125
-            HELL: 0.0
-            SKY: 0.25
+        biome:
+          cold_grassland: 0.125
+          cold_forest: 0.125
+          cold_mountain: 0.75
+          temperate_grassland: 0.5
+          temperate_forest: 0.5
+          temperate_mountain: 1.0
+          temperate_wet: 0.125
+          tropical_desert: 0.125
+          tropical_rainforest: 0.125
+          water: 0.0
+          mushroom: 0.125
+          HELL: 0.0
+          SKY: 0.25
 
     # --------------------------------------------------------
     block_PUMPKIN_STEM:
-      seasonal_growth:
-        requires_sunlight: true
-        start_day: 5
-        max_stage_difference: 2
+      requires_sunlight: true
+      start_day: 5
+      max_stage_difference: 2
 
-      harvesting:
-        requires_sunlight: true
-        base_tool_time: 5.0
+      base_tending_time: 5.0
 
-        custom_yield:
-          base_yield: 0.25
+      custom_yield:
+        base_yield: 0.25
 
-          fresh_water:
-            multiplier: 4.0
+        fresh_water:
+          multiplier: 4.0
 
-          regional:
-            nutrients: FOUL
-            ph: BASIC
-            compactness: COMPACT
+        regional:
+          nutrients: FOUL
+          ph: BASIC
+          compactness: COMPACT
 
-          biome:
-            cold_grassland: 0.75
-            cold_forest: 1.0
-            cold_mountain: 0.5
-            temperate_grassland: 0.125
-            temperate_forest: 0.25
-            temperate_mountain: 0.25
-            temperate_wet: 0.125
-            tropical_desert: 0.0
-            tropical_rainforest: 0.0
-            water: 0.0
-            mushroom: 0.0
-            HELL: 0.0
-            SKY: 0.0
+        biome:
+          cold_grassland: 0.75
+          cold_forest: 1.0
+          cold_mountain: 0.5
+          temperate_grassland: 0.125
+          temperate_forest: 0.25
+          temperate_mountain: 0.25
+          temperate_wet: 0.125
+          tropical_desert: 0.0
+          tropical_rainforest: 0.0
+          water: 0.0
+          mushroom: 0.0
+          HELL: 0.0
+          SKY: 0.0
 
     block_MELON_STEM:
-      seasonal_growth:
-        requires_sunlight: true
-        start_day: 5
-        max_stage_difference: 2
+      requires_sunlight: true
+      start_day: 5
+      max_stage_difference: 2
 
-      harvesting:
-        requires_sunlight: true
-        base_tool_time: 5.0
+      base_tending_time: 5.0
 
-        custom_yield:
-          base_yield: 0.125
+      custom_yield:
+        base_yield: 0.125
 
-          fresh_water:
+        fresh_water:
             multiplier: 8.0
 
-          regional:
-            nutrients: FAIR
-            ph: BASIC
-            compactness: LOOSE
+        regional:
+          nutrients: FAIR
+          ph: BASIC
+          compactness: LOOSE
 
-          biome:
-            cold_grassland: 0.0
-            cold_forest: 0.0
-            cold_mountain: 0.0
-            temperate_grassland: 0.125
-            temperate_forest: 0.125
-            temperate_mountain: 0.125
-            SWAMPLAND: 1.0
-            BEACH: 0.125
-            tropical_desert: 0.0
-            tropical_rainforest: 0.75
-            water: 0.0
-            mushroom: 0.125
-            HELL: 0.0
-            SKY: 0.0
+        biome:
+          cold_grassland: 0.0
+          cold_forest: 0.0
+          cold_mountain: 0.0
+          temperate_grassland: 0.125
+          temperate_forest: 0.125
+          temperate_mountain: 0.125
+          SWAMPLAND: 1.0
+          BEACH: 0.125
+          tropical_desert: 0.0
+          tropical_rainforest: 0.75
+          water: 0.0
+          mushroom: 0.125
+          HELL: 0.0
+          SKY: 0.0
 
     # --------------------------------------------------------
     block_NETHER_WARTS:
-      seasonal_growth:
-        requires_sunlight: true
-        start_day: 10
-        max_stage_difference: 2
+      requires_sunlight: true
+      start_day: 10
+      max_stage_difference: 2
 
-      harvesting:
-        requires_sunlight: true
-        base_tool_time: 5.0
+      base_tending_time: 5.0
 
-        custom_yield:
-          base_yield: 0.5
+      custom_yield:
+        base_yield: 0.5
 
-          fresh_water:
-            multiplier: 2.0
+        fresh_water:
+          multiplier: 2.0
 
-          fertilizer_block:
-            block_type: SOUL_SAND
-            block_count: 16
-            block_offset: 2
-            multiplier: 1.5
+        fertilizer_block:
+          block_type: SOUL_SAND
+          block_count: 16
+          block_offset: 2
+          multiplier: 1.5
 
-          regional:
-            nutrients: FAIR
-            ph: NEUTRAL
-            compactness: NONE
+        regional:
+          nutrients: FAIR
+          ph: NEUTRAL
+          compactness: NONE
 
-          biome:
-            cold_grassland: 0.0
-            cold_forest: 0.0
-            cold_mountain: 0.0
-            temperate_grassland: 0.0
-            temperate_forest: 0.0
-            temperate_mountain: 0.0
-            SWAMPLAND: 0.0
-            BEACH: 0.0
-            tropical_desert: 0.0
-            tropical_rainforest: 0.125
-            water: 0.0
-            mushroom: 0.75
-            HELL: 1.0
-            SKY: 0.0
+        biome:
+          DEFAULT: 0.0
+          tropical_rainforest: 0.125
+          mushroom: 1.0
+          HELL: 0.75
 
     block_COCOA:
-      seasonal_growth:
-        requires_sunlight: true
-        start_day: 7
-        max_stage_difference: 2
+      requires_sunlight: true
+      start_day: 7
+      max_stage_difference: 2
 
-      harvesting:
-        requires_sunlight: true
-        base_tool_time: 5.0
+      base_tending_time: 5.0
 
-        custom_yield:
-          base_yield: 0.125
+      custom_yield:
+        base_yield: 0.125
 
-          fresh_water:
-            multiplier: 8.0
+        fresh_water:
+          multiplier: 8.0
 
-          fertilizer_block:
-            block_type: VINES
-            block_count: 16
-            block_offset: 1
-            multiplier: 1.5
+        fertilizer_block:
+          block_type: VINE
+          block_count: 16
+          block_offset: 1
+          multiplier: 1.5
 
-          regional:
-            nutrients: FAIR
-            ph: NEUTRAL
-            compactness: NONE
+        regional:
+          nutrients: FAIR
+          ph: NEUTRAL
+          compactness: NONE
 
-          biome:
-            cold_grassland: 0.0
-            cold_forest: 0.0
-            cold_mountain: 0.0
-            temperate_grassland: 0.0
-            temperate_forest: 0.0
-            temperate_mountain: 0.0
-            SWAMPLAND: 0.125
-            BEACH: 0.0
-            tropical_desert: 0.0
-            tropical_rainforest: 1.0
-            water: 0.0
-            mushroom: 0.125
-            HELL: 0.0
-            SKY: 0.0
+        biome:
+          DEFAULT: 0.0
+          SWAMPLAND: 0.125
+          tropical_rainforest: 1.0
+          mushroom: 0.125
     
+  chance_crop_list:
     # == CHANCE GROWTH =====================================
     # -- blocks --------------------------------------------
     block_MELON_BLOCK:
-      chance_growth:
-        requires_sunlight: false
-        base_chance: 0.0
+      requires_sunlight: false
+      base_chance: 0.0
 
     block_PUMPKIN:
-      chance_growth:
-        requires_sunlight: false
-        base_chance: 0.0
+      requires_sunlight: false
+      base_chance: 0.0
 
     # -- trees ---------------------------------------------
     tree_TREE:
-      chance_growth:
-        requires_sunlight: true
-        base_chance: 1.0
+      requires_sunlight: true
+      base_chance: 1.0
   
     # -- breeding ------------------------------------------
         

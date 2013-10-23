@@ -15,7 +15,6 @@ import com.github.namrufus.harvest_time.configuration.ConfigurationLoader;
 import com.github.namrufus.harvest_time.configuration.FarmlandCreationConfiguration;
 import com.github.namrufus.harvest_time.configuration.SeasonalConfiguration;
 import com.github.namrufus.harvest_time.farmland.FarmlandCreationListener;
-import com.github.namrufus.harvest_time.harvesting.CropHarvestListener;
 import com.github.namrufus.harvest_time.seasonal.SeasonalCalendar;
 import com.github.namrufus.harvest_time.util.PlayerTimerSystem;
 
@@ -77,9 +76,6 @@ public class HarvestTime extends JavaPlugin {
 //		GrowthListener cropTendingListener = new GrowthListener(crops, dayCalendar);
 //		this.getServer().getPluginManager().registerEvents(cropTendingListener, this);
 //		
-		// crop harvest listener
-		CropHarvestListener cropHarvestListener = new CropHarvestListener();
-		this.getServer().getPluginManager().registerEvents(cropHarvestListener, this);
 	}
 	
 	// ================================================================================================================
@@ -109,6 +105,8 @@ public class HarvestTime extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
 		if (cmd.getName().equalsIgnoreCase("ht-config-dump")) {
 			configDumpCommand(sender, args);
+		} else if (cmd.getName().equalsIgnoreCase("ht-config-dump-crop")) {
+			configDumpCropCommand(sender, args);
 		} else if(cmd.getName().equalsIgnoreCase("ht-timecheck")){	
 			timecheckCommand(sender, args);
 		} else if (cmd.getName().equalsIgnoreCase("ht-when-increment")) {
@@ -129,6 +127,15 @@ public class HarvestTime extends JavaPlugin {
 	// = command handlers =============================================================================================
 	private void configDumpCommand(CommandSender sender, String[] args) {
 		configurationLoader.dumpConfiguration(getLogger());
+	}
+	
+	private void configDumpCropCommand(CommandSender sender, String[] args) {
+		if (args.length != 1) {
+			sender.sendMessage("command requires 1 argument.");
+			return;
+		}
+		
+		configurationLoader.dumpCrop(args[0], getLogger());
 	}
 	// ----------------------------------------------------------------------------------------------------------------
 	private void timecheckCommand(CommandSender sender, String[] args) {

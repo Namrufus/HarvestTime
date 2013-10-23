@@ -1,4 +1,4 @@
-package com.github.namrufus.harvest_time.growth;
+package com.github.namrufus.harvest_time.seasonal_growth;
 
 import java.util.Map;
 

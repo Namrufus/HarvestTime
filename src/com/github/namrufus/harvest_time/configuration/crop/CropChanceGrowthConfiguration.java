@@ -40,4 +40,12 @@ public class CropChanceGrowthConfiguration {
 		
 		return Math.random() < chance;
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	public void dump(Logger log) {
+		log.info("CropChanceGrowthConfiguration:");
+		log.info("  requiresSunlight: " + requiresSunlight);
+		log.info("  baseChance: " + baseChance);
+		cropEnvironmentConfiguration.dump(log);
+	}
 }

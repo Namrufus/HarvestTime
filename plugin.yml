@@ -7,6 +7,10 @@ commands:
     description: dumps configuration data to the console
     usage: /ht-config-dump
 
+  ht-config-dump-crop:
+    description: dumps configuration data on a single crop type to the console
+    usage: /ht-config-dump-crop cropName
+
   ht-timecheck:
     description: check the seasonal day and year index
     usage: /ht-timecheck

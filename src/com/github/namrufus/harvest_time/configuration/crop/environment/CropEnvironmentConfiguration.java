@@ -31,7 +31,7 @@ public class CropEnvironmentConfiguration {
 		else
 			freshWaterConfiguration = null;
 		
-		fertilizerBlockEnabled = config.isSet("fertillizer_block");
+		fertilizerBlockEnabled = config.isSet("fertilizer_block");
 		if (fertilizerBlockEnabled)
 			fertilizerBlockConfiguration = new CropFertilizerBlockConfiguration(config.getConfigurationSection("fertilizer_block"), log);
 		else
@@ -39,13 +39,13 @@ public class CropEnvironmentConfiguration {
 		
 		regionalEnabled = config.isSet("regional");
 		if (regionalEnabled)
-			regionalConfiguration = new CropRegionalConfiguration(config.getConfigurationSection("fertilizer_block"), baseRegionalConfiguration, log);
+			regionalConfiguration = new CropRegionalConfiguration(config.getConfigurationSection("regional"), baseRegionalConfiguration, log);
 		else
 			regionalConfiguration = null;
 		
-		biomeEnabled = config.isSet("biomes");
+		biomeEnabled = config.isSet("biome");
 		if (biomeEnabled)
-			biomeConfiguration = new CropBiomeConfiguration(config.getConfigurationSection("biomes"), biomeAliases, log);
+			biomeConfiguration = new CropBiomeConfiguration(config.getConfigurationSection("biome"), biomeAliases, log);
 		else
 			biomeConfiguration = null;
 	}
@@ -67,5 +67,16 @@ public class CropEnvironmentConfiguration {
 			multiplier *= biomeConfiguration.getMultiplier(block.getBiome());
 		
 		return multiplier;
+	}
+	
+	public void dump(Logger log) {
+		if (freshWaterEnabled)
+			freshWaterConfiguration.dump(log);
+		if (fertilizerBlockEnabled)
+			fertilizerBlockConfiguration.dump(log);
+		if (regionalEnabled)
+			regionalConfiguration.dump(log);
+		if (biomeEnabled)
+			biomeConfiguration.dump(log);
 	}
 }

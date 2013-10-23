@@ -21,7 +21,7 @@ public class CropFertilizerBlockConfiguration {
 		blockType = ConfigUtil.enumFromString(Material.class, blockTypeName);
 		if (blockType == null) {
 			blockType = Material.CLAY;
-			LOG.warning("Fertilizer Block Config: don't recognize material: " + blockTypeName + "using default: " + blockType.toString());
+			LOG.warning("Fertilizer Block Config: don't recognize material: " + blockTypeName + " using default: " + blockType.toString());
 		}
 		
 		blockCount = config.getInt("block_count");
@@ -56,5 +56,14 @@ public class CropFertilizerBlockConfiguration {
 		}
 		
 		return blockCount;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	public void dump(Logger log) {
+		log.info("  FertilizerBlockConfiguration:");
+		log.info("    blockType: " + blockType);
+		log.info("    blockCount: " + blockCount);
+		log.info("    blockOffset: " + blockOffset);
+		log.info("    multiplier: " + multiplier);
 	}
 }

@@ -26,4 +26,11 @@ public class CustomYieldConfiguration {
 	public double getYieldCount(Block block, RegionalGenerator regionalGenerator) {
 		return baseYield * environmentConfiguration.getMultiplier(block, regionalGenerator);
 	}
+	
+	// ------------------------------------------------------------------------------
+	public void dump(Logger log) {
+		log.info("CustomYieldConfiguration:");
+		log.info("  baseYield: "+baseYield);
+		environmentConfiguration.dump(log);
+	}
 }

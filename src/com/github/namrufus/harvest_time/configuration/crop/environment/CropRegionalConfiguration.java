@@ -41,4 +41,12 @@ public class CropRegionalConfiguration {
 		// get the combined multiplier from the three region type preferences
 		return regionalConfiguration.getMultiplier(nutrientsPreference, phPreference, compactnessPreference, nutrientsState, phState, compactnessState);
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	public void dump(Logger log) {
+		log.info("  CropRegionalConfiguration:");
+		log.info("    nutrientsPreference: " + nutrientsPreference);
+		log.info("    phPreference: " + nutrientsPreference);
+		log.info("    compactnessPreference: " + compactnessPreference);
+	}
 }

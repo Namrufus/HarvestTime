@@ -11,17 +11,24 @@ import com.github.namrufus.harvest_time.configuration.BiomeAliasesConfiguration;
 import com.github.namrufus.harvest_time.configuration.util.ConfigUtil;
 
 public class CropBiomeConfiguration {
-	private static final double defaultBiomeMultiplier = 0.0;
+	private double defaultMultiplier;
 	
 	private Map<Biome, Double> biomeMultipliers;
 	
 	public CropBiomeConfiguration(ConfigurationSection config, BiomeAliasesConfiguration biomeAliases, Logger log) {
+		defaultMultiplier = 0.0;
 		biomeMultipliers = new HashMap<Biome, Double>();
 		
-		for (String biomeName : config.getKeys(false)) {
+		for (String biomeName : config.getKeys(false)) {			
 			double multiplier = config.getDouble(biomeName);
 			
-			// first try to match a biome alias
+			// match default
+			if (biomeName.equals("DEFAULT")) {
+				defaultMultiplier = multiplier;
+				continue;
+			}
+			
+			// match a biome alias
 			if (biomeAliases.contains(biomeName)) {
 				for (Biome biome : biomeAliases.getBiomeAliases(biomeName)) {
 					biomeMultipliers.put(biome, multiplier);
@@ -29,10 +36,11 @@ public class CropBiomeConfiguration {
 				continue;
 			} 
 			
-			// then just single biome types
+			// match single biome types
 			Biome biome = ConfigUtil.enumFromString(Biome.class, biomeName);
 			if (biome != null) {
 				biomeMultipliers.put(biome, multiplier);
+				continue;
 			}
 			
 			// if nothing matches, print warning
@@ -45,7 +53,16 @@ public class CropBiomeConfiguration {
 		if (biomeMultipliers.containsKey(biome)) {
 			return biomeMultipliers.get(biome);
 		} else {
-			return defaultBiomeMultiplier;
+			return defaultMultiplier;
+		}
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	public void dump(Logger log) {
+		log.info("  CropBiomeConfiguration:");
+		log.info("    DEFAULT: " + defaultMultiplier);
+		for (Biome biome : biomeMultipliers.keySet()) {
+			log.info("    "+biome+": "+biomeMultipliers.get(biome));
 		}
 	}
 }
