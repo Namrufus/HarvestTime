@@ -9,19 +9,25 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.namrufus.harvest_time.bonemeal.BonemealDisabledListener;
 import com.github.namrufus.harvest_time.configuration.ConfigurationLoader;
 import com.github.namrufus.harvest_time.configuration.FarmlandCreationConfiguration;
 import com.github.namrufus.harvest_time.configuration.SeasonalConfiguration;
+import com.github.namrufus.harvest_time.configuration.region.RegionState;
 import com.github.namrufus.harvest_time.farmland.FarmlandCreationListener;
+import com.github.namrufus.harvest_time.regional.RegionSamplerUtil;
+import com.github.namrufus.harvest_time.regional.RegionalGenerator;
 import com.github.namrufus.harvest_time.seasonal.SeasonalCalendar;
 import com.github.namrufus.harvest_time.util.PlayerTimerSystem;
 
 public class HarvestTime extends JavaPlugin {
-	SeasonalCalendar seasonalCalendar;
 	ConfigurationLoader configurationLoader;
+	
+	SeasonalCalendar seasonalCalendar;
+	RegionalGenerator regionalGenerator;
 	
 	@Override
 	public void onEnable() {
@@ -61,6 +67,9 @@ public class HarvestTime extends JavaPlugin {
 	    
 	    seasonalCalendar = new SeasonalCalendar(seasonalConfiguration.getDaysInSeasonalYear(), timestamp);
 		
+	    // -- Initialize regional generator ---------------------------------------------------------------------------
+	    regionalGenerator = new RegionalGenerator(configurationLoader.getRegionalConfiguration());
+	    
 		// -- Initialize listeners ------------------------------------------------------------------------------------
 		PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem();
 		
@@ -111,6 +120,10 @@ public class HarvestTime extends JavaPlugin {
 			configDumpCommand(sender, args);
 		} else if (cmd.getName().equalsIgnoreCase("ht-config-dump-crop")) {
 			configDumpCropCommand(sender, args);
+		} else if (cmd.getName().equalsIgnoreCase("ht-region-image")) {
+			regionImageCommand(sender, args);
+		} else if (cmd.getName().equalsIgnoreCase("ht-region-check")) {
+			regionCheckCommand(sender, args);
 		} else if(cmd.getName().equalsIgnoreCase("ht-timecheck")){	
 			timecheckCommand(sender, args);
 		} else if (cmd.getName().equalsIgnoreCase("ht-when-increment")) {
@@ -141,9 +154,54 @@ public class HarvestTime extends JavaPlugin {
 		
 		configurationLoader.dumpCrop(args[0], getLogger());
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	private void regionImageCommand(CommandSender sender, String[] args) {
+		if (args.length != 2) {
+			sender.sendMessage("command requires 2 arguments");
+			return;
+		}
+		
+		int imageSize;
+		double blocksPerPixel;
+		
+		try {
+		imageSize = Integer.parseInt(args[0]);
+		} catch (NumberFormatException e) {
+		sender.sendMessage("can't parse imageSize: " + args[0]);
+		return;
+		}
+		
+		try {
+		blocksPerPixel = Double.parseDouble(args[1]);
+		} catch (NumberFormatException e) {
+	    sender.sendMessage("can't parse blocksPerPixel: " + args[1]);
+	    return;
+		}
+		
+		RegionSamplerUtil.sampleNutrientsImage(imageSize, blocksPerPixel, regionalGenerator, new File(getDataFolder(), "nutrients.png"), getLogger());
+		RegionSamplerUtil.samplePhImage(imageSize, blocksPerPixel, regionalGenerator, new File(getDataFolder(), "ph.png"), getLogger());
+		RegionSamplerUtil.sampleCompactnessImage(imageSize, blocksPerPixel, regionalGenerator, new File(getDataFolder(), "compactness.png"), getLogger());
+	}
+	
+	private void regionCheckCommand(CommandSender sender, String[] args) {
+		if (!(sender instanceof Player)) {
+			sender.sendMessage("that is a player command.");
+			return;
+		}
+		
+		Player player = (Player) sender;
+		
+		RegionState.Nutrients nutrients = regionalGenerator.getNutrientState(player.getLocation());
+		RegionState.Ph ph = regionalGenerator.getPhState(player.getLocation());
+		RegionState.Compactness compactness = regionalGenerator.getCompactnessState(player.getLocation());
+		
+		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] Regional Soil Analysis: " + nutrients + ", " + ph + ", " + compactness);
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	private void timecheckCommand(CommandSender sender, String[] args) {
-		sender.sendMessage("§7"/*light grey*/ + "[Demeter] " + getTimeSummary());
+		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] " + getTimeSummary());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

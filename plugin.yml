@@ -11,6 +11,14 @@ commands:
     description: dumps configuration data on a single crop type to the console
     usage: /ht-config-dump-crop cropName
 
+  ht-region-image:
+    description: draws an image depicting the distribution of the regional types
+    usage: /ht-region-image imageSize blocksPerPixel
+
+  ht-region-check:
+    description: displays the soil region properties at player location
+    usage: /ht-region-check
+
   ht-timecheck:
     description: check the seasonal day and year index
     usage: /ht-timecheck

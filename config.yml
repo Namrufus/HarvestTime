@@ -74,12 +74,11 @@ harvest_time:
   # -- regional bonuses ------------------------------------
   regional:
     enabled: true
-    seed: ABBA
+    seed: Columbia
+    cell_size: 1000.0
+    variation_size: 5000.0
 
     nutrients:
-      enabled: true
-      region_size: 500.0
-      variation_scale: 10000.0
       multipliers:
         FAIR:
           FAIR: 1.25
@@ -93,9 +92,6 @@ harvest_time:
           VERY_FOUL: 1.25  
 
     ph:
-      enabled: true
-      region_size: 500.0
-      variation_scale: 10000.0
       multipliers:
         ACIDIC:
           ACIDIC: 1.0
@@ -120,9 +116,6 @@ harvest_time:
           VERY_BASIC: 1.25
 
     compactness:
-      enabled: true
-      region_size: 500.0
-      variation_scale: 10000.0
       multipliers:
         LOOSE:
           LOOSE: 1.0

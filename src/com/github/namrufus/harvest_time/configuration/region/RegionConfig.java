@@ -11,21 +11,11 @@ public class RegionConfig {
 	List<RegionPreference> preferences;
 	List<RegionState> states;
 	
-	boolean enabled;
-	
-	double regionSize;
-	double variationScale;
-	
 	Map<RegionPreference, Map<RegionState, Double>> multipliers;
 	
 	public RegionConfig(List<RegionPreference> preferences, List<RegionState> states, ConfigurationSection config, Logger LOG) {
 		this.preferences = preferences;
 		this.states = states;
-		
-		enabled = config.getBoolean("enabled");
-		
-		regionSize = config.getDouble("region_size");
-		variationScale = config.getDouble("variation_scale");
 		
 		multipliers = new HashMap<RegionPreference, Map<RegionState, Double>>();
 		ConfigurationSection multipliersConfig = config.getConfigurationSection("multipliers");
@@ -69,15 +59,7 @@ public class RegionConfig {
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	public boolean isEnabled() { return enabled; }
-	public double getRegionSize() { return regionSize; }
-	public double getVariationScale() { return variationScale; }
-	
-	// ----------------------------------------------------------------------------------------------------------------
 	public double getMultiplier(RegionPreference preference, RegionState state) {
-		if (!enabled)
-			return 1.0;
-		
 		if (!multipliers.containsKey(preference))
 			return 1.0;
 		
@@ -89,9 +71,6 @@ public class RegionConfig {
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	public void dump(Logger log) {
-		log.info("    enabled: "+enabled);
-		log.info("    regionSize: "+regionSize);
-		log.info("    variationScale: "+variationScale);
 		log.info("    multipliers:");
 		for (RegionPreference preference : multipliers.keySet()) {
 			log.info("      " + preference + ":");

@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Noise {
 	private GeoRandom geoRandom;
+	private double frequency;
 	
 	// xyzStore
 	double aaaStore, aabStore, abaStore, abbStore;
@@ -15,8 +16,9 @@ public class Noise {
 	
 	double xOffset, yOffset, zOffset;
 	
-	public Noise(Random random) {
+	public Noise(Random random, double frequency) {
 		geoRandom = new GeoRandom(random.nextLong());
+		this.frequency = frequency;
 		
 		xRecord = 0;
 		yRecord = 0;
@@ -37,6 +39,11 @@ public class Noise {
 	}
 	
 	public double sample(double x, double y, double z) {
+		// scale values
+		x /= frequency;
+		y /= frequency;
+		z /= frequency;
+		
 		// offset value randomly
 		x += xOffset;
 		y += yOffset;
@@ -99,6 +106,10 @@ public class Noise {
 	}
 	// ================================================================================================================
 	public double sample(double x, double y) {
+		// scale values
+		x /= frequency;
+		y /= frequency;
+		
 		// offset value randomly
 		x += xOffset;
 		y += yOffset;
@@ -146,6 +157,9 @@ public class Noise {
 	}
 	
 	public double sample(double x) {
+		// scale values
+		x /= frequency;
+		
 		// offset value
 		x += xOffset;
 		

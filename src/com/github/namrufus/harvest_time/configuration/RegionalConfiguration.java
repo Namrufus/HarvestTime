@@ -21,13 +21,19 @@ public class RegionalConfiguration {
 	
 	// ================================================================================================================
 	private boolean enabled;
+	private String worldName;
 	private String seed;
+	private double cellSize;
+	private double variationSize;
 	
 	private RegionConfig nutrientRegionConfig, phRegionConfig, compactnessRegionConfig;
 	
 	public RegionalConfiguration(ConfigurationSection config, Logger LOG) {
 		enabled = config.getBoolean("enabled");
+		worldName = config.getString("world_name");
 		seed = config.getString("seed");
+		cellSize = config.getDouble("cell_size");
+		variationSize = config.getDouble("variation_size");
 		
 		ConfigurationSection nutrientConfig = config.getConfigurationSection("nutrients");
 		nutrientRegionConfig = new RegionConfig(Arrays.asList(nutrientPreferences), Arrays.asList(nutrientStates), nutrientConfig, LOG);
@@ -41,7 +47,10 @@ public class RegionalConfiguration {
 	
 	// ================================================================================================================
 	public boolean isEnabled() { return enabled; }
+	public String getWorldName() { return worldName; }
 	public String getSeed() { return seed; }
+	public double getCellSize() { return cellSize; }
+	public double getVariationSize() { return variationSize; }
 	
 	public double getMultiplier(RegionPreference.Nutrients nutrientsPreference, RegionPreference.Ph phPreference, RegionPreference.Compactness compactnessPreference,
 			                    RegionState.Nutrients nutrientsState, RegionState.Ph phState, RegionState.Compactness compactnessState) {
@@ -58,7 +67,10 @@ public class RegionalConfiguration {
 	public void dump(Logger log) {
 		log.info("RegionalConfiguration");
 		log.info("  enabled: " + enabled);
+		log.info("  worldName: " + worldName);
 		log.info("  seed: " + seed);
+		log.info("  cellSize: " + cellSize);
+		log.info("  variationSize: " + variationSize);
 		log.info("  nutrients:");
 		nutrientRegionConfig.dump(log);
 		log.info("  ph:");
