@@ -14,13 +14,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.namrufus.harvest_time.bonemeal.BonemealDisabledListener;
 import com.github.namrufus.harvest_time.configuration.ConfigurationLoader;
-import com.github.namrufus.harvest_time.configuration.FarmlandCreationConfiguration;
 import com.github.namrufus.harvest_time.configuration.SeasonalConfiguration;
 import com.github.namrufus.harvest_time.configuration.region.RegionState;
 import com.github.namrufus.harvest_time.farmland.FarmlandCreationListener;
 import com.github.namrufus.harvest_time.regional.RegionSamplerUtil;
 import com.github.namrufus.harvest_time.regional.RegionalGenerator;
 import com.github.namrufus.harvest_time.seasonal.SeasonalCalendar;
+import com.github.namrufus.harvest_time.seasonal_growth.SeasonalGrowthListener;
 import com.github.namrufus.harvest_time.util.PlayerTimerSystem;
 
 public class HarvestTime extends JavaPlugin {
@@ -70,8 +70,10 @@ public class HarvestTime extends JavaPlugin {
 	    // -- Initialize regional generator ---------------------------------------------------------------------------
 	    regionalGenerator = new RegionalGenerator(configurationLoader.getRegionalConfiguration());
 	    
+	    // -- Initialize player timer system --------------------------------------------------------------------------
+		PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem();   
+	    
 		// -- Initialize listeners ------------------------------------------------------------------------------------
-		PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem();
 		
 		// bonemeal disabling listener
 		BonemealDisabledListener bonemealDisabledListener = new BonemealDisabledListener(configurationLoader.getBonemealDisabledConfiguration());
@@ -80,15 +82,13 @@ public class HarvestTime extends JavaPlugin {
 		// farmland creation listener
 		FarmlandCreationListener farmlandListener = new FarmlandCreationListener(playerTimerSystem, configurationLoader.getFarmlandCreationConfiguration());
 		this.getServer().getPluginManager().registerEvents(farmlandListener, this);
-//		
-//		// crop growth info listener
-//		GrowthStageInformationListener growthStageInformationListener = new GrowthStageInformationListener(crops, dayCalendar);
-//		this.getServer().getPluginManager().registerEvents(growthStageInformationListener, this);
-//		
-//		// crop "tending" listener
-//		GrowthListener cropTendingListener = new GrowthListener(crops, dayCalendar);
-//		this.getServer().getPluginManager().registerEvents(cropTendingListener, this);
-//		
+	
+		// crop seasonal growth listener
+		SeasonalGrowthListener seasonalGrowthListener = new SeasonalGrowthListener(configurationLoader.getInteractionConfiguration(),
+				                                                                configurationLoader.getTendingConfiguration(),
+				                                                                configurationLoader.getSeasonalCropListConfiguration(),
+				                                                                regionalGenerator, seasonalCalendar, playerTimerSystem);
+		this.getServer().getPluginManager().registerEvents(seasonalGrowthListener, this);
 	}
 	
 	// ================================================================================================================

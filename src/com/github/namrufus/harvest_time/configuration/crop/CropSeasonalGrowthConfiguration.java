@@ -39,12 +39,13 @@ public class CropSeasonalGrowthConfiguration {
 	
 	// ================================================================================================================
 	public boolean doesRequiresSunlight() { return requiresSunlight; }
+	public int getStartDay() { return startDay; }
 	
 	public boolean hasCustomYield() { return hasCustomYield; }
 	public CustomYieldConfiguration getCustomYieldConfiguration() { return customYieldConfiguration; }
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	public int getTargetStage(int seasonalDay) {
+	public int getUncappedTargetStage(int seasonalDay) {
 		int targetStage = seasonalDay - startDay;
 		
 		if (targetStage < 0)
@@ -53,16 +54,30 @@ public class CropSeasonalGrowthConfiguration {
 		return targetStage;
 	}
 	
+	public int getCappedTargetStage(int seasonalDay, int stageCount) {
+		int targetStage =  getUncappedTargetStage(seasonalDay);
+		
+		if (targetStage >= stageCount - 1)
+			targetStage = stageCount - 1;
+		
+		return targetStage;
+	}
+	
+	// get the index of the final seasonal day on which this crop will still be viable to be grown
+	public int getFinalViableSeasonalDay(int currentStage) {
+		return startDay + currentStage + maxStageDifference;
+	}
+	
 	public boolean isAllowedToGrow(int currentStage, int seasonalDay) {
-		int targetStage = getTargetStage(seasonalDay);
+		int targetStage = getUncappedTargetStage(seasonalDay);
 		
 		int difference = targetStage - currentStage;
 		
 		return difference > 0 && difference <= maxStageDifference;
 	}
 	
-	public boolean isAtTargetStage(int currentStage, int seasonalDay) {
-		int targetStage = getTargetStage(seasonalDay);
+	public boolean isAtTargetStage(int currentStage, int seasonalDay, int stageCount) {
+		int targetStage = getCappedTargetStage(seasonalDay, stageCount);
 		
 		return currentStage == targetStage;
 	}

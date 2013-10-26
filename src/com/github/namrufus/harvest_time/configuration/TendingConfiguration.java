@@ -11,46 +11,43 @@ import com.github.namrufus.harvest_time.configuration.util.ConfigUtil;
 
 public class TendingConfiguration {
 	int radius;
-	double baseTime;
-	private Map<Material, Double> toolMultipliers;
+	private Map<Material, Double> toolTimes;
 	
 	public TendingConfiguration(ConfigurationSection config, Logger log) {
 		radius = config.getInt("radius");
-		baseTime = config.getDouble("base_time");
 		
-		toolMultipliers = new HashMap<Material, Double>();
+		toolTimes = new HashMap<Material, Double>();
 		
-		ConfigurationSection toolSection = config.getConfigurationSection("tool_multipliers");
+		ConfigurationSection toolSection = config.getConfigurationSection("tool_times");
 		for (String toolMaterialName : toolSection.getKeys(false)) {
 			Material toolMaterial = ConfigUtil.enumFromString(Material.class, toolMaterialName);
 			if (toolMaterial == null) {
 				log.warning("Tool Harvest Time Configuration: can't identify "+toolMaterialName+". Skipping.");
 				continue;
 			}
-			toolMultipliers.put(toolMaterial, toolSection.getDouble(toolMaterialName));
+			toolTimes.put(toolMaterial, toolSection.getDouble(toolMaterialName));
 		}
 	}
 	
 	// ================================================================================================================
 	public int getRadius() { return radius; }
-	public double getBaseTime() { return baseTime; }
 	
-	public boolean isHarvestTool(Material material) {
-		return toolMultipliers.containsKey(material);
+	public boolean isTendingTool(Material material) {
+		return toolTimes.containsKey(material);
 	}
-	public double getToolHarvestMultiplier(Material material) {
-		if (!isHarvestTool(material))
-			return 1.0;
+	public double getToolTendingTime(Material material) {
+		if (!isTendingTool(material))
+			return 0.0;
 		
-		return toolMultipliers.get(material);
+		return toolTimes.get(material);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	public void dump(Logger log) {
 		log.info("HarvestingConfiguration:");
 		log.info("  toolMultipliers:");
-		for (Material tool : toolMultipliers.keySet()) {
-			log.info("    " + tool + ": " + toolMultipliers.get(tool));
+		for (Material tool : toolTimes.keySet()) {
+			log.info("    " + tool + ": " + toolTimes.get(tool));
 		}
 	}
 }

@@ -103,6 +103,15 @@ public class SeasonalCalendar {
 		return new Date(nextDayMillis);
 	}
 	
+	// return the real date of the start of the given day
+	public Date getSeasonalDayStart(long seasonalYear, long seasonalDay) {
+		long absoluteSeasonalDay = seasonalYear * daysInSeasonalYear + seasonalDay;
+		
+		long dateMillis = absoluteSeasonalDay * millisInDay + referenceTimestamp;
+		
+		return new Date(dateMillis);
+	}
+	
 	// return the number of hours & minutes +/- from midnight GMT the seasonal day increments
 	public long seasonalDayIncrementTime() {
 		return referenceTimestamp % millisInDay;

@@ -2,7 +2,6 @@ package com.github.namrufus.harvest_time.configuration;
 
 import java.util.logging.Logger;
 
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class SeasonalConfiguration {
@@ -11,7 +10,6 @@ public class SeasonalConfiguration {
 	}
 	
 	private int daysInSeasonalYear;
-	private Material cropGrowthCheckMaterial;
 	
 	boolean rainfallControlEnabled;
 	double mildFrequency, mildRainfallChance;
@@ -21,14 +19,6 @@ public class SeasonalConfiguration {
 	public SeasonalConfiguration(ConfigurationSection config, Logger LOG) {
 		// seasonal_growth config
 		daysInSeasonalYear = config.getInt("days_in_seasonal_year");
-		
-		String cropGrowthCheckMaterialName = config.getString("crop_growth_check_material");
-		try {
-			cropGrowthCheckMaterial = Material.valueOf(cropGrowthCheckMaterialName);
-		} catch (IllegalArgumentException e) {
-			LOG.warning("Seasonal Growth Configuration: unkown material: "+cropGrowthCheckMaterialName+" using WATCH");
-			cropGrowthCheckMaterial = Material.WATCH;
-		}
 		
 		// seasonal rainfall control config
 		ConfigurationSection rainfallConfig = config.getConfigurationSection("rainfall_control");
@@ -46,7 +36,6 @@ public class SeasonalConfiguration {
 	
 	// ================================================================================================================
 	public int getDaysInSeasonalYear() { return daysInSeasonalYear; }
-	public Material getCrogGrowthCheckMaterial() { return cropGrowthCheckMaterial; }
 	
 	public RainfallType sampleNewRainfallType() {
 		double r = Math.random();
@@ -78,7 +67,6 @@ public class SeasonalConfiguration {
 	public void dump(Logger LOG) {
 		LOG.info("SeasonalConfiguration:");
 		LOG.info("  daysInSeasonalYear: " + daysInSeasonalYear);
-		LOG.info("  cropGrowthCheckMaterial: " + cropGrowthCheckMaterial);
 		
 		LOG.info("  rainfallControlEnabled: " + rainfallControlEnabled);
 		

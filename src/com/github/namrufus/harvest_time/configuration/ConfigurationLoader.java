@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 // loads all configuration data and provides a configuration dump utility
 
 public class ConfigurationLoader {
+	private InteractionConfiguration interactionConfiguration;
 	private BonemealDisabledConfiguration bonemealDisabledConfiguration;
 	private SeasonalConfiguration seasonalConfiguration;
 	private FarmlandCreationConfiguration farmlandCreationConfiguration;
@@ -18,6 +19,7 @@ public class ConfigurationLoader {
 	private ChanceCropListConfiguration chanceCropListConfiguration;
 	
 	public ConfigurationLoader(ConfigurationSection config, Logger log) {
+		interactionConfiguration = new InteractionConfiguration(config.getConfigurationSection("interaction"), log);
 		bonemealDisabledConfiguration = new BonemealDisabledConfiguration(config.getConfigurationSection("bonemeal_disabled"), log);
 		seasonalConfiguration = new SeasonalConfiguration(config.getConfigurationSection("seasonal"), log);
 		farmlandCreationConfiguration = new FarmlandCreationConfiguration(config.getConfigurationSection("farmland_creation"), log);
@@ -30,10 +32,11 @@ public class ConfigurationLoader {
 	}
 	
 	// ================================================================================================================
+	public InteractionConfiguration getInteractionConfiguration() { return interactionConfiguration; }
 	public BonemealDisabledConfiguration getBonemealDisabledConfiguration() { return bonemealDisabledConfiguration; }
 	public SeasonalConfiguration getSeasonalConfiguration() { return seasonalConfiguration; }
 	public FarmlandCreationConfiguration getFarmlandCreationConfiguration() {return farmlandCreationConfiguration; }
-	public TendingConfiguration getHarvestingConfiguration() { return tendingConfiguration; }
+	public TendingConfiguration getTendingConfiguration() { return tendingConfiguration; }
 	public RegionalConfiguration getRegionalConfiguration() { return regionalConfiguration; }
 	public FreshWaterConfiguration getFreshWaterConfiguration() { return freshWaterConfiguration; }
 	public SeasonalCropListConfiguration getSeasonalCropListConfiguration() { return seasonalCropListConfiguration; }
@@ -43,6 +46,7 @@ public class ConfigurationLoader {
 	public void dumpConfiguration(Logger log) {
 		log.info("Start Configuration Dump:");
 		log.info("");
+		interactionConfiguration.dump(log);
 		bonemealDisabledConfiguration.dump(log);
 		seasonalConfiguration.dump(log);
 		farmlandCreationConfiguration.dump(log);

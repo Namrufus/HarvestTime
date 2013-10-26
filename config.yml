@@ -1,4 +1,9 @@
 harvest_time:
+  # == info ================================================
+  interaction:
+    crop_growth_check_material: WATCH
+    crop_yield_check_material: COMPASS
+
   # == bonemeal ============================================
   bonemeal_disabled:
     materials:
@@ -13,7 +18,6 @@ harvest_time:
   # == seasonal growth =====================================
   seasonal:
     days_in_seasonal_year: 16
-    crop_growth_check_material: WATCH
     rainfall_control:
       enabled: true
       MILD:
@@ -44,13 +48,12 @@ harvest_time:
   # -- seasonal crop tending -------------------------------
   tending:
     radius: 2
-    base_time: 10.0
-    tool_multipliers:
-      WOOD_HOE: 1.0
-      STONE_HOE: 0.9
-      IRON_HOE: 0.8
-      DIAMOND_HOE: 0.5
-      GOLD_HOE: 0.6
+    tool_times:
+      WOOD_HOE: 10.0
+      STONE_HOE: 9.0
+      IRON_HOE: 8.0
+      DIAMOND_HOE: 5.0
+      GOLD_HOE: 6.0
 
   # == bonuses =============================================
   # -- fresh water -----------------------------------------

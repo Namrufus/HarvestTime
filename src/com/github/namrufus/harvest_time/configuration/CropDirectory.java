@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Material;
-import org.bukkit.TreeType;
 import org.bukkit.entity.EntityType;
 
 import com.github.namrufus.harvest_time.configuration.util.ConfigUtil;
+import com.github.namrufus.harvest_time.util.TreeGrowthType;
 
 public class CropDirectory<K> {
 	protected static enum CropType {
@@ -76,12 +76,12 @@ public class CropDirectory<K> {
 			return new CropIdentifier(CropType.BLOCK, blockMaterial);
 		} else if (cropName.startsWith("tree_")) {
 			String treeName = cropName.replaceFirst("tree_", "");
-			TreeType treeType = ConfigUtil.enumFromString(TreeType.class, treeName);
+			TreeGrowthType treeGrowthType = ConfigUtil.enumFromString(TreeGrowthType.class, treeName);
 			
-			if (treeType == null)
+			if (treeGrowthType == null)
 				return null;
 			
-			return new CropIdentifier(CropType.TREE, treeType);
+			return new CropIdentifier(CropType.TREE, treeGrowthType);
 		} else if (cropName.startsWith("breeding_")) {
 			String entityName = cropName.replaceFirst("breeding_", "");
 			EntityType entityType = ConfigUtil.enumFromString(EntityType.class, entityName);
@@ -103,11 +103,19 @@ public class CropDirectory<K> {
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	private CropIdentifier blockIdentifier(Material blockMaterial) { return new CropIdentifier(CropType.BLOCK, blockMaterial); }
-	private CropIdentifier treeIdentifier(TreeType treeType) { return new CropIdentifier(CropType.TREE, treeType); }
+	private CropIdentifier treeIdentifier(TreeGrowthType treeGrowthType) { return new CropIdentifier(CropType.TREE, treeGrowthType); }
 	private CropIdentifier breedingIdentifier(EntityType entityType) { return new CropIdentifier(CropType.BREEDING, entityType); }
 	private CropIdentifier eggLayingIdentifier() { return new CropIdentifier(CropType.EGG_LAYING); }
 	private CropIdentifier eggHatchingIdentifier() { return new CropIdentifier(CropType.EGG_HATCHING); }
 	private CropIdentifier fishingIdentifier() { return new CropIdentifier(CropType.FISHING); }
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	public boolean containsBlockCrop(Material material) { return crops.containsKey(blockIdentifier(material)); }
+	public boolean containsTreeCrop(TreeGrowthType treeGrowthType) { return crops.containsKey(treeIdentifier(treeGrowthType)); }
+	public boolean containsBreedingCrop(EntityType entityType) { return crops.containsKey(breedingIdentifier(entityType)); }
+	public boolean containsEggLayingCrop() { return crops.containsKey(eggLayingIdentifier()); }
+	public boolean containsEggHatchingCrop() { return crops.containsKey(eggHatchingIdentifier()); }
+	public boolean containsFishingCrop() { return crops.containsKey(fishingIdentifier()); }
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	public boolean canParse(String cropName) {
@@ -127,7 +135,7 @@ public class CropDirectory<K> {
 	}
 	
 	public void putBlockCrop(Material material, K value) { crops.put(blockIdentifier(material), value); }
-	public void putTreeCrop(TreeType treeType, K value) { crops.put(treeIdentifier(treeType), value); }
+	public void putTreeCrop(TreeGrowthType treeGrowthType, K value) { crops.put(treeIdentifier(treeGrowthType), value); }
 	public void putBreedingCrop(EntityType entityType, K value) { crops.put(breedingIdentifier(entityType), value); }
 	public void putEggLayingCrop(K value) { crops.put(eggLayingIdentifier(), value); }
 	public void putEggHatchingCrop(K value) { crops.put(eggHatchingIdentifier(), value); }
@@ -143,10 +151,10 @@ public class CropDirectory<K> {
 		return crops.get(identifier);
 	}
 	
-	public void getBlockCrop(Material material) { crops.get(blockIdentifier(material)); }
-	public void getTreeCrop(TreeType treeType) { crops.get(treeIdentifier(treeType)); }
-	public void getBreedingCrop(EntityType entityType) { crops.get(breedingIdentifier(entityType)); }
-	public void getEggLayingCrop() { crops.get(eggLayingIdentifier());}
-	public void getEggHatchingCrop() { crops.get(eggHatchingIdentifier()); }
-	public void getFishingCrop() { crops.get(fishingIdentifier()); }
+	public K getBlockCrop(Material material) { return crops.get(blockIdentifier(material)); }
+	public K getTreeCrop(TreeGrowthType treeGrowthType) { return crops.get(treeIdentifier(treeGrowthType)); }
+	public K getBreedingCrop(EntityType entityType) { return crops.get(breedingIdentifier(entityType)); }
+	public K getEggLayingCrop() { return crops.get(eggLayingIdentifier());}
+	public K getEggHatchingCrop() { return crops.get(eggHatchingIdentifier()); }
+	public K getFishingCrop() { return crops.get(fishingIdentifier()); }
 }

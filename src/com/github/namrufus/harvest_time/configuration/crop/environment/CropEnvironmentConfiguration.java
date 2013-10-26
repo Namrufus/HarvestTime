@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 
 import com.github.namrufus.harvest_time.configuration.BiomeAliasesConfiguration;
 import com.github.namrufus.harvest_time.configuration.FreshWaterConfiguration;
@@ -69,6 +70,7 @@ public class CropEnvironmentConfiguration {
 		return multiplier;
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
 	public void dump(Logger log) {
 		if (freshWaterEnabled)
 			freshWaterConfiguration.dump(log);
@@ -78,5 +80,34 @@ public class CropEnvironmentConfiguration {
 			regionalConfiguration.dump(log);
 		if (biomeEnabled)
 			biomeConfiguration.dump(log);
+	}
+	
+	public void displayState(Player player, Block block, RegionalGenerator regionalGenerator) {
+		if (freshWaterEnabled) {
+			double multiplier = freshWaterConfiguration.getMultiplier(block);
+			if (multiplier != 1.0)
+				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Fresh Water: " + "§8"/*dark grey*/ + "x" + percentageFormat(multiplier));
+		}
+		
+		if (biomeEnabled) {
+			double multiplier = biomeConfiguration.getMultiplier(block.getBiome());
+			player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Biome: " + "§8"/*dark grey*/ + "x" + percentageFormat(multiplier));
+		}
+		
+		if (fertilizerBlockEnabled) {
+			double multiplier = fertilizerBlockConfiguration.getMultiplier(block);
+			if (multiplier != 1.0)
+				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Fertilizer Blocks: " + "§8"/*dark grey*/ + "x" + percentageFormat(multiplier));
+		}
+		
+		if (regionalEnabled) {
+			double multiplier = regionalConfiguration.getMultiplier(block.getLocation(), regionalGenerator);
+			if (multiplier != 1.0)
+				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Regional Soil State: " + "§8"/*dark grey*/ + "x" + percentageFormat(multiplier));
+		}
+	}
+	
+	private static String percentageFormat(double multiplier) {
+		return String.format("%.2f%%", (multiplier * 100.0));
 	}
 }
