@@ -124,8 +124,8 @@ public class HarvestTime extends JavaPlugin {
 			regionImageCommand(sender, args);
 		} else if (cmd.getName().equalsIgnoreCase("ht-region-check")) {
 			regionCheckCommand(sender, args);
-		} else if(cmd.getName().equalsIgnoreCase("ht-timecheck")){	
-			timecheckCommand(sender, args);
+		} else if(cmd.getName().equalsIgnoreCase("ht-time-check")){	
+			timeCheckCommand(sender, args);
 		} else if (cmd.getName().equalsIgnoreCase("ht-when-increment")) {
 			whenIncrementCommand(sender, args);
 		} else if (cmd.getName().equalsIgnoreCase("ht-next-increment")) {
@@ -166,17 +166,17 @@ public class HarvestTime extends JavaPlugin {
 		double blocksPerPixel;
 		
 		try {
-		imageSize = Integer.parseInt(args[0]);
+			imageSize = Integer.parseInt(args[0]);
 		} catch (NumberFormatException e) {
-		sender.sendMessage("can't parse imageSize: " + args[0]);
-		return;
+			sender.sendMessage("can't parse imageSize: " + args[0]);
+			return;
 		}
 		
 		try {
-		blocksPerPixel = Double.parseDouble(args[1]);
+			blocksPerPixel = Double.parseDouble(args[1]);
 		} catch (NumberFormatException e) {
-	    sender.sendMessage("can't parse blocksPerPixel: " + args[1]);
-	    return;
+			sender.sendMessage("can't parse blocksPerPixel: " + args[1]);
+			return;
 		}
 		
 		RegionSamplerUtil.sampleNutrientsImage(imageSize, blocksPerPixel, regionalGenerator, new File(getDataFolder(), "nutrients.png"), getLogger());
@@ -200,7 +200,7 @@ public class HarvestTime extends JavaPlugin {
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	private void timecheckCommand(CommandSender sender, String[] args) {
+	private void timeCheckCommand(CommandSender sender, String[] args) {
 		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] " + getTimeSummary());
 	}
 	
@@ -211,17 +211,35 @@ public class HarvestTime extends JavaPlugin {
 		long hours = incrementTime / SeasonalCalendar.millisInHour;
 		long minutes = (incrementTime - hours * SeasonalCalendar.millisInHour) / SeasonalCalendar.millisInMinute;
 		
-		sender.sendMessage("§7"/*light grey*/ + "[Demeter] " + "GMT +" + hours + "h:" + minutes + "m");
+		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] " + "GMT +" + hours + "h:" + minutes + "m");
 	}
 	
 	private void nextIncrementCommand(CommandSender sender, String[] args) {
-		sender.sendMessage("§7"/*light grey*/ + "[Demeter] " + seasonalCalendar.nextSeasonalDayIncrement());
+		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] " + seasonalCalendar.nextSeasonalDayIncrement());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	private void timeSetCommand(CommandSender sender, String[] args) {
-		long seasonalYear = Long.parseLong(args[0]);
-		long seasonalDay = Long.parseLong(args[1]);
+		if (args.length != 2) {
+			sender.sendMessage("command requires 2 arguments");
+			return;
+		}
+		
+		long seasonalYear, seasonalDay;
+		
+		try {
+			seasonalYear = Long.parseLong(args[0]);
+		} catch (NumberFormatException e) {
+			sender.sendMessage("can't parse seasonalYear: " + args[0]);
+			return;
+		}
+		
+		try {
+			seasonalDay = Long.parseLong(args[1]);
+		} catch (NumberFormatException e) {
+			sender.sendMessage("can't parse seasonalDay: " + args[1]);
+			return;
+		}
 		
 		seasonalCalendar.setReferenceTimestamp(seasonalYear, seasonalDay);
 		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] " + getTimeSummary());
@@ -231,7 +249,18 @@ public class HarvestTime extends JavaPlugin {
 	}
 	
 	private void timeIncrementCommand(CommandSender sender, String[] args) {
-		long increment = Long.parseLong(args[0]);
+		if (args.length != 2) {
+			sender.sendMessage("command requires 2 arguments.");
+			return;
+		}
+		
+		long increment;
+		try {
+			increment = Long.parseLong(args[0]);
+		} catch (NumberFormatException e) {
+			sender.sendMessage("can't parse increment: "+args[0]);
+			return;
+		}
 		
 		String interval = args[1];
 		
@@ -244,7 +273,7 @@ public class HarvestTime extends JavaPlugin {
 		else if (interval.equalsIgnoreCase("week") || interval.equalsIgnoreCase("weeks"))
 			increment *= SeasonalCalendar.millisInDay * 7;
 		else {
-			this.getLogger().warning("unknown interval: "+interval);
+			sender.sendMessage("unknown interval: "+interval);
 			return;
 		}
 			

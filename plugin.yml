@@ -2,39 +2,65 @@ name: HarvestTime
 main: com.github.namrufus.harvest_time.HarvestTime
 version: 0.1
 
+permissions:
+  harvest_time.config_dump:
+    description: allows config dump commands
+    default: op
+
+  harvest_time.region_check:
+    description: use of ht-region-check command
+    default: true
+
+  harvest_time.time_check:
+    description: allows use of plugin time checking commands
+    default: true
+
+  harvest_time.time_change:
+    description: allows use of commands that modify plugin time
+    default: op
+
 commands:
   ht-config-dump:
+    permission: harvest_time.config_dump
     description: dumps configuration data to the console
     usage: /ht-config-dump
 
   ht-config-dump-crop:
+    permission: harvest_time.config_dump
     description: dumps configuration data on a single crop type to the console
     usage: /ht-config-dump-crop cropName
 
   ht-region-image:
+    permission: harvest_time.config_dump
     description: draws an image depicting the distribution of the regional types
     usage: /ht-region-image imageSize blocksPerPixel
 
   ht-region-check:
+    permission: harvest_time.region_check
     description: displays the soil region properties at player location
     usage: /ht-region-check
 
-  ht-timecheck:
+  ht-time-check:
+    permission: harvest_time.time_check
     description: check the seasonal day and year index
     usage: /ht-timecheck
 
   ht-when-increment:
+    permission: harvest_time.time_check
     description: check the time at which the the plugin "seasonal day" will change
     usage: /ht-when-increment
 
   ht-next-increment:
+    permission: harvest_time.time_check
     description: check the time until the next seasonal day increment
     usage: /ht-next-increment
 
   ht-time-set:
+    permission: harvest_time.time_change
     description: set the current seasonal year and day. Updates timestamp file.
     usage: /ht-timeset yearIndex dayIndex
 
   ht-time-increment:
+    permission: harvest_time.time_change
     description: move the current plugin-time (negative to move backwards in time). Updates timestamp file.
     usage: /ht-timemove increment {minutes, hours, days, weeks}
