@@ -13,8 +13,12 @@ import org.bukkit.configuration.ConfigurationSection;
 import com.github.namrufus.harvest_time.configuration.util.ConfigUtil;
 
 public class FreshWaterConfiguration {
-	private static int MAX_LIGHT = 15;
+	// temperature values in between which rain falls
+	// this may change in the future depending on Mojang
+	private static final double minTemperature = 0.15, maxTemperature = 1.5;
+	private static final int MAX_LIGHT = 15;
 	
+	// ================================================================================================================
 	// fresh water from being near open water near a "fresh water" biome (like RIVER)
 	private boolean biomesEnabled;
 	private int biomeMinY;
@@ -63,6 +67,8 @@ public class FreshWaterConfiguration {
 		int x = block.getX(), y = block.getY(), z = block.getZ();
 		World world = block.getWorld();
 		
+		System.out.println("what?");
+		
 		if (checkBiomeWater(world, x+biomeRadius, y, z))
 			return true;
 		if (checkBiomeWater(world, x, y, z+biomeRadius))
@@ -75,9 +81,9 @@ public class FreshWaterConfiguration {
 		return false;
 	}
 	
+	// determine if the given location is above water at the specified coordinates (in the configured irrigation y range)
 	private boolean checkBiomeWater(World world, int blockX, int blockY, int blockZ) {
-		int y = blockY - 1;
-		while (y > 0 && y >= biomeMinY && y <= biomeMaxY) {
+		for (int y = blockY - 1; y > 0 && y >= biomeMinY && y <= biomeMaxY; y--) {
 			Block block = world.getBlockAt(blockX, y, blockZ);
 			
 			if (block.getType() == Material.STATIONARY_WATER)
@@ -94,7 +100,35 @@ public class FreshWaterConfiguration {
 		if (!rainfallEnabled)
 			return false;
 		
-		return block.getWorld().hasStorm() && block.getRelative(0, 1, 0).getLightFromSky() == MAX_LIGHT;
+		World world = block.getWorld();
+		
+		// if the world is not in a rain state, the block is not receiving rainfall
+		if (!world.hasStorm())
+			return false;
+		
+		// if the biome does not support rain, then the block is not receiving rainfall
+		if (block.getTemperature() < minTemperature || block.getTemperature() > maxTemperature)
+			return false;
+		
+		// determine if the block is exposed to the sky
+		// world.getHighestBlockAt() and related functions are not usable here because they only include blocks that are not transparent
+		// (glass etc is not taken into account, which is pretty much the point of this - to determine if the block is out in the rain)
+		
+		if (block.getLightFromSky() != MAX_LIGHT) {
+			if (block.getY() != world.getMaxHeight() - 1 || block.getRelative(0, 1, 0).getLightFromSky() != MAX_LIGHT) {
+				return false; /* blocks without 100% sky lighting cannot be under the sky */
+			}
+		}
+		
+		// check all blocks above the given block for blocks that block rain
+		int x = block.getX(), z = block.getZ();
+		for (int y = block.getY() + 1; y < world.getMaxHeight(); y++) {
+			// solid blocks block rain (I think...)
+			if (world.getBlockAt(x, y, z).getType().isSolid())
+				return false;
+		}
+		// if the top of the world is reached, the sky is clear to the build limit
+		return true;
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

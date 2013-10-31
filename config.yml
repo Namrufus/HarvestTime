@@ -60,7 +60,7 @@ harvest_time:
   fresh_water:
     biome:
       enabled: true
-      min_y: 63
+      min_y: 62
       max_y: 68
       radius: 5
       biomes: [RIVER, FROZEN_RIVER]
