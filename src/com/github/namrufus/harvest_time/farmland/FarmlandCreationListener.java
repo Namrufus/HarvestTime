@@ -8,16 +8,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.github.namrufus.harvest_time.configuration.FarmlandCreationConfiguration;
-import com.github.namrufus.harvest_time.util.PlayerTimerSystem;
+import com.github.namrufus.harvest_time.util.PlayerInteractionDelayer;
 
 public class FarmlandCreationListener implements Listener {
 	FarmlandCreationConfiguration config;
 	
-	private PlayerTimerSystem playerTimerSystem;
+	private PlayerInteractionDelayer playerInteractionDelayer;
 	
-	public FarmlandCreationListener(PlayerTimerSystem playerTimerSystem, FarmlandCreationConfiguration config) {
-		this.playerTimerSystem = playerTimerSystem;
+	public FarmlandCreationListener(PlayerInteractionDelayer playerTimerSystem, FarmlandCreationConfiguration config) {
+		this.playerInteractionDelayer = playerTimerSystem;
 		this.config = config;
 	}
 	
@@ -48,7 +47,7 @@ public class FarmlandCreationListener implements Listener {
 		// if the player has not been hoeing on the same block for long enough, then cancel the event and allow the
 		// player to continue hoeing.
 		Double duration = config.getToolTime(toolMaterial);
-		if (playerTimerSystem.canBreak(event.getPlayer(), event.getClickedBlock(), duration, 1.0)) {
+		if (playerInteractionDelayer.canBreak(event.getPlayer(), event.getClickedBlock(), duration, 1.0)) {
 			// check if the block is fertilized appropriately
 			if (checkFertilizerBlocks(block, false)) {
 				// *** FARMLAND block created ***

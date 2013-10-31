@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 import org.bukkit.Location;
 
-import com.github.namrufus.harvest_time.configuration.region.RegionState;
+import com.github.namrufus.harvest_time.regional.region.RegionState;
 
 public class RegionSamplerUtil {
 	private static interface Sampler {

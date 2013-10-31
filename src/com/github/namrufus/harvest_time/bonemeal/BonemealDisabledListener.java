@@ -1,6 +1,5 @@
 package com.github.namrufus.harvest_time.bonemeal;
 
-import com.github.namrufus.harvest_time.configuration.BonemealDisabledConfiguration;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

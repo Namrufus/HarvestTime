@@ -13,15 +13,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.namrufus.harvest_time.bonemeal.BonemealDisabledListener;
-import com.github.namrufus.harvest_time.configuration.ConfigurationLoader;
-import com.github.namrufus.harvest_time.configuration.SeasonalConfiguration;
-import com.github.namrufus.harvest_time.configuration.region.RegionState;
+import com.github.namrufus.harvest_time.crop_growth.seasonal.SeasonalGrowthListener;
 import com.github.namrufus.harvest_time.farmland.FarmlandCreationListener;
 import com.github.namrufus.harvest_time.regional.RegionSamplerUtil;
 import com.github.namrufus.harvest_time.regional.RegionalGenerator;
+import com.github.namrufus.harvest_time.regional.region.RegionState;
 import com.github.namrufus.harvest_time.seasonal.SeasonalCalendar;
-import com.github.namrufus.harvest_time.seasonal_growth.SeasonalGrowthListener;
-import com.github.namrufus.harvest_time.util.PlayerTimerSystem;
+import com.github.namrufus.harvest_time.seasonal.SeasonalConfiguration;
+import com.github.namrufus.harvest_time.util.PlayerInteractionDelayer;
+import com.github.namrufus.harvest_time.util.configuration.ConfigurationLoader;
 
 public class HarvestTime extends JavaPlugin {
 	ConfigurationLoader configurationLoader;
@@ -71,7 +71,7 @@ public class HarvestTime extends JavaPlugin {
 	    regionalGenerator = new RegionalGenerator(configurationLoader.getRegionalConfiguration());
 	    
 	    // -- Initialize player timer system --------------------------------------------------------------------------
-		PlayerTimerSystem playerTimerSystem = new PlayerTimerSystem();   
+		PlayerInteractionDelayer playerInteractionDelayer = new PlayerInteractionDelayer();   
 	    
 		// -- Initialize listeners ------------------------------------------------------------------------------------
 		
@@ -80,14 +80,14 @@ public class HarvestTime extends JavaPlugin {
 		this.getServer().getPluginManager().registerEvents(bonemealDisabledListener, this);
 		
 		// farmland creation listener
-		FarmlandCreationListener farmlandListener = new FarmlandCreationListener(playerTimerSystem, configurationLoader.getFarmlandCreationConfiguration());
+		FarmlandCreationListener farmlandListener = new FarmlandCreationListener(playerInteractionDelayer, configurationLoader.getFarmlandCreationConfiguration());
 		this.getServer().getPluginManager().registerEvents(farmlandListener, this);
 	
 		// crop seasonal growth listener
 		SeasonalGrowthListener seasonalGrowthListener = new SeasonalGrowthListener(configurationLoader.getInteractionConfiguration(),
 				                                                                configurationLoader.getTendingConfiguration(),
 				                                                                configurationLoader.getSeasonalCropListConfiguration(),
-				                                                                regionalGenerator, seasonalCalendar, playerTimerSystem);
+				                                                                regionalGenerator, seasonalCalendar, playerInteractionDelayer);
 		this.getServer().getPluginManager().registerEvents(seasonalGrowthListener, this);
 	}
 	
