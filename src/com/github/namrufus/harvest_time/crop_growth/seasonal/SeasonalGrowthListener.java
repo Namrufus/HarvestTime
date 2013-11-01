@@ -115,7 +115,7 @@ public class SeasonalGrowthListener implements Listener {
 			
 			player.sendMessage("§7" + "[Harvest Time] Crop: " + "§8"/*dark grey*/ + blockMaterial.toString());
 			cropGrowthConfiguration.getCustomYieldConfiguration().displayState(player, block, regionalGenerator);
-			player.sendMessage("§7" + "[Harvest Time]   §3Total Yield: " + "§b"/*dark grey*/ + targetYield);
+			player.sendMessage("§7" + "[Harvest Time]   §3Total Yield: " + "§b" + String.format("%.2f", targetYield));
 			
 		// .. seasonal crop tending and custom yield ..................................................................
 		} else if (tendingConfiguration.isTendingTool(toolMaterial)) {
