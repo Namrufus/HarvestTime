@@ -11,9 +11,6 @@ import com.github.namrufus.harvest_time.util.configuration.BiomeAliasesConfigura
 // records the growth parameters of a crop type and handles checking for allowed growth
 
 public class CropSeasonalGrowthConfiguration {
-	
-	private boolean requiresSunlight;
-
 	// the seasonal day index on which plant growth starts
 	private int startDay;
 	// the maximum difference in growth for which a plant will be viable for growth
@@ -25,8 +22,6 @@ public class CropSeasonalGrowthConfiguration {
 	
 	// ================================================================================================================
 	public CropSeasonalGrowthConfiguration(ConfigurationSection config, FreshWaterConfiguration freshWaterConfiguration, RegionalConfiguration regionalConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {
-		requiresSunlight = config.getBoolean("requires_sunlight");
-		
 		startDay = config.getInt("start_day");
 		maxStageDifference = config.getInt("max_stage_difference");
 		
@@ -38,7 +33,6 @@ public class CropSeasonalGrowthConfiguration {
 	}
 	
 	// ================================================================================================================
-	public boolean doesRequiresSunlight() { return requiresSunlight; }
 	public int getStartDay() { return startDay; }
 	
 	public boolean hasCustomYield() { return hasCustomYield; }
@@ -85,7 +79,6 @@ public class CropSeasonalGrowthConfiguration {
 	// ----------------------------------------------------------------------------------------------------------------
 	public void dump(Logger log) {
 		log.info("CropSeasonalGrowthConfiguration: ");
-		log.info("  requiresSunlight: "+requiresSunlight);
 		log.info("  startDay: "+startDay);
 		log.info("  maxStageDifference: "+maxStageDifference);
 		log.info("  hasCustomYield: "+hasCustomYield);

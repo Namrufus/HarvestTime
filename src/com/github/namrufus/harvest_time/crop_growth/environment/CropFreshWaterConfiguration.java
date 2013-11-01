@@ -9,19 +9,26 @@ import org.bukkit.configuration.ConfigurationSection;
 public class CropFreshWaterConfiguration {
 	// multiplier if this crop is exposed to fresh water
 	private FreshWaterConfiguration freshWaterConfiguration;
-	private double multiplier;
+	private double irrigationMultiplier;
+	private double rainfallMultiplier;
 	
 	public CropFreshWaterConfiguration(ConfigurationSection config, FreshWaterConfiguration freshWaterConfiguration) {
 		this.freshWaterConfiguration = freshWaterConfiguration;
-		multiplier = config.getDouble("multiplier");
+		irrigationMultiplier = config.getDouble("irrigation_multiplier");
+		rainfallMultiplier = config.getDouble("rainfall_multiplier");
 	}
 	
 	// ============================================================================================
-	public double getMultiplier(Block block) {
-		// if the block is exposed to fresh water, then use the multiplier
-		// if not, simply return 100%
-		if (freshWaterConfiguration.hasFreshWater(block))
-			return multiplier;
+	public double getRainfallMultiplier(Block block) {
+		if (freshWaterConfiguration.hasRainfallFreshWater(block))
+			return rainfallMultiplier;
+		else
+			return 1.0;
+	}
+	
+	public double getIrrigationMultiplier(Block block) {
+		if (freshWaterConfiguration.hasBiomeFreshWater(block))
+			return irrigationMultiplier;
 		else
 			return 1.0;
 	}
@@ -29,6 +36,7 @@ public class CropFreshWaterConfiguration {
 	// --------------------------------------------------------------------------------------------
 	public void dump(Logger log) {
 		log.info("  CropFreshWaterConfiguration:");
-		log.info("    multiplier: "+multiplier);
+		log.info("    irrigationMultiplier: " + irrigationMultiplier);
+		log.info("    rainfallMultiplier: " + rainfallMultiplier);
 	}
 }

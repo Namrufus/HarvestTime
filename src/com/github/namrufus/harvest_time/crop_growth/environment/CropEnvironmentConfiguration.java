@@ -11,6 +11,9 @@ import com.github.namrufus.harvest_time.regional.RegionalGenerator;
 import com.github.namrufus.harvest_time.util.configuration.BiomeAliasesConfiguration;
 
 public class CropEnvironmentConfiguration {
+	private boolean sunlightEnabled;
+	private CropSunlightConfiguration sunlightConfiguration;
+	
 	private boolean freshWaterEnabled;
 	private CropFreshWaterConfiguration freshWaterConfiguration;
 	
@@ -25,6 +28,12 @@ public class CropEnvironmentConfiguration {
 	
 	public CropEnvironmentConfiguration(ConfigurationSection config, FreshWaterConfiguration baseFreshWaterConfiguration, RegionalConfiguration baseRegionalConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {
 		// each environment modifier section is optional
+		sunlightEnabled = config.isSet("sunlight");
+		if (sunlightEnabled)
+			sunlightConfiguration = new CropSunlightConfiguration(config.getConfigurationSection("sunlight"));
+		else
+			sunlightConfiguration = null;
+		
 		freshWaterEnabled = config.isSet("fresh_water");
 		if (freshWaterEnabled)
 			freshWaterConfiguration = new CropFreshWaterConfiguration(config.getConfigurationSection("fresh_water"), baseFreshWaterConfiguration);
@@ -54,8 +63,14 @@ public class CropEnvironmentConfiguration {
 	public double getMultiplier(Block block, RegionalGenerator regionalGenerator) {
 		double multiplier = 1.0;
 		
-		if (freshWaterEnabled)
-			multiplier *= freshWaterConfiguration.getMultiplier(block);
+		if (sunlightEnabled) {
+			multiplier *= sunlightConfiguration.getMultiplier(block);
+		}
+		
+		if (freshWaterEnabled) {
+			multiplier *= freshWaterConfiguration.getIrrigationMultiplier(block);
+			multiplier *= freshWaterConfiguration.getRainfallMultiplier(block);
+		}
 		
 		if (fertilizerBlockEnabled)
 			multiplier *= fertilizerBlockConfiguration.getMultiplier(block);
@@ -71,6 +86,8 @@ public class CropEnvironmentConfiguration {
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	public void dump(Logger log) {
+		if (sunlightEnabled)
+			sunlightConfiguration.dump(log);
 		if (freshWaterEnabled)
 			freshWaterConfiguration.dump(log);
 		if (fertilizerBlockEnabled)
@@ -82,10 +99,20 @@ public class CropEnvironmentConfiguration {
 	}
 	
 	public void displayState(Player player, Block block, RegionalGenerator regionalGenerator) {
+		if (sunlightEnabled) {
+			double sunlightMultiplier = sunlightConfiguration.getMultiplier(block);
+			if (sunlightMultiplier != 1.0)
+				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]  Sunlight: " + "§8"/*dark grey*/ + "x" + percentageFormat(sunlightMultiplier));
+		}
+		
 		if (freshWaterEnabled) {
-			double multiplier = freshWaterConfiguration.getMultiplier(block);
-			if (multiplier != 1.0)
-				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Fresh Water: " + "§8"/*dark grey*/ + "x" + percentageFormat(multiplier));
+			double irrigationMultiplier = freshWaterConfiguration.getIrrigationMultiplier(block);
+			if (irrigationMultiplier != 1.0)
+				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Fresh Water Irrigation: " + "§8"/*dark grey*/ + "x" + percentageFormat(irrigationMultiplier));
+			
+			double rainfallMultiplier = freshWaterConfiguration.getRainfallMultiplier(block);
+			if (rainfallMultiplier != 1.0)
+				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Rainfall: " + "§8"/*dark grey*/ + "x" + percentageFormat(rainfallMultiplier));
 		}
 		
 		if (biomeEnabled) {

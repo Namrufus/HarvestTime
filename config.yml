@@ -153,7 +153,6 @@ harvest_time:
   # == crop listings =======================================
   seasonal_crop_list:
     block_CROPS:
-      requires_sunlight: true
       start_day: 3
       max_stage_difference: 2
 
@@ -162,8 +161,13 @@ harvest_time:
       custom_yield:
         base_yield: 0.25
 
-        fresh_water:
+        sunlight:
+          min_sunlight_level: 15
           multiplier: 4.0
+
+        fresh_water:
+          irrigation_multiplier: 2.0
+          rainfall_multiplier: 2.0
 
         regional:
           nutrients: FAIR
@@ -186,15 +190,19 @@ harvest_time:
           SKY: 0.125
 
     block_CARROT:
-      requires_sunlight: true
       start_day: 3
       max_stage_difference: 1
 
       custom_yield:
         base_yield: 0.25
 
-        fresh_water:
+        sunlight:
+          min_sunlight_level: 15
           multiplier: 4.0
+
+        fresh_water:
+          irrigation_multiplier: 2.0
+          rainfall_multiplier: 2.0
 
         regional:
           nutrients: FAIR
@@ -218,7 +226,6 @@ harvest_time:
           SKY: 0.0
 
     block_POTATO:
-      requires_sunlight: true
       start_day: 3
       max_stage_difference: 3
 
@@ -227,8 +234,13 @@ harvest_time:
       custom_yield:
         base_yield: 0.5
 
+        sunlight:
+          min_sunlight_level: 15
+          multiplier: 4.0
+
         fresh_water:
-          multiplier: 2.0
+          irrigation_multiplier: 2.0
+          rainfall_multiplier: 2.0
 
         regional:
           nutrients: FAIR
@@ -252,7 +264,6 @@ harvest_time:
 
     # --------------------------------------------------------
     block_PUMPKIN_STEM:
-      requires_sunlight: true
       start_day: 5
       max_stage_difference: 2
 
@@ -261,8 +272,13 @@ harvest_time:
       custom_yield:
         base_yield: 0.25
 
-        fresh_water:
+        sunlight:
+          min_sunlight_level: 15
           multiplier: 4.0
+
+        fresh_water:
+          irrigation_multiplier: 2.0
+          rainfall_multiplier: 2.0
 
         regional:
           nutrients: FOUL
@@ -285,7 +301,6 @@ harvest_time:
           SKY: 0.0
 
     block_MELON_STEM:
-      requires_sunlight: true
       start_day: 5
       max_stage_difference: 2
 
@@ -294,8 +309,13 @@ harvest_time:
       custom_yield:
         base_yield: 0.125
 
+        sunlight:
+          min_sunlight_level: 15
+          multiplier: 4.0
+
         fresh_water:
-            multiplier: 8.0
+          irrigation_multiplier: 4.0
+          rainfall_multiplier: 2.0
 
         regional:
           nutrients: FAIR
@@ -320,17 +340,21 @@ harvest_time:
 
     # --------------------------------------------------------
     block_NETHER_WARTS:
-      requires_sunlight: true
       start_day: 10
       max_stage_difference: 2
 
       base_tending_time: 5.0
 
       custom_yield:
-        base_yield: 0.5
+        base_yield: 0.125
+
+        sunlight:
+          min_sunlight_level: 15
+          multiplier: 4.0
 
         fresh_water:
-          multiplier: 2.0
+          irrigation_multiplier: 2.0
+          rainfall_multiplier: 4.0
 
         fertilizer_block:
           block_type: SOUL_SAND
@@ -350,7 +374,6 @@ harvest_time:
           HELL: 0.75
 
     block_COCOA:
-      requires_sunlight: true
       start_day: 7
       max_stage_difference: 2
 
@@ -359,8 +382,13 @@ harvest_time:
       custom_yield:
         base_yield: 0.125
 
+        sunlight:
+          min_sunlight_level: 15
+          multiplier: 4.0
+
         fresh_water:
-          multiplier: 8.0
+          irrigation_multiplier: 1.0
+          rainfall_multiplier: 8.0
 
         fertilizer_block:
           block_type: VINE
@@ -383,16 +411,13 @@ harvest_time:
     # == CHANCE GROWTH =====================================
     # -- blocks --------------------------------------------
     block_MELON_BLOCK:
-      requires_sunlight: false
       base_chance: 0.0
 
     block_PUMPKIN:
-      requires_sunlight: false
       base_chance: 0.0
 
     # -- trees ---------------------------------------------
-    tree_TREE:
-      requires_sunlight: true
+    tree_OAK:
       base_chance: 1.0
   
     # -- breeding ------------------------------------------
