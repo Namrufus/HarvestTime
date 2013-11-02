@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.namrufus.harvest_time.bonemeal.BonemealDisabledListener;
+import com.github.namrufus.harvest_time.crop_growth.chance.ChanceGrowthListener;
 import com.github.namrufus.harvest_time.crop_growth.seasonal.SeasonalGrowthListener;
 import com.github.namrufus.harvest_time.farmland.FarmlandCreationListener;
 import com.github.namrufus.harvest_time.regional.RegionSamplerUtil;
@@ -89,6 +90,12 @@ public class HarvestTime extends JavaPlugin {
 				                                                                configurationLoader.getSeasonalCropListConfiguration(),
 				                                                                regionalGenerator, seasonalCalendar, playerInteractionDelayer);
 		this.getServer().getPluginManager().registerEvents(seasonalGrowthListener, this);
+		
+		// crop chance growth listener
+		ChanceGrowthListener chanceGrowthListener = new ChanceGrowthListener(configurationLoader.getInteractionConfiguration(),
+																			 configurationLoader.getChanceCropListConfiguration(),
+																			 regionalGenerator, this.getLogger());
+		this.getServer().getPluginManager().registerEvents(chanceGrowthListener, this);
 	}
 	
 	// ================================================================================================================

@@ -11,7 +11,7 @@ import com.github.namrufus.harvest_time.util.configuration.ConfigUtil;
 
 public class CropDirectory<K> {
 	protected static enum CropType {
-		BLOCK, TREE, BREEDING, EGG_LAYING, EGG_HATCHING, FISHING;
+		BLOCK, TREE, BREEDING, EGG_HATCHING, FISHING;
 	}
 	protected static class CropIdentifier {
 		private CropType type;
@@ -37,6 +37,10 @@ public class CropDirectory<K> {
 			if (other.type != this.type)
 				return false;
 			
+			if (this.payload == null && other.payload == null)
+				return true;
+			if (this.payload == null || other.payload == null)
+				return false;
 			return this.payload.equals(other.payload);
 		}
 		
@@ -90,8 +94,6 @@ public class CropDirectory<K> {
 				return null;
 			
 			return new CropIdentifier(CropType.BREEDING, entityType);
-		} else if (cropName.equals("egg_laying")) {
-			return new CropIdentifier(CropType.EGG_LAYING);
 		} else if (cropName.equals("egg_hatching")) {
 			return new CropIdentifier(CropType.EGG_HATCHING);
 		} else if (cropName.equals("fishing")) {
@@ -105,7 +107,6 @@ public class CropDirectory<K> {
 	private CropIdentifier blockIdentifier(Material blockMaterial) { return new CropIdentifier(CropType.BLOCK, blockMaterial); }
 	private CropIdentifier treeIdentifier(TreeGrowthType treeGrowthType) { return new CropIdentifier(CropType.TREE, treeGrowthType); }
 	private CropIdentifier breedingIdentifier(EntityType entityType) { return new CropIdentifier(CropType.BREEDING, entityType); }
-	private CropIdentifier eggLayingIdentifier() { return new CropIdentifier(CropType.EGG_LAYING); }
 	private CropIdentifier eggHatchingIdentifier() { return new CropIdentifier(CropType.EGG_HATCHING); }
 	private CropIdentifier fishingIdentifier() { return new CropIdentifier(CropType.FISHING); }
 	
@@ -113,7 +114,6 @@ public class CropDirectory<K> {
 	public boolean containsBlockCrop(Material material) { return crops.containsKey(blockIdentifier(material)); }
 	public boolean containsTreeCrop(TreeGrowthType treeGrowthType) { return crops.containsKey(treeIdentifier(treeGrowthType)); }
 	public boolean containsBreedingCrop(EntityType entityType) { return crops.containsKey(breedingIdentifier(entityType)); }
-	public boolean containsEggLayingCrop() { return crops.containsKey(eggLayingIdentifier()); }
 	public boolean containsEggHatchingCrop() { return crops.containsKey(eggHatchingIdentifier()); }
 	public boolean containsFishingCrop() { return crops.containsKey(fishingIdentifier()); }
 	
@@ -137,7 +137,6 @@ public class CropDirectory<K> {
 	public void putBlockCrop(Material material, K value) { crops.put(blockIdentifier(material), value); }
 	public void putTreeCrop(TreeGrowthType treeGrowthType, K value) { crops.put(treeIdentifier(treeGrowthType), value); }
 	public void putBreedingCrop(EntityType entityType, K value) { crops.put(breedingIdentifier(entityType), value); }
-	public void putEggLayingCrop(K value) { crops.put(eggLayingIdentifier(), value); }
 	public void putEggHatchingCrop(K value) { crops.put(eggHatchingIdentifier(), value); }
 	public void putFishingCrop(K value) { crops.put(fishingIdentifier(), value); }
 	
@@ -154,7 +153,6 @@ public class CropDirectory<K> {
 	public K getBlockCrop(Material material) { return crops.get(blockIdentifier(material)); }
 	public K getTreeCrop(TreeGrowthType treeGrowthType) { return crops.get(treeIdentifier(treeGrowthType)); }
 	public K getBreedingCrop(EntityType entityType) { return crops.get(breedingIdentifier(entityType)); }
-	public K getEggLayingCrop() { return crops.get(eggLayingIdentifier());}
 	public K getEggHatchingCrop() { return crops.get(eggHatchingIdentifier()); }
 	public K getFishingCrop() { return crops.get(fishingIdentifier()); }
 }

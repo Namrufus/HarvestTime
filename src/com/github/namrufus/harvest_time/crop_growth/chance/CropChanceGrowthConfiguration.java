@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 
 import com.github.namrufus.harvest_time.crop_growth.environment.CropEnvironmentConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.FreshWaterConfiguration;
@@ -24,11 +25,12 @@ public class CropChanceGrowthConfiguration {
 	}
 	
 	// ================================================================================================================
+	public double getGrowthChance(Block block, RegionalGenerator regionalGenerator) {
+		return baseChance * cropEnvironmentConfiguration.getMultiplier(block, regionalGenerator);
+	}
+	
 	public boolean growthSucceeds(Block block, RegionalGenerator regionalGenerator) {
-		double chance = baseChance;
-		chance *= cropEnvironmentConfiguration.getMultiplier(block, regionalGenerator);
-		
-		return Math.random() < chance;
+		return Math.random() < getGrowthChance(block, regionalGenerator);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -36,5 +38,11 @@ public class CropChanceGrowthConfiguration {
 		log.info("CropChanceGrowthConfiguration:");
 		log.info("  baseChance: " + baseChance);
 		cropEnvironmentConfiguration.dump(log);
+	}
+	
+	public void displayState(Player player, Block block, RegionalGenerator regionalGenerator) {
+		player.sendMessage("§7[Harvest Time] Base Chance: §8" + String.format("%.2f%%", 100.0 * baseChance));
+		cropEnvironmentConfiguration.displayState(player, block, regionalGenerator);
+		player.sendMessage("§7" + "[Harvest Time]   §3Total Chance: " + "§b" + String.format("%.2f%%", 100.0 * getGrowthChance(block, regionalGenerator)));
 	}
 }

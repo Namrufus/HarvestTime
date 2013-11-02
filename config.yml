@@ -418,9 +418,80 @@ harvest_time:
 
     # -- trees ---------------------------------------------
     tree_OAK:
-      base_chance: 1.0
+      base_chance: 0.25
+
+      sunlight:
+        min_sunlight_level: 15
+        multiplier: 4.0
+
+      fresh_water:
+        irrigation_multiplier: 2.0
+        rainfall_multiplier: 2.0
+
+      regional:
+        nutrients: FAIR
+        ph: NEUTRAL
+        compactness: NONE
+
+      biome:
+        DEFAULT: 0.125
+        temperate_forest: 1.0
+        cold_forest: 0.75
+        sky: 0.125
+
+    tree_RED_MUSHROOM:
+      base_chance: 0.5
+
+      biome:
+        DEFAULT: 0.0
+        mushroom: 1.0
+        HELL: 1.0
   
     # -- breeding ------------------------------------------
-        
+    breeding_SHEEP:
+      base_chance: 0.25
+
+      sunlight:
+        min_sunlight_level: 15
+        multiplier: 4.0
+
+      regional:
+        nutrients: FAIR
+        ph: NEUTRAL
+        compactness: NONE
+
+      biome:
+        DEFAULT: 0.125
+        temperate_mountain: 1.0
+        cold_mountain: 0.75
+        sky: 0.125
+
+    breeding_CHICKEN:
+      base_chance: 0.25
+
+      sunlight:
+        min_sunlight_level: 15
+        multiplier: 4.0
+
+      regional:
+        nutrients: FAIR
+        ph: NEUTRAL
+        compactness: NONE
+
+      biome:
+        DEFAULT: 0.125
+        temperate_mountain: 1.0
+        cold_mountain: 0.75
+        sky: 0.125
+
     # -- eggs ----------------------------------------------
+    egg_hatching:
+      base_chance: 0.0
+
     # -- fishing -------------------------------------------
+    fishing:
+      base_chance: 1.0
+
+      biome:
+        DEFAULT: 0.0
+        water: 1.0

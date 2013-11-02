@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.TreeType;
+import org.bukkit.block.Block;
 import org.bukkit.material.MaterialData;
 
 public enum TreeGrowthType {
@@ -30,15 +31,24 @@ public enum TreeGrowthType {
 		}
 	}
 	
-	public static boolean hasTreeGrowthType(Material material, int data) {
+	private static MaterialData getMaterialData(Block block) {
+		Material material = block.getType();
+		// mask out all but the bottom 3 bits (sapling type)
+		int data;
+		if (material == Material.SAPLING)
+			data = block.getData() & 0x07;
+		else
+			data = block.getData();
+		
 		MaterialData materialData = new MaterialData(material);
 		materialData.setData((byte) data);
-		return byMaterial.containsKey(materialData);
+		return materialData;
 	}
-	public static TreeGrowthType getTreeGrowthType(Material material, int data) {
-		MaterialData materialData = new MaterialData(material);
-		materialData.setData((byte) data);
-		return byMaterial.get(materialData);
+	public static boolean hasTreeGrowthType(Block block) {
+		return byMaterial.containsKey(getMaterialData(block));
+	}
+	public static TreeGrowthType getTreeGrowthType(Block block) {
+		return byMaterial.get(getMaterialData(block));
 	}
 	
 	public static boolean hasTreeGrowthType(TreeType treeType) {
