@@ -55,7 +55,7 @@ public class ChanceGrowthListener implements Listener {
 		
 		if (!cropConfiguration.growthSucceeds(block, regionalGenerator)) {
 			event.setCancelled(true);
-			log.info("crop chance growth event canceled: " + blockMaterial + " " + block.getLocation());
+			log.finest("crop chance growth event canceled: " + blockMaterial + " " + block.getLocation());
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class ChanceGrowthListener implements Listener {
 		
 		if (!cropConfiguration.growthSucceeds(event.getLocation().getBlock(), regionalGenerator)) {
 			event.setCancelled(true);
-			log.info("crop chance growth event canceled: " + treeGrowthType + " " + event.getLocation());
+			log.finest("crop chance growth event canceled: " + treeGrowthType + " " + event.getLocation());
 		}
 	}
 	
@@ -93,7 +93,7 @@ public class ChanceGrowthListener implements Listener {
 			
 			if (!cropConfiguration.growthSucceeds(event.getLocation().getBlock(), regionalGenerator)) {
 				event.setCancelled(true);
-				log.info("crop chance growth event canceled: " + "egg hatching" + " " + event.getLocation());
+				log.finest("crop chance growth event canceled: " + "egg hatching" + " " + event.getLocation());
 			}
 		} else if (event.getSpawnReason() == SpawnReason.BREEDING) {
 			EntityType entityType = event.getEntityType();
@@ -106,7 +106,7 @@ public class ChanceGrowthListener implements Listener {
 			
 			if (!cropConfiguration.growthSucceeds(event.getLocation().getBlock(), regionalGenerator)) {
 				event.setCancelled(true);
-				log.info("crop chance growth event canceled: " + entityType + " " + event.getLocation());
+				log.finest("crop chance growth event canceled: " + entityType + " " + event.getLocation());
 			}
 		}
 	}
@@ -125,7 +125,7 @@ public class ChanceGrowthListener implements Listener {
 
 		if (!cropConfiguration.growthSucceeds(event.getCaught().getLocation().getBlock(), regionalGenerator)) {
 			event.setCancelled(true);
-			log.info("crop chance growth event canceled: " + "fishing" + " " + event.getCaught().getLocation());
+			log.finest("crop chance growth event canceled: " + "fishing" + " " + event.getCaught().getLocation());
 		}
 	}
 	
