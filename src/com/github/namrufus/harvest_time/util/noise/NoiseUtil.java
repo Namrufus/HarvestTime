@@ -1,4 +1,4 @@
-package com.github.namrufus.harvest_time.regional.noise;
+package com.github.namrufus.harvest_time.util.noise;
 
 public class NoiseUtil {
 	// fade function that fades from 0 to 1 over input 0 to 1

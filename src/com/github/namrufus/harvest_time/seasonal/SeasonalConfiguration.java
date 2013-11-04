@@ -11,10 +11,11 @@ public class SeasonalConfiguration {
 	
 	private int daysInSeasonalYear;
 	
-	boolean rainfallControlEnabled;
-	double mildFrequency, mildRainfallChance;
-	double droughtFrequency, droughtRainfallChance;
-	double monsoonFrequency, monsoonRainfallChance;
+	private boolean rainfallControlEnabled;
+	private String seed;
+	private double mildFrequency, mildRainfallChance;
+	private double droughtFrequency, droughtRainfallChance;
+	private double monsoonFrequency, monsoonRainfallChance;
 	
 	public SeasonalConfiguration(ConfigurationSection config, Logger LOG) {
 		// seasonal_growth config
@@ -23,6 +24,8 @@ public class SeasonalConfiguration {
 		// seasonal rainfall control config
 		ConfigurationSection rainfallConfig = config.getConfigurationSection("rainfall_control");
 		rainfallControlEnabled = rainfallConfig.getBoolean("enabled");
+		
+		seed = rainfallConfig.getString("seed");
 		
 		mildFrequency = rainfallConfig.getDouble("MILD.frequency");
 		mildRainfallChance = rainfallConfig.getDouble("MILD.rainfall_chance");
@@ -37,23 +40,25 @@ public class SeasonalConfiguration {
 	// ================================================================================================================
 	public int getDaysInSeasonalYear() { return daysInSeasonalYear; }
 	
-	public RainfallType sampleNewRainfallType() {
-		double r = Math.random();
-		
+	public boolean isRainfallControlEnabled() { return rainfallControlEnabled; }
+	
+	public String getRainfallSeed() { return seed; }
+	
+	// given a unformly random number from the range [0, 1] return a distribution
+	// of rainfall states 
+	public RainfallType sampleNewRainfallType(double r) {	
 		// normalize
 		r *= mildFrequency + droughtFrequency + monsoonFrequency;
 		
 		if (r < mildFrequency)
 			return RainfallType.MILD;
-		else if (r < droughtFrequency)
+		else if (r < droughtFrequency + mildFrequency)
 			return RainfallType.DROUGHT;
 		else /* r < monsoonFrequency */
 			return RainfallType.MONSOON;
 	}
 	
-	public boolean sampleIsRaining(RainfallType rainfallType) {
-		double r = Math.random();
-		
+	public boolean sampleIsRaining(RainfallType rainfallType, double r) {	
 		if (rainfallType == RainfallType.MILD)
 			return r < mildRainfallChance;
 		else if (rainfallType == RainfallType.DROUGHT)
@@ -69,6 +74,8 @@ public class SeasonalConfiguration {
 		LOG.info("  daysInSeasonalYear: " + daysInSeasonalYear);
 		
 		LOG.info("  rainfallControlEnabled: " + rainfallControlEnabled);
+		
+		LOG.info("  seed: " + seed);
 		
 		LOG.info("  mildFrequency: " + mildFrequency);
 		LOG.info("  mildRainfallChance: " + mildRainfallChance);

@@ -19,6 +19,10 @@ permissions:
     description: allows use of commands that modify plugin time
     default: op
 
+  harvest_time.rain_check:
+    description: allows use of commands that check the plugin rain state
+    default: op
+
 commands:
   ht-config-dump:
     permission: harvest_time.config_dump
@@ -64,3 +68,13 @@ commands:
     permission: harvest_time.time_change
     description: move the current plugin-time (negative to move backwards in time). Updates timestamp file.
     usage: /ht-timemove increment {minutes, hours, days, weeks}
+
+  ht-rain-check:
+    permission: harvest_time.rain_check
+    description: check the current target rain state for the seasonal rainfall control system
+    usage: /ht-rain-check
+
+  ht-rain-climate-check:
+    permission: harvest_time.rain_check
+    description: check the current rain climate (drought, mild, monsoon)
+    usage: /ht-rain-climate-check

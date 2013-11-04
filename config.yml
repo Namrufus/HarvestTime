@@ -20,15 +20,16 @@ harvest_time:
     days_in_seasonal_year: 16
     rainfall_control:
       enabled: true
+      seed: Mt.Augusta
       MILD:
         frequency: 0.50
-        rainfall_chance: 0.25
+        rainfall_chance: 0.5
       DROUGHT:
         frequency: 0.25
-        rainfall_chance: 0.0625
+        rainfall_chance: 0.125
       MONSOON:
         frequency: 0.25
-        rainfall_chance: 0.75
+        rainfall_chance: 0.875
 
   # == farmland and harvesting =============================
   # -- farmland creation -----------------------------------

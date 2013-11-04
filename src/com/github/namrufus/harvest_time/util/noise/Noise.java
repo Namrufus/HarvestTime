@@ -1,6 +1,7 @@
-package com.github.namrufus.harvest_time.regional.noise;
+package com.github.namrufus.harvest_time.util.noise;
 
 import java.util.Random;
+
 
 // infinitely random Value Noise generator
 

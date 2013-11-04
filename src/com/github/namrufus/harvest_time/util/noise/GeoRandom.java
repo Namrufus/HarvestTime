@@ -1,4 +1,4 @@
-package com.github.namrufus.harvest_time.regional.noise;
+package com.github.namrufus.harvest_time.util.noise;
 
 // This class represents a random number generator that generates random numbers based on inputed coordinates and a seed
 // the random number generation should be seeded, infinite (in practice), and non-symmetric.

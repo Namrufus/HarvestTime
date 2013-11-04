@@ -4,9 +4,9 @@ import java.util.Random;
 
 import org.bukkit.Location;
 
-import com.github.namrufus.harvest_time.regional.noise.Noise;
-import com.github.namrufus.harvest_time.regional.noise.Voronoi;
 import com.github.namrufus.harvest_time.regional.region.RegionState;
+import com.github.namrufus.harvest_time.util.noise.Noise;
+import com.github.namrufus.harvest_time.util.noise.Voronoi;
 
 public class RegionalGenerator {
 	private RegionalConfiguration regionalConfiguration;
