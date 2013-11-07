@@ -15,24 +15,7 @@ harvest_time:
       - SAPLING
       - COCOA
 
-  # == seasonal growth =====================================
-  seasonal:
-    days_in_seasonal_year: 16
-    rainfall_control:
-      enabled: true
-      seed: Mt.Augusta
-      MILD:
-        frequency: 0.50
-        rainfall_chance: 0.5
-      DROUGHT:
-        frequency: 0.25
-        rainfall_chance: 0.125
-      MONSOON:
-        frequency: 0.25
-        rainfall_chance: 0.875
-
-  # == farmland and harvesting =============================
-  # -- farmland creation -----------------------------------
+  # == farmland ============================================
   farmland_creation:
     enabled: true
  
@@ -45,6 +28,22 @@ harvest_time:
       IRON_HOE: 5.0
       DIAMOND_HOE: 3.0
       GOLD_HOE: 4.0
+
+  # == seasonal growth =====================================
+  seasonal:
+    days_in_seasonal_year: 20
+    rainfall_control:
+      enabled: true
+      seed: Mt.Augusta
+      MILD:
+        frequency: 0.50
+        rainfall_chance: 0.5
+      DROUGHT:
+        frequency: 0.25
+        rainfall_chance: 0.125
+      MONSOON:
+        frequency: 0.25
+        rainfall_chance: 0.875
 
   # -- seasonal crop tending -------------------------------
   tending:
@@ -141,24 +140,26 @@ harvest_time:
     temperate_grassland: [PLAINS]
     temperate_forest: [FOREST, FOREST_HILLS]
     temperate_mountain: [EXTREME_HILLS, SMALL_MOUNTAINS]
-    temperate_wet: [SWAMPLAND, BEACH]
+    temperate_swamp: [SWAMPLAND]
 
     tropical_desert: [DESERT, DESERT_HILLS]
     tropical_rainforest: [JUNGLE, JUNGLE_HILLS]
 
     water: [OCEAN, FROZEN_OCEAN, RIVER, FROZEN_RIVER]
+    beach: [BEACH]
 
     mushroom: [MUSHROOM_ISLAND, MUSHROOM_SHORE]
-    alien: [HELL, SKY]
+    hell: [HELL]
+    sky: [SKY]
 
   # == crop listings =======================================
   seasonal_crop_list:
     block_CROPS:
-      start_day: 3
+      start_day: 4
       max_stage_difference: 2
 
       custom_yield:
-        base_yield: 0.03125
+        base_yield: 0.0625
 
         sunlight:
           min_sunlight_level: 15
@@ -166,8 +167,8 @@ harvest_time:
           multiplier: 4.0
 
         fresh_water:
-          irrigation_multiplier: 2.0
-          rainfall_multiplier: 2.0
+          irrigation_multiplier: 4.0
+          rainfall_multiplier: 4.0
 
         regional:
           nutrients: FAIR
@@ -178,23 +179,69 @@ harvest_time:
           cold_grassland: 0.125
           cold_forest: 0.125
           cold_mountain: 0.125
+
           temperate_grassland: 1.0
           temperate_forest: 0.75
           temperate_mountain: 0.125
-          temperate_wet: 0.125
+          temperate_swamp: 0.125
+
           tropical_desert: 0.75
           tropical_rainforest: 0.125
-          water: 0.0
-          mushroom: 0.125
+
+          water: 0.125
+          beach: 0.125
+
+          mushroom: 0.0
           HELL: 0.0
-          SKY: 0.125
+          SKY: 0.0
 
     block_CARROT:
-      start_day: 3
+      start_day: 8
       max_stage_difference: 1
 
       custom_yield:
-        base_yield: 0.03125
+        base_yield: 0.0625
+
+        sunlight:
+          min_sunlight_level: 15
+          glowstone_lighting_enabled: true
+          multiplier: 4.0
+
+        fresh_water:
+          irrigation_multiplier: 4.0
+          rainfall_multiplier: 4.0
+
+        regional:
+          nutrients: FAIR
+          ph: ACIDIC
+          compactness: COMPACT
+
+        biome:
+          cold_grassland: 0.125
+          cold_forest: 0.125
+          cold_mountain: 0.125
+
+          temperate_grassland: 0.75
+          temperate_forest: 1.0
+          temperate_mountain: 0.125
+          temperate_swamp: 0.125
+
+          tropical_desert: 0.125
+          tropical_rainforest: 0.75
+
+          water: 0.125
+          beach: 0.125
+
+          mushroom: 0.0
+          HELL: 0.0
+          SKY: 0.0
+
+    block_POTATO:
+      start_day: 8
+      max_stage_difference: 3
+
+      custom_yield:
+        base_yield: 0.125
 
         sunlight:
           min_sunlight_level: 15
@@ -207,68 +254,36 @@ harvest_time:
 
         regional:
           nutrients: FAIR
-          ph: ACIDIC
-          compactness: COMPACT
-
-        biome:
-          cold_grassland: 0.125
-          cold_forest: 0.125
-          cold_mountain: 0.125
-          temperate_grassland: 0.125
-          temperate_forest: 0.5
-          temperate_mountain: 0.125
-          SWAMPLAND: 0.75
-          BEACH: 0.125
-          tropical_desert: 0.125
-          tropical_rainforest: 1.0
-          water: 0.0
-          mushroom: 0.125
-          HELL: 0.0
-          SKY: 0.0
-
-    block_POTATO:
-      start_day: 3
-      max_stage_difference: 3
-
-      custom_yield:
-        base_yield: 0.03125
-
-        sunlight:
-          min_sunlight_level: 15
-          glowstone_lighting_enabled: true
-          multiplier: 4.0
-
-        fresh_water:
-          irrigation_multiplier: 2.0
-          rainfall_multiplier: 4.0
-
-        regional:
-          nutrients: FAIR
           ph: NEUTRAL
-          compactness: NONE
+          compactness: LOOSE
 
         biome:
           cold_grassland: 0.125
           cold_forest: 0.125
           cold_mountain: 0.75
-          temperate_grassland: 0.5
-          temperate_forest: 0.5
+
+          temperate_grassland: 0.75
+          temperate_forest: 0.75
           temperate_mountain: 1.0
-          temperate_wet: 0.125
+          temperate_swamp: 0.75
+
           tropical_desert: 0.125
           tropical_rainforest: 0.125
-          water: 0.0
-          mushroom: 0.125
+
+          water: 0.125
+          beach: 0.125
+
+          mushroom: 0.0
           HELL: 0.0
-          SKY: 0.25
+          SKY: 0.125
 
     # --------------------------------------------------------
     block_PUMPKIN_STEM:
-      start_day: 5
+      start_day: 8
       max_stage_difference: 2
 
       custom_yield:
-        base_yield: 0.25
+        base_yield: 0.0625
 
         sunlight:
           min_sunlight_level: 15
@@ -276,7 +291,7 @@ harvest_time:
           multiplier: 4.0
 
         fresh_water:
-          irrigation_multiplier: 2.0
+          irrigation_multiplier: 4.0
           rainfall_multiplier: 4.0
 
         regional:
@@ -287,24 +302,29 @@ harvest_time:
         biome:
           cold_grassland: 0.75
           cold_forest: 1.0
-          cold_mountain: 0.5
+          cold_mountain: 0.75
+
           temperate_grassland: 0.125
-          temperate_forest: 0.25
-          temperate_mountain: 0.25
-          temperate_wet: 0.125
+          temperate_forest: 0.75
+          temperate_mountain: 0.125
+          temperate_swamp: 0.125
+
           tropical_desert: 0.0
           tropical_rainforest: 0.0
+
           water: 0.0
+          beach: 0.0
+
           mushroom: 0.0
           HELL: 0.0
-          SKY: 0.0
+          SKY: 0.125
 
     block_MELON_STEM:
-      start_day: 5
+      start_day: 4
       max_stage_difference: 2
 
       custom_yield:
-        base_yield: 0.03125
+        base_yield: 0.0625
 
         sunlight:
           min_sunlight_level: 15
@@ -312,7 +332,7 @@ harvest_time:
           multiplier: 4.0
 
         fresh_water:
-          irrigation_multiplier: 2.0
+          irrigation_multiplier: 4.0
           rainfall_multiplier: 4.0
 
         regional:
@@ -324,25 +344,29 @@ harvest_time:
           cold_grassland: 0.0
           cold_forest: 0.0
           cold_mountain: 0.0
+
           temperate_grassland: 0.125
           temperate_forest: 0.125
-          temperate_mountain: 0.125
-          SWAMPLAND: 1.0
-          BEACH: 0.125
-          tropical_desert: 0.0
+          temperate_mountain: 0.0
+          temperate_swamp: 1.0
+
+          tropical_desert: 0.125
           tropical_rainforest: 0.75
+
           water: 0.0
-          mushroom: 0.125
+          beach: 0.0
+
+          mushroom: 0.0
           HELL: 0.0
           SKY: 0.0
 
     # --------------------------------------------------------
     block_NETHER_WARTS:
-      start_day: 10
+      start_day: 13
       max_stage_difference: 2
 
       custom_yield:
-        base_yield: 0.03125
+        base_yield: 0.0625
 
         sunlight:
           min_sunlight_level: 15
@@ -350,34 +374,34 @@ harvest_time:
           multiplier: 4.0
 
         fresh_water:
-          irrigation_multiplier: 2.0
+          irrigation_multiplier: 1.0
           rainfall_multiplier: 4.0
 
         fertilizer_block:
           block_type: STATIONARY_LAVA
           block_count: 16
           block_offset: 2
-          multiplier: 1.5
+          multiplier: 4.0
 
         regional:
           nutrients: FAIR
           ph: NEUTRAL
-          compactness: NONE
+          compactness: COMPACT
 
         biome:
           DEFAULT: 0.0
           tropical_rainforest: 0.125
-          mushroom: 1.0
-          HELL: 0.75
+          mushroom: 0.75
+          HELL: 1.0
 
     block_COCOA:
-      start_day: 7
+      start_day: 1
       max_stage_difference: 2
 
       base_tending_time: 5.0
 
       custom_yield:
-        base_yield: 0.125
+        base_yield: 0.0625
 
         sunlight:
           min_sunlight_level: 15
@@ -392,18 +416,17 @@ harvest_time:
           block_type: VINE
           block_count: 16
           block_offset: 1
-          multiplier: 1.5
+          multiplier: 4.0
 
         regional:
           nutrients: FAIR
           ph: NEUTRAL
-          compactness: NONE
+          compactness: COMPACT
 
         biome:
           DEFAULT: 0.0
           SWAMPLAND: 0.125
           tropical_rainforest: 1.0
-          mushroom: 0.125
     
   chance_crop_list:
     # == CHANCE GROWTH =====================================

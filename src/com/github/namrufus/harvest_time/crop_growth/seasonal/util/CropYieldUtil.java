@@ -48,8 +48,8 @@ public class CropYieldUtil {
 		
 		crops.put(Material.NETHER_WARTS, new CropYieldType(new Item[]{new Item(Material.NETHER_STALK, 0, 1.0)}, 3.5));
 		
-		crops.put(Material.MELON_STEM, new CropYieldType(new Item[]{new Item(Material.MELON, 0, 1.0)}, 1.0));
-		crops.put(Material.PUMPKIN_STEM, new CropYieldType(new Item[]{new Item(Material.PUMPKIN, 0, 1.0)}, 1.0));
+		crops.put(Material.MELON_STEM, new CropYieldType(new Item[]{new Item(Material.MELON, 0, 1.0)}, 0.0));
+		crops.put(Material.PUMPKIN_STEM, new CropYieldType(new Item[]{new Item(Material.PUMPKIN, 0, 1.0)}, 0.0));
 		
 		crops.put(Material.COCOA, new CropYieldType(new Item[]{new Item(Material.INK_SACK, DyeColor.BROWN.getDyeData(), 1.0)}, 1.5));
 	}
