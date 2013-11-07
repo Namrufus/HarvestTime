@@ -162,6 +162,7 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
+          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -197,6 +198,7 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
+          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -233,6 +235,7 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
+          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -269,6 +272,7 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
+          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -304,6 +308,7 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
+          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -341,6 +346,7 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
+          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -375,6 +381,7 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
+          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
