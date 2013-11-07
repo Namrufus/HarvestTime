@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockGrowEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -44,6 +45,7 @@ public class SeasonalGrowthListener implements Listener {
 		this.playerInteractionDelayer = playerTimerSystem;
 	}
 	
+	// ===============================================================================================================-
 	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
 		Block block = event.getClickedBlock();
@@ -75,6 +77,7 @@ public class SeasonalGrowthListener implements Listener {
 		}
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
 	// display information relating to the growth status of the block to the player.
 	private void growthCheckInteraction(Player player, Block block) {
 		Material blockMaterial = block.getType();
@@ -115,6 +118,7 @@ public class SeasonalGrowthListener implements Listener {
 		}		
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
 	// display information relating to the yield of the crop to the given player
 	private void yieldCheckInteraction(Player player, Block block) {
 		Material blockMaterial = block.getType();
@@ -130,6 +134,7 @@ public class SeasonalGrowthListener implements Listener {
 		player.sendMessage("§7" + "[Harvest Time]   §3Total Yield: " + "§b" + String.format("%.2f", targetYield));
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
 	// update plant growth by "tending" the crop
 	private void cropTendInteraction(Player player, Material toolMaterial, Block block) {
 		Material blockMaterial = block.getType();
@@ -181,6 +186,8 @@ public class SeasonalGrowthListener implements Listener {
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
+	// update the crop at the given block to the corresponding growth stage for the given seasonal day
+	// will not update to the final stage if the "notFinalStage" flag is set
 	private void updateGrowth(Block block, int seasonalDay, boolean notFinalStage) {
 		Material blockMaterial = block.getType();
 		
@@ -191,8 +198,12 @@ public class SeasonalGrowthListener implements Listener {
 			
 			if (cropGrowthConfiguration.isAllowedToGrow(currentStage, seasonalDay)) {
 				int targetStage = cropGrowthConfiguration.getCappedTargetStage(seasonalDay, GrowthUtil.getStageCount(blockMaterial));
-				if (!(notFinalStage && targetStage >= GrowthUtil.getStageCount(blockMaterial) - 1))
-					GrowthUtil.setStage(block, targetStage);
+				
+				// cancel if this is the final stage and the "notFinalStage" flag is set
+				if (notFinalStage && targetStage >= GrowthUtil.getStageCount(blockMaterial) - 1)
+					return;
+				
+				GrowthUtil.setStage(block, targetStage);
 			}
 		}
 	}
@@ -204,6 +215,30 @@ public class SeasonalGrowthListener implements Listener {
 			return;
 		
 		updateGrowth(block, seasonalDay, notFinalStage);
+	}
+	
+	// ================================================================================================================
+	@EventHandler
+	public void onBlockPlaceEvent(BlockPlaceEvent event) {
+		// stop the player from placing a crop block if it is not "planting time"
+		
+		Block block = event.getBlock();
+		Material blockMaterial = block.getType();
+		
+		if (seasonalCropList.containsBlockCrop(blockMaterial)) {
+			CropSeasonalGrowthConfiguration cropGrowthConfiguration = seasonalCropList.getBlockCrop(blockMaterial);
+			
+			int currentDay = (int)calendar.getSeasonalDay();
+			int startDay = cropGrowthConfiguration.getStartDay();
+			int endDay = cropGrowthConfiguration.getFinalPlantingDay();
+			
+			if (currentDay < startDay || currentDay > endDay) {
+				event.setCancelled(true);
+
+				event.getPlayer().sendMessage("§7[Harvest Time] planting season for " + blockMaterial + ": day §8" + startDay + " §7to §8" + endDay);
+				event.getPlayer().sendMessage("§7[Harvest Time] current day: §8" + calendar.getSeasonalDay());
+			}
+		}
 	}
 	
 	// ================================================================================================================

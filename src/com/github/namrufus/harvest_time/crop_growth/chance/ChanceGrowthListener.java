@@ -64,7 +64,7 @@ public class ChanceGrowthListener implements Listener {
 		TreeGrowthType treeGrowthType = TreeGrowthType.getTreeGrowthType(event.getSpecies());
 		
 		// if the crop is not supported, do nothing
-		if (!treeGrowthType.hasTreeGrowthType(event.getSpecies())) {
+		if (!TreeGrowthType.hasTreeGrowthType(event.getSpecies())) {
 			// warn later if mojang changes tree types and I forget to add them
 			log.warning("tree type not identified: " + event.getSpecies() + " plugin probably was not updated properly to a new version, contact plugin maintainer.");
 			return;
@@ -154,7 +154,6 @@ public class ChanceGrowthListener implements Listener {
 			}
 			
 			// tree type crops
-			int blockData = block.getData();
 			TreeGrowthType treeGrowthType = TreeGrowthType.getTreeGrowthType(block);
 			if (treeGrowthType != null && chanceCropList.containsTreeCrop(treeGrowthType)) {
 				player.sendMessage("§7[Harvest Time] Crop: §8tree_" + treeGrowthType);

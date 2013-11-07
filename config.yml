@@ -157,10 +157,8 @@ harvest_time:
       start_day: 3
       max_stage_difference: 2
 
-      base_tending_time: 5.0
-
       custom_yield:
-        base_yield: 0.25
+        base_yield: 0.03125
 
         sunlight:
           min_sunlight_level: 15
@@ -195,7 +193,7 @@ harvest_time:
       max_stage_difference: 1
 
       custom_yield:
-        base_yield: 0.25
+        base_yield: 0.03125
 
         sunlight:
           min_sunlight_level: 15
@@ -230,10 +228,8 @@ harvest_time:
       start_day: 3
       max_stage_difference: 3
 
-      base_tending_time: 5.0
-
       custom_yield:
-        base_yield: 0.5
+        base_yield: 0.03125
 
         sunlight:
           min_sunlight_level: 15
@@ -241,7 +237,7 @@ harvest_time:
 
         fresh_water:
           irrigation_multiplier: 2.0
-          rainfall_multiplier: 2.0
+          rainfall_multiplier: 4.0
 
         regional:
           nutrients: FAIR
@@ -268,8 +264,6 @@ harvest_time:
       start_day: 5
       max_stage_difference: 2
 
-      base_tending_time: 5.0
-
       custom_yield:
         base_yield: 0.25
 
@@ -279,7 +273,7 @@ harvest_time:
 
         fresh_water:
           irrigation_multiplier: 2.0
-          rainfall_multiplier: 2.0
+          rainfall_multiplier: 4.0
 
         regional:
           nutrients: FOUL
@@ -305,18 +299,16 @@ harvest_time:
       start_day: 5
       max_stage_difference: 2
 
-      base_tending_time: 5.0
-
       custom_yield:
-        base_yield: 0.125
+        base_yield: 0.03125
 
         sunlight:
           min_sunlight_level: 15
           multiplier: 4.0
 
         fresh_water:
-          irrigation_multiplier: 4.0
-          rainfall_multiplier: 2.0
+          irrigation_multiplier: 2.0
+          rainfall_multiplier: 4.0
 
         regional:
           nutrients: FAIR
@@ -344,10 +336,8 @@ harvest_time:
       start_day: 10
       max_stage_difference: 2
 
-      base_tending_time: 5.0
-
       custom_yield:
-        base_yield: 0.125
+        base_yield: 0.03125
 
         sunlight:
           min_sunlight_level: 15
@@ -358,7 +348,7 @@ harvest_time:
           rainfall_multiplier: 4.0
 
         fertilizer_block:
-          block_type: SOUL_SAND
+          block_type: STATIONARY_LAVA
           block_count: 16
           block_offset: 2
           multiplier: 1.5
@@ -418,72 +408,8 @@ harvest_time:
       base_chance: 0.0
 
     # -- trees ---------------------------------------------
-    tree_OAK:
-      base_chance: 0.25
-
-      sunlight:
-        min_sunlight_level: 15
-        multiplier: 4.0
-
-      fresh_water:
-        irrigation_multiplier: 2.0
-        rainfall_multiplier: 2.0
-
-      regional:
-        nutrients: FAIR
-        ph: NEUTRAL
-        compactness: NONE
-
-      biome:
-        DEFAULT: 0.125
-        temperate_forest: 1.0
-        cold_forest: 0.75
-        sky: 0.125
-
-    tree_RED_MUSHROOM:
-      base_chance: 0.5
-
-      biome:
-        DEFAULT: 0.0
-        mushroom: 1.0
-        HELL: 1.0
   
     # -- breeding ------------------------------------------
-    breeding_SHEEP:
-      base_chance: 0.25
-
-      sunlight:
-        min_sunlight_level: 15
-        multiplier: 4.0
-
-      regional:
-        nutrients: FAIR
-        ph: NEUTRAL
-        compactness: NONE
-
-      biome:
-        DEFAULT: 0.125
-        temperate_mountain: 1.0
-        cold_mountain: 0.75
-        sky: 0.125
-
-    breeding_CHICKEN:
-      base_chance: 0.25
-
-      sunlight:
-        min_sunlight_level: 15
-        multiplier: 4.0
-
-      regional:
-        nutrients: FAIR
-        ph: NEUTRAL
-        compactness: NONE
-
-      biome:
-        DEFAULT: 0.125
-        temperate_mountain: 1.0
-        cold_mountain: 0.75
-        sky: 0.125
 
     # -- eggs ----------------------------------------------
     egg_hatching:

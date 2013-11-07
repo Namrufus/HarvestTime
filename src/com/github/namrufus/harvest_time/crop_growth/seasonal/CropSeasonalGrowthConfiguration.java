@@ -34,6 +34,8 @@ public class CropSeasonalGrowthConfiguration {
 	
 	// ================================================================================================================
 	public int getStartDay() { return startDay; }
+	public int getFinalDay(int growthStageCount) { return startDay + growthStageCount + maxStageDifference; }
+	public int getFinalPlantingDay() { return startDay + maxStageDifference; }
 	
 	public boolean hasCustomYield() { return hasCustomYield; }
 	public CustomYieldConfiguration getCustomYieldConfiguration() { return customYieldConfiguration; }
