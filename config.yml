@@ -1,5 +1,5 @@
 harvest_time:
-  # == info ================================================
+  # == plugin interaction ==================================
   interaction:
     crop_growth_check_material: WATCH
     crop_yield_check_material: COMPASS
@@ -55,7 +55,7 @@ harvest_time:
       DIAMOND_HOE: 5.0
       GOLD_HOE: 6.0
 
-  # == bonuses =============================================
+  # == global environment configuration ====================
   # -- fresh water -----------------------------------------
   fresh_water:
     biome:
@@ -68,13 +68,7 @@ harvest_time:
     rainfall:
       enabled: true
 
-  seasonal_rainfall_control:
-    enable: true
-    DROUGHT: 0.0625
-    NORMAL: 0.25
-    MONSOON: 0.75
-
-  # -- regional bonuses ------------------------------------
+  # -- regional multiplier ---------------------------------
   regional:
     enabled: true
     seed: Columbia

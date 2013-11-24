@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.github.namrufus.harvest_time.util.PlayerInteractionDelayer;
+import com.github.namrufus.harvest_time.plugin.PlayerInteractionDelayer;
 
 public class FarmlandCreationListener implements Listener {
 	FarmlandCreationConfiguration config;

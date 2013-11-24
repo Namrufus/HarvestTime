@@ -6,9 +6,15 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-import com.github.namrufus.harvest_time.regional.RegionalConfiguration;
-import com.github.namrufus.harvest_time.regional.RegionalGenerator;
-import com.github.namrufus.harvest_time.util.configuration.BiomeAliasesConfiguration;
+import com.github.namrufus.harvest_time.crop_growth.environment.global.BiomeAliasesConfiguration;
+import com.github.namrufus.harvest_time.crop_growth.environment.global.FreshWaterConfiguration;
+import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionConfiguration;
+import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionGenerator;
+import com.github.namrufus.harvest_time.crop_growth.environment.local.CropBiomeConfiguration;
+import com.github.namrufus.harvest_time.crop_growth.environment.local.CropFertilizerBlockConfiguration;
+import com.github.namrufus.harvest_time.crop_growth.environment.local.CropFreshWaterConfiguration;
+import com.github.namrufus.harvest_time.crop_growth.environment.local.CropRegionalConfiguration;
+import com.github.namrufus.harvest_time.crop_growth.environment.local.CropSunlightConfiguration;
 
 public class CropEnvironmentConfiguration {
 	private boolean sunlightEnabled;
@@ -26,7 +32,7 @@ public class CropEnvironmentConfiguration {
 	private boolean biomeEnabled;
 	private CropBiomeConfiguration biomeConfiguration;
 	
-	public CropEnvironmentConfiguration(ConfigurationSection config, FreshWaterConfiguration baseFreshWaterConfiguration, RegionalConfiguration baseRegionalConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {
+	public CropEnvironmentConfiguration(ConfigurationSection config, FreshWaterConfiguration baseFreshWaterConfiguration, RegionConfiguration baseRegionalConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {
 		// each environment modifier section is optional
 		sunlightEnabled = config.isSet("sunlight");
 		if (sunlightEnabled)
@@ -60,7 +66,7 @@ public class CropEnvironmentConfiguration {
 	}
 	
 	// ================================================================================================================
-	public double getMultiplier(Block block, RegionalGenerator regionalGenerator) {
+	public double getMultiplier(Block block, RegionGenerator regionalGenerator) {
 		double multiplier = 1.0;
 		
 		if (sunlightEnabled) {
@@ -98,7 +104,7 @@ public class CropEnvironmentConfiguration {
 			biomeConfiguration.dump(log);
 	}
 	
-	public void displayState(Player player, Block block, RegionalGenerator regionalGenerator) {
+	public void displayState(Player player, Block block, RegionGenerator regionalGenerator) {
 		if (sunlightEnabled) {
 			double sunlightMultiplier = sunlightConfiguration.getMultiplier(block);
 			if (sunlightMultiplier != 1.0)

@@ -1,5 +1,5 @@
 name: HarvestTime
-main: com.github.namrufus.harvest_time.HarvestTime
+main: com.github.namrufus.harvest_time.plugin.HarvestTime
 version: 0.1
 
 permissions:

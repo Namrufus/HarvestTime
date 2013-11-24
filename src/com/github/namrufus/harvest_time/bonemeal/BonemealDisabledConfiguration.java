@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
-import com.github.namrufus.harvest_time.util.configuration.ConfigUtil;
+import com.github.namrufus.harvest_time.util.ConfigUtil;
 
 public class BonemealDisabledConfiguration {
 	// set of block materials on which bonemeal will not be usable on
