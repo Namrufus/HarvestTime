@@ -32,20 +32,22 @@ harvest_time:
   # == seasonal growth =====================================
   seasonal:
     days_in_seasonal_year: 20
-    rainfall_control:
-      enabled: true
-      seed: Mt.Augusta
-      MILD:
-        frequency: 0.50
-        rainfall_chance: 0.5
-      DROUGHT:
-        frequency: 0.25
-        rainfall_chance: 0.125
-      MONSOON:
-        frequency: 0.25
-        rainfall_chance: 0.875
 
-  # -- seasonal crop tending -------------------------------
+  # == seasonal rainfall control ===========================
+  rainfall_control:
+    enabled: true
+    seed: Mt.Augusta
+    MILD:
+      frequency: 0.50
+      rainfall_chance: 0.5
+    DROUGHT:
+      frequency: 0.25
+      rainfall_chance: 0.125
+    MONSOON:
+      frequency: 0.25
+      rainfall_chance: 0.875
+
+  # == seasonal crop tending ===============================
   tending:
     radius: 2
     tool_times:

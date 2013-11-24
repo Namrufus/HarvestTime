@@ -16,16 +16,19 @@ import com.github.namrufus.harvest_time.bonemeal.BonemealDisabledListener;
 import com.github.namrufus.harvest_time.crop_growth.chance_growth.ChanceGrowthListener;
 import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.SeasonalGrowthListener;
 import com.github.namrufus.harvest_time.farmland.FarmlandCreationListener;
-import com.github.namrufus.harvest_time.seasonal.DailyRainfallSystem;
+import com.github.namrufus.harvest_time.rainfall_control.RainfallControl;
+import com.github.namrufus.harvest_time.rainfall_control.RainfallControlListener;
+import com.github.namrufus.harvest_time.rainfall_control.RainfallControlWorldUpdater;
 import com.github.namrufus.harvest_time.seasonal.SeasonalCalendar;
 import com.github.namrufus.harvest_time.seasonal.SeasonalConfiguration;
-import com.github.namrufus.harvest_time.seasonal.SeasonalRainfallListener;
 
 public class HarvestTime extends JavaPlugin {
 	ConfigurationLoader configurationLoader;
 	
 	SeasonalCalendar seasonalCalendar;
-	DailyRainfallSystem dailyRainfallSystem;
+	
+	RainfallControl rainfallControl;
+	RainfallControlWorldUpdater rainfallControlWorldUpdater;
 	
 	@Override
 	public void onEnable() {
@@ -69,14 +72,10 @@ public class HarvestTime extends JavaPlugin {
 		PlayerInteractionDelayer playerInteractionDelayer = new PlayerInteractionDelayer();
 		
 		// -- Initialize rainfall system and set weather to desired value ---------------------------------------------
-		dailyRainfallSystem = new DailyRainfallSystem(seasonalConfiguration);
-		if (seasonalConfiguration.isRainfallControlEnabled()) {
-			for (World world : getServer().getWorlds()) {
-				boolean isRaining = dailyRainfallSystem.getRainState(seasonalCalendar);
-				this.getLogger().info("changed weather: " + world.getName() + ", rain = " + isRaining);
-				world.setStorm(isRaining);
-				world.setWeatherDuration(20);
-			}
+		rainfallControl = new RainfallControl(configurationLoader.getRainfallControlConfiguration());
+		rainfallControlWorldUpdater = new RainfallControlWorldUpdater(rainfallControl, seasonalCalendar, getLogger());
+		for (World world : getServer().getWorlds()) {
+			rainfallControlWorldUpdater.updateWeather(world);
 		}
 	    
 		// -- Initialize listeners ------------------------------------------------------------------------------------
@@ -89,9 +88,9 @@ public class HarvestTime extends JavaPlugin {
 		FarmlandCreationListener farmlandListener = new FarmlandCreationListener(playerInteractionDelayer, configurationLoader.getFarmlandCreationConfiguration());
 		this.getServer().getPluginManager().registerEvents(farmlandListener, this);
 	
-		// rainfall listener
-		SeasonalRainfallListener seasonalRainfallListener = new SeasonalRainfallListener(dailyRainfallSystem, seasonalCalendar, getLogger());
-		this.getServer().getPluginManager().registerEvents(seasonalRainfallListener, this);
+		// rainfall listener -- also set up the weather
+		RainfallControlListener rainfallControlListener = new RainfallControlListener(rainfallControlWorldUpdater, getLogger());
+		this.getServer().getPluginManager().registerEvents(rainfallControlListener, this);
 		
 		// crop seasonal growth listener
 		SeasonalGrowthListener seasonalGrowthListener = new SeasonalGrowthListener(configurationLoader.getInteractionConfiguration(),
@@ -258,15 +257,24 @@ public class HarvestTime extends JavaPlugin {
 	}
 	
 	private void rainCheckCommand(CommandSender sender, String[] args) {
-		if (!configurationLoader.getSeasonalConfiguration().isRainfallControlEnabled())
+		if (!configurationLoader.getRainfallControlConfiguration().isEnabled())
 			sender.sendMessage("§7[Harvest Time] rainfall system not enabled, enable using the configuration file.");
 		
-		sender.sendMessage("§7[Harvest Time] target rainfall state: rain = " + dailyRainfallSystem.getRainState(seasonalCalendar));
+		for (World world : getServer().getWorlds()) {
+			rainfallControlWorldUpdater.updateWeather(world);
+		}
+		
+		sender.sendMessage("§7[Harvest Time] target rainfall state: rain = " + rainfallControl.getRainState((int)seasonalCalendar.getAbsoluteSeasonalDay(), (int)seasonalCalendar.getSeasonalYear()));
 	}
 	
 	private void rainClimateCheckCommand(CommandSender sender, String[] args) {
-		if (!configurationLoader.getSeasonalConfiguration().isRainfallControlEnabled())
+		if (!configurationLoader.getRainfallControlConfiguration().isEnabled())
 			sender.sendMessage("§7[Harvest Time] rainfall system not enabled, enable using the configuration file.");
-		dailyRainfallSystem.displayState(sender, seasonalCalendar);
+		
+		for (World world : getServer().getWorlds()) {
+			rainfallControlWorldUpdater.updateWeather(world);
+		}
+		
+		rainfallControl.displayRainfallClimateState(sender, (int)seasonalCalendar.getSeasonalYear());
 	}
 }
