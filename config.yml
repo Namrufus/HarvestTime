@@ -68,63 +68,6 @@ harvest_time:
     rainfall:
       enabled: true
 
-  # -- regional multiplier ---------------------------------
-  regional:
-    enabled: true
-    seed: Columbia
-    cell_size: 1000.0
-    variation_size: 5000.0
-
-    nutrients:
-      multipliers:
-        FAIR:
-          FAIR: 1.25
-          VERY_FAIR: 1.0
-          FOUL: 0.75
-          VERY_FOUL: 0.5
-        FOUL:
-          FAIR: 0.75
-          VERY_FAIR: 0.5
-          FOUL: 1.0
-          VERY_FOUL: 1.25  
-
-    ph:
-      multipliers:
-        ACIDIC:
-          ACIDIC: 1.0
-          VERY_ACIDIC: 1.25
-          NEUTRAL: 0.75
-          VERY_NEUTRAL: 0.75
-          BASIC: 0.5
-          VERY_BASIC: 0.25
-        NEUTRAL:
-          ACIDIC: 0.75
-          VERY_ACIDIC: 0.5
-          NEUTRAL: 1.0
-          VERY_NEUTRAL: 1.25
-          BASIC: 0.75
-          VERY_BASIC: 0.5
-        BASIC:
-          ACIDIC: 0.5
-          VERY_ACIDIC: 0.25
-          NEUTRAL: 0.75
-          VERY_NEUTRAL: 0.75
-          BASIC: 1.0
-          VERY_BASIC: 1.25
-
-    compactness:
-      multipliers:
-        LOOSE:
-          LOOSE: 1.0
-          VERY_LOOSE: 1.25
-          COMPACT: 0.75
-          VERY_COMPACT: 0.5
-        COMPACT:
-          LOOSE: 0.5
-          VERY_LOOSE: 0.75
-          COMPACT: 1.0
-          VERY_COMPACT: 1.25
-
   # -- biome aliases ---------------------------------------
   biome_aliases:
     cold_grassland: [ICE_PLAINS]
@@ -164,11 +107,6 @@ harvest_time:
           irrigation_multiplier: 4.0
           rainfall_multiplier: 4.0
 
-        regional:
-          nutrients: FAIR
-          ph: ACIDIC
-          compactness: LOOSE
-
         biome:
           cold_grassland: 0.125
           cold_forest: 0.125
@@ -205,11 +143,6 @@ harvest_time:
           irrigation_multiplier: 4.0
           rainfall_multiplier: 4.0
 
-        regional:
-          nutrients: FAIR
-          ph: ACIDIC
-          compactness: COMPACT
-
         biome:
           cold_grassland: 0.125
           cold_forest: 0.125
@@ -245,11 +178,6 @@ harvest_time:
         fresh_water:
           irrigation_multiplier: 2.0
           rainfall_multiplier: 2.0
-
-        regional:
-          nutrients: FAIR
-          ph: NEUTRAL
-          compactness: LOOSE
 
         biome:
           cold_grassland: 0.125
@@ -288,11 +216,6 @@ harvest_time:
           irrigation_multiplier: 4.0
           rainfall_multiplier: 4.0
 
-        regional:
-          nutrients: FOUL
-          ph: BASIC
-          compactness: COMPACT
-
         biome:
           cold_grassland: 0.75
           cold_forest: 1.0
@@ -328,11 +251,6 @@ harvest_time:
         fresh_water:
           irrigation_multiplier: 4.0
           rainfall_multiplier: 4.0
-
-        regional:
-          nutrients: FAIR
-          ph: BASIC
-          compactness: LOOSE
 
         biome:
           cold_grassland: 0.0
@@ -377,11 +295,6 @@ harvest_time:
           block_offset: 2
           multiplier: 4.0
 
-        regional:
-          nutrients: FAIR
-          ph: NEUTRAL
-          compactness: COMPACT
-
         biome:
           DEFAULT: 0.0
           tropical_rainforest: 0.125
@@ -411,11 +324,6 @@ harvest_time:
           block_count: 16
           block_offset: 1
           multiplier: 4.0
-
-        regional:
-          nutrients: FAIR
-          ph: NEUTRAL
-          compactness: COMPACT
 
         biome:
           DEFAULT: 0.0

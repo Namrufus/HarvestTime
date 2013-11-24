@@ -15,7 +15,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionGenerator;
 import com.github.namrufus.harvest_time.crop_growth.seasonal.util.CropYieldUtil;
 import com.github.namrufus.harvest_time.crop_growth.seasonal.util.GrowthUtil;
 import com.github.namrufus.harvest_time.plugin.InteractionConfiguration;
@@ -26,20 +25,17 @@ public class SeasonalGrowthListener implements Listener {
 	InteractionConfiguration interactionConfiguration;
 	TendingConfiguration tendingConfiguration;
 	SeasonalCropListConfiguration seasonalCropList;
-	RegionGenerator regionalGenerator;
 	SeasonalCalendar calendar;
 	PlayerInteractionDelayer playerInteractionDelayer;
 	
 	public SeasonalGrowthListener(InteractionConfiguration interactionConfiguration,
 			                              TendingConfiguration tendingConfiguration,
 			                              SeasonalCropListConfiguration seasonalCropList,
-			                              RegionGenerator regionalGenerator,
 			                              SeasonalCalendar calendar,
 			                              PlayerInteractionDelayer playerTimerSystem) {
 		this.interactionConfiguration = interactionConfiguration;
 		this.tendingConfiguration = tendingConfiguration;
 		this.seasonalCropList = seasonalCropList;
-		this.regionalGenerator = regionalGenerator;
 		this.calendar = calendar;
 		this.playerInteractionDelayer = playerTimerSystem;
 	}
@@ -126,10 +122,10 @@ public class SeasonalGrowthListener implements Listener {
 		if (!cropGrowthConfiguration.hasCustomYield())
 			return;
 		
-		double targetYield = cropGrowthConfiguration.getCustomYieldConfiguration().getYieldCount(block, regionalGenerator);
+		double targetYield = cropGrowthConfiguration.getCustomYieldConfiguration().getYieldCount(block);
 		
 		player.sendMessage("§7" + "[Harvest Time] Crop: " + "§8"/*dark grey*/ + blockMaterial.toString());
-		cropGrowthConfiguration.getCustomYieldConfiguration().displayState(player, block, regionalGenerator);
+		cropGrowthConfiguration.getCustomYieldConfiguration().displayState(player, block);
 		player.sendMessage("§7" + "[Harvest Time]   §3Total Yield: " + "§b" + String.format("%.2f", targetYield));
 	}
 	
@@ -157,7 +153,7 @@ public class SeasonalGrowthListener implements Listener {
 			
 			
 			if (cropGrowthConfiguration.hasCustomYield()) {
-				double targetYield = cropGrowthConfiguration.getCustomYieldConfiguration().getYieldCount(block, regionalGenerator);
+				double targetYield = cropGrowthConfiguration.getCustomYieldConfiguration().getYieldCount(block);
 				
 				if (CropYieldUtil.cropFailureSample(blockMaterial, targetYield)) {
 					// the crop has failed, destroy the crop block

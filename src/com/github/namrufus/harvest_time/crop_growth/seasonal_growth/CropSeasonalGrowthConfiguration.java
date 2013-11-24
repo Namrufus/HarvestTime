@@ -6,7 +6,6 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import com.github.namrufus.harvest_time.crop_growth.environment.global.BiomeAliasesConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.global.FreshWaterConfiguration;
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionConfiguration;
 
 // records the growth parameters of a crop type and handles checking for allowed growth
 
@@ -21,13 +20,13 @@ public class CropSeasonalGrowthConfiguration {
 	private CustomYieldConfiguration customYieldConfiguration;
 	
 	// ================================================================================================================
-	public CropSeasonalGrowthConfiguration(ConfigurationSection config, FreshWaterConfiguration freshWaterConfiguration, RegionConfiguration regionalConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {
+	public CropSeasonalGrowthConfiguration(ConfigurationSection config, FreshWaterConfiguration freshWaterConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {
 		startDay = config.getInt("start_day");
 		maxStageDifference = config.getInt("max_stage_difference");
 		
 		hasCustomYield = config.isSet("custom_yield");
 		if (hasCustomYield)
-			customYieldConfiguration = new CustomYieldConfiguration(config.getConfigurationSection("custom_yield"), freshWaterConfiguration, regionalConfiguration, biomeAliases, log);
+			customYieldConfiguration = new CustomYieldConfiguration(config.getConfigurationSection("custom_yield"), freshWaterConfiguration, biomeAliases, log);
 		else
 			customYieldConfiguration = null;
 	}

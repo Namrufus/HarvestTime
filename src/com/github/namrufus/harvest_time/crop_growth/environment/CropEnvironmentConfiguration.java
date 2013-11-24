@@ -8,12 +8,9 @@ import org.bukkit.entity.Player;
 
 import com.github.namrufus.harvest_time.crop_growth.environment.global.BiomeAliasesConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.global.FreshWaterConfiguration;
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionConfiguration;
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionGenerator;
 import com.github.namrufus.harvest_time.crop_growth.environment.local.CropBiomeConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.local.CropFertilizerBlockConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.local.CropFreshWaterConfiguration;
-import com.github.namrufus.harvest_time.crop_growth.environment.local.CropRegionalConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.local.CropSunlightConfiguration;
 
 public class CropEnvironmentConfiguration {
@@ -26,13 +23,10 @@ public class CropEnvironmentConfiguration {
 	private boolean fertilizerBlockEnabled;
 	private CropFertilizerBlockConfiguration fertilizerBlockConfiguration;
 	
-	private boolean regionalEnabled;
-	private CropRegionalConfiguration regionalConfiguration;
-	
 	private boolean biomeEnabled;
 	private CropBiomeConfiguration biomeConfiguration;
 	
-	public CropEnvironmentConfiguration(ConfigurationSection config, FreshWaterConfiguration baseFreshWaterConfiguration, RegionConfiguration baseRegionalConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {
+	public CropEnvironmentConfiguration(ConfigurationSection config, FreshWaterConfiguration baseFreshWaterConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {
 		// each environment modifier section is optional
 		sunlightEnabled = config.isSet("sunlight");
 		if (sunlightEnabled)
@@ -52,12 +46,6 @@ public class CropEnvironmentConfiguration {
 		else
 			fertilizerBlockConfiguration = null;
 		
-		regionalEnabled = config.isSet("regional");
-		if (regionalEnabled)
-			regionalConfiguration = new CropRegionalConfiguration(config.getConfigurationSection("regional"), baseRegionalConfiguration, log);
-		else
-			regionalConfiguration = null;
-		
 		biomeEnabled = config.isSet("biome");
 		if (biomeEnabled)
 			biomeConfiguration = new CropBiomeConfiguration(config.getConfigurationSection("biome"), biomeAliases, log);
@@ -66,7 +54,7 @@ public class CropEnvironmentConfiguration {
 	}
 	
 	// ================================================================================================================
-	public double getMultiplier(Block block, RegionGenerator regionalGenerator) {
+	public double getMultiplier(Block block) {
 		double multiplier = 1.0;
 		
 		if (sunlightEnabled) {
@@ -80,9 +68,6 @@ public class CropEnvironmentConfiguration {
 		
 		if (fertilizerBlockEnabled)
 			multiplier *= fertilizerBlockConfiguration.getMultiplier(block);
-		
-		if (regionalEnabled)
-			multiplier *= regionalConfiguration.getMultiplier(block.getLocation(), regionalGenerator);
 		
 		if (biomeEnabled)
 			multiplier *= biomeConfiguration.getMultiplier(block.getBiome());
@@ -98,13 +83,11 @@ public class CropEnvironmentConfiguration {
 			freshWaterConfiguration.dump(log);
 		if (fertilizerBlockEnabled)
 			fertilizerBlockConfiguration.dump(log);
-		if (regionalEnabled)
-			regionalConfiguration.dump(log);
 		if (biomeEnabled)
 			biomeConfiguration.dump(log);
 	}
 	
-	public void displayState(Player player, Block block, RegionGenerator regionalGenerator) {
+	public void displayState(Player player, Block block) {
 		if (sunlightEnabled) {
 			double sunlightMultiplier = sunlightConfiguration.getMultiplier(block);
 			if (sunlightMultiplier != 1.0)
@@ -130,12 +113,6 @@ public class CropEnvironmentConfiguration {
 			double multiplier = fertilizerBlockConfiguration.getMultiplier(block);
 			if (multiplier != 1.0)
 				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Fertilizer Blocks: " + "§8"/*dark grey*/ + "x" + percentageFormat(multiplier));
-		}
-		
-		if (regionalEnabled) {
-			double multiplier = regionalConfiguration.getMultiplier(block.getLocation(), regionalGenerator);
-			if (multiplier != 1.0)
-				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Regional Soil State: " + "§8"/*dark grey*/ + "x" + percentageFormat(multiplier));
 		}
 	}
 	

@@ -19,7 +19,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 
 import com.github.namrufus.harvest_time.crop_growth.crop_directory.TreeGrowthType;
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionGenerator;
 import com.github.namrufus.harvest_time.plugin.InteractionConfiguration;
 
 // the purpose of this class is to prevent the growth of "chance" type crops with a frequency dependent on that
@@ -28,16 +27,13 @@ import com.github.namrufus.harvest_time.plugin.InteractionConfiguration;
 public class ChanceGrowthListener implements Listener {
 	ChanceCropListConfiguration chanceCropList;
 	InteractionConfiguration interactionConfiguration;
-	RegionGenerator regionalGenerator;
 	Logger log;
 	
 	public ChanceGrowthListener(InteractionConfiguration interactionConfiguration,
 			                    ChanceCropListConfiguration chanceCropList,
-			                    RegionGenerator regionalGenerator,
 			                    Logger log) {
 		this.interactionConfiguration = interactionConfiguration;
 		this.chanceCropList = chanceCropList;
-		this.regionalGenerator = regionalGenerator;
 		this.log = log;
 	}
 	
@@ -52,7 +48,7 @@ public class ChanceGrowthListener implements Listener {
 		
 		CropChanceGrowthConfiguration cropConfiguration = chanceCropList.getBlockCrop(blockMaterial);
 		
-		if (!cropConfiguration.growthSucceeds(block, regionalGenerator)) {
+		if (!cropConfiguration.growthSucceeds(block)) {
 			event.setCancelled(true);
 			log.finest("crop chance growth event canceled: " + blockMaterial + " " + block.getLocation());
 		}
@@ -75,7 +71,7 @@ public class ChanceGrowthListener implements Listener {
 		
 		CropChanceGrowthConfiguration cropConfiguration = chanceCropList.getTreeCrop(treeGrowthType);
 		
-		if (!cropConfiguration.growthSucceeds(event.getLocation().getBlock(), regionalGenerator)) {
+		if (!cropConfiguration.growthSucceeds(event.getLocation().getBlock())) {
 			event.setCancelled(true);
 			log.finest("crop chance growth event canceled: " + treeGrowthType + " " + event.getLocation());
 		}
@@ -90,7 +86,7 @@ public class ChanceGrowthListener implements Listener {
 			
 			CropChanceGrowthConfiguration cropConfiguration = chanceCropList.getEggHatchingCrop();
 			
-			if (!cropConfiguration.growthSucceeds(event.getLocation().getBlock(), regionalGenerator)) {
+			if (!cropConfiguration.growthSucceeds(event.getLocation().getBlock())) {
 				event.setCancelled(true);
 				log.finest("crop chance growth event canceled: " + "egg hatching" + " " + event.getLocation());
 			}
@@ -103,7 +99,7 @@ public class ChanceGrowthListener implements Listener {
 			
 			CropChanceGrowthConfiguration cropConfiguration = chanceCropList.getBreedingCrop(entityType);
 			
-			if (!cropConfiguration.growthSucceeds(event.getLocation().getBlock(), regionalGenerator)) {
+			if (!cropConfiguration.growthSucceeds(event.getLocation().getBlock())) {
 				event.setCancelled(true);
 				log.finest("crop chance growth event canceled: " + entityType + " " + event.getLocation());
 			}
@@ -122,7 +118,7 @@ public class ChanceGrowthListener implements Listener {
 		
 		CropChanceGrowthConfiguration cropConfiguration = chanceCropList.getFishingCrop();
 
-		if (!cropConfiguration.growthSucceeds(event.getCaught().getLocation().getBlock(), regionalGenerator)) {
+		if (!cropConfiguration.growthSucceeds(event.getCaught().getLocation().getBlock())) {
 			event.setCancelled(true);
 			log.finest("crop chance growth event canceled: " + "fishing" + " " + event.getCaught().getLocation());
 		}
@@ -149,20 +145,20 @@ public class ChanceGrowthListener implements Listener {
 			// block type crops
 			if (chanceCropList.containsBlockCrop(blockMaterial)) {
 				player.sendMessage("§7[Harvest Time] Crop: §8block_"+blockMaterial.toString());
-				chanceCropList.getBlockCrop(blockMaterial).displayState(player, block, regionalGenerator);
+				chanceCropList.getBlockCrop(blockMaterial).displayState(player, block);
 			}
 			
 			// tree type crops
 			TreeGrowthType treeGrowthType = TreeGrowthType.getTreeGrowthType(block);
 			if (treeGrowthType != null && chanceCropList.containsTreeCrop(treeGrowthType)) {
 				player.sendMessage("§7[Harvest Time] Crop: §8tree_" + treeGrowthType);
-				chanceCropList.getTreeCrop(treeGrowthType).displayState(player, block, regionalGenerator);
+				chanceCropList.getTreeCrop(treeGrowthType).displayState(player, block);
 			}
 			
 			// fishing type crop
 			if (blockMaterial == Material.STATIONARY_WATER && chanceCropList.containsFishingCrop()) {
 				player.sendMessage("§7[Harvest Time] Crop: §8fishing");
-				chanceCropList.getFishingCrop().displayState(player, block, regionalGenerator);
+				chanceCropList.getFishingCrop().displayState(player, block);
 			}
 		}
 	}
@@ -184,12 +180,12 @@ public class ChanceGrowthListener implements Listener {
 		
 		if (chanceCropList.containsBreedingCrop(entityType)) {
 			player.sendMessage("§7[Harvest Time] Crop: §8breeding_" + entityType);
-			chanceCropList.getBreedingCrop(entityType).displayState(player, block, regionalGenerator);
+			chanceCropList.getBreedingCrop(entityType).displayState(player, block);
 		}
 		
 		if (entityType == EntityType.CHICKEN && chanceCropList.containsEggHatchingCrop()) {
 			player.sendMessage("§7[Harvest Time] Crop: §8" + "egg hatching");
-			chanceCropList.getEggHatchingCrop().displayState(player, block, regionalGenerator);
+			chanceCropList.getEggHatchingCrop().displayState(player, block);
 		}
 	}
 }

@@ -9,23 +9,21 @@ import org.bukkit.entity.Player;
 import com.github.namrufus.harvest_time.crop_growth.environment.CropEnvironmentConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.global.BiomeAliasesConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.global.FreshWaterConfiguration;
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionConfiguration;
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionGenerator;
 
 public class CustomYieldConfiguration {
 	// base yield count and environment modifiers
 	private double baseYield;
 	private CropEnvironmentConfiguration environmentConfiguration;
 	
-	public CustomYieldConfiguration(ConfigurationSection config, FreshWaterConfiguration baseFreshWaterConfiguration, RegionConfiguration baseRegionalConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {
+	public CustomYieldConfiguration(ConfigurationSection config, FreshWaterConfiguration baseFreshWaterConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {
 		baseYield = config.getDouble("base_yield");
 		
-		environmentConfiguration = new CropEnvironmentConfiguration(config, baseFreshWaterConfiguration, baseRegionalConfiguration, biomeAliases, log);
+		environmentConfiguration = new CropEnvironmentConfiguration(config, baseFreshWaterConfiguration, biomeAliases, log);
 	}
 	
 	// ==============================================================================
-	public double getYieldCount(Block block, RegionGenerator regionalGenerator) {
-		return baseYield * environmentConfiguration.getMultiplier(block, regionalGenerator);
+	public double getYieldCount(Block block) {
+		return baseYield * environmentConfiguration.getMultiplier(block);
 	}
 	
 	// ------------------------------------------------------------------------------
@@ -35,8 +33,8 @@ public class CustomYieldConfiguration {
 		environmentConfiguration.dump(log);
 	}
 	
-	public void displayState(Player player, Block block, RegionGenerator regionalGenerator) {
+	public void displayState(Player player, Block block) {
 		player.sendMessage("§7"/*light grey*/ + "[Harvest Time] Base Yield: " + "§8"/*dark grey*/ + String.format("%.2f", baseYield));
-		environmentConfiguration.displayState(player, block, regionalGenerator);
+		environmentConfiguration.displayState(player, block);
 	}
 }

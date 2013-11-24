@@ -7,10 +7,6 @@ permissions:
     description: allows config dump commands
     default: op
 
-  harvest_time.region_check:
-    description: use of ht-region-check command
-    default: true
-
   harvest_time.time_check:
     description: allows use of plugin time checking commands
     default: true
@@ -33,16 +29,6 @@ commands:
     permission: harvest_time.config_dump
     description: dumps configuration data on a single crop type to the console
     usage: /ht-config-dump-crop cropName
-
-  ht-region-image:
-    permission: harvest_time.config_dump
-    description: draws an image depicting the distribution of the regional types
-    usage: /ht-region-image imageSize blocksPerPixel
-
-  ht-region-check:
-    permission: harvest_time.region_check
-    description: displays the soil region properties at player location
-    usage: /ht-region-check
 
   ht-time-check:
     permission: harvest_time.time_check

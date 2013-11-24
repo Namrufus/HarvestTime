@@ -10,14 +10,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.namrufus.harvest_time.bonemeal.BonemealDisabledListener;
 import com.github.namrufus.harvest_time.crop_growth.chance_growth.ChanceGrowthListener;
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionGenerator;
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionSamplerUtil;
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.type.RegionState;
 import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.SeasonalGrowthListener;
 import com.github.namrufus.harvest_time.farmland.FarmlandCreationListener;
 import com.github.namrufus.harvest_time.seasonal.DailyRainfallSystem;
@@ -29,7 +25,6 @@ public class HarvestTime extends JavaPlugin {
 	ConfigurationLoader configurationLoader;
 	
 	SeasonalCalendar seasonalCalendar;
-	RegionGenerator regionalGenerator;
 	DailyRainfallSystem dailyRainfallSystem;
 	
 	@Override
@@ -69,9 +64,6 @@ public class HarvestTime extends JavaPlugin {
 	    this.getLogger().info("Reference Timestamp Date: "+date);
 	    
 	    seasonalCalendar = new SeasonalCalendar(seasonalConfiguration.getDaysInSeasonalYear(), timestamp);
-		
-	    // -- Initialize regional generator ---------------------------------------------------------------------------
-	    regionalGenerator = new RegionGenerator(configurationLoader.getRegionConfiguration());
 	    
 	    // -- Initialize player timer system --------------------------------------------------------------------------
 		PlayerInteractionDelayer playerInteractionDelayer = new PlayerInteractionDelayer();
@@ -105,13 +97,13 @@ public class HarvestTime extends JavaPlugin {
 		SeasonalGrowthListener seasonalGrowthListener = new SeasonalGrowthListener(configurationLoader.getInteractionConfiguration(),
 				                                                                configurationLoader.getTendingConfiguration(),
 				                                                                configurationLoader.getSeasonalCropListConfiguration(),
-				                                                                regionalGenerator, seasonalCalendar, playerInteractionDelayer);
+				                                                                seasonalCalendar, playerInteractionDelayer);
 		this.getServer().getPluginManager().registerEvents(seasonalGrowthListener, this);
 		
 		// crop chance growth listener
 		ChanceGrowthListener chanceGrowthListener = new ChanceGrowthListener(configurationLoader.getInteractionConfiguration(),
 																			 configurationLoader.getChanceCropListConfiguration(),
-																			 regionalGenerator, this.getLogger());
+																			 this.getLogger());
 		this.getServer().getPluginManager().registerEvents(chanceGrowthListener, this);
 	}
 	
@@ -144,10 +136,6 @@ public class HarvestTime extends JavaPlugin {
 			configDumpCommand(sender, args);
 		} else if (cmd.getName().equalsIgnoreCase("ht-config-dump-crop")) {
 			configDumpCropCommand(sender, args);
-		} else if (cmd.getName().equalsIgnoreCase("ht-region-image")) {
-			regionImageCommand(sender, args);
-		} else if (cmd.getName().equalsIgnoreCase("ht-region-check")) {
-			regionCheckCommand(sender, args);
 		} else if(cmd.getName().equalsIgnoreCase("ht-time-check")){	
 			timeCheckCommand(sender, args);
 		} else if (cmd.getName().equalsIgnoreCase("ht-when-increment")) {
@@ -181,50 +169,6 @@ public class HarvestTime extends JavaPlugin {
 		}
 		
 		configurationLoader.dumpCrop(args[0], getLogger());
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	private void regionImageCommand(CommandSender sender, String[] args) {
-		if (args.length != 2) {
-			sender.sendMessage("command requires 2 arguments");
-			return;
-		}
-		
-		int imageSize;
-		double blocksPerPixel;
-		
-		try {
-			imageSize = Integer.parseInt(args[0]);
-		} catch (NumberFormatException e) {
-			sender.sendMessage("can't parse imageSize: " + args[0]);
-			return;
-		}
-		
-		try {
-			blocksPerPixel = Double.parseDouble(args[1]);
-		} catch (NumberFormatException e) {
-			sender.sendMessage("can't parse blocksPerPixel: " + args[1]);
-			return;
-		}
-		
-		RegionSamplerUtil.sampleNutrientsImage(imageSize, blocksPerPixel, regionalGenerator, new File(getDataFolder(), "nutrients.png"), getLogger());
-		RegionSamplerUtil.samplePhImage(imageSize, blocksPerPixel, regionalGenerator, new File(getDataFolder(), "ph.png"), getLogger());
-		RegionSamplerUtil.sampleCompactnessImage(imageSize, blocksPerPixel, regionalGenerator, new File(getDataFolder(), "compactness.png"), getLogger());
-	}
-	
-	private void regionCheckCommand(CommandSender sender, String[] args) {
-		if (!(sender instanceof Player)) {
-			sender.sendMessage("that is a player command.");
-			return;
-		}
-		
-		Player player = (Player) sender;
-		
-		RegionState.Nutrients nutrients = regionalGenerator.getNutrientState(player.getLocation());
-		RegionState.Ph ph = regionalGenerator.getPhState(player.getLocation());
-		RegionState.Compactness compactness = regionalGenerator.getCompactnessState(player.getLocation());
-		
-		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] Regional Soil Analysis: " + nutrients + ", " + ph + ", " + compactness);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

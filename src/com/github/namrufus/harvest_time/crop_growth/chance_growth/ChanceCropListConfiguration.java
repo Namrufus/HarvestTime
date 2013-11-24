@@ -7,10 +7,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import com.github.namrufus.harvest_time.crop_growth.crop_directory.CropDirectory;
 import com.github.namrufus.harvest_time.crop_growth.environment.global.BiomeAliasesConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.global.FreshWaterConfiguration;
-import com.github.namrufus.harvest_time.crop_growth.environment.global.region.RegionConfiguration;
 
 public class ChanceCropListConfiguration extends CropDirectory<CropChanceGrowthConfiguration> {
-	public ChanceCropListConfiguration(ConfigurationSection config, FreshWaterConfiguration freshWaterConfiguration, RegionConfiguration regionalConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {	
+	public ChanceCropListConfiguration(ConfigurationSection config, FreshWaterConfiguration freshWaterConfiguration, BiomeAliasesConfiguration biomeAliases, Logger log) {	
 		for (String cropName : config.getKeys(false)) {
 			if (!canParse(cropName)) {
 				log.warning("Seasonal Crop List Configuration: can't parse crop: "+cropName+". Skipping.");
@@ -18,7 +17,7 @@ public class ChanceCropListConfiguration extends CropDirectory<CropChanceGrowthC
 			}
 			
 			ConfigurationSection cropConfig = config.getConfigurationSection(cropName);
-			CropChanceGrowthConfiguration cropConfiguration = new CropChanceGrowthConfiguration(cropConfig, freshWaterConfiguration, regionalConfiguration, biomeAliases, log);
+			CropChanceGrowthConfiguration cropConfiguration = new CropChanceGrowthConfiguration(cropConfig, freshWaterConfiguration, biomeAliases, log);
 		
 			put(cropName, cropConfiguration);
 		}
