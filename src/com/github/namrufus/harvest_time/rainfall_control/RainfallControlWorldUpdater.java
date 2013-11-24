@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.World;
 
-import com.github.namrufus.harvest_time.seasonal.SeasonalCalendar;
+import com.github.namrufus.harvest_time.seasonal_calendar.SeasonalCalendar;
 
 // this class is responsible for updating a world's rainfall state when asked
 

@@ -19,8 +19,8 @@ import com.github.namrufus.harvest_time.farmland.FarmlandCreationListener;
 import com.github.namrufus.harvest_time.rainfall_control.RainfallControl;
 import com.github.namrufus.harvest_time.rainfall_control.RainfallControlListener;
 import com.github.namrufus.harvest_time.rainfall_control.RainfallControlWorldUpdater;
-import com.github.namrufus.harvest_time.seasonal.SeasonalCalendar;
-import com.github.namrufus.harvest_time.seasonal.SeasonalConfiguration;
+import com.github.namrufus.harvest_time.seasonal_calendar.SeasonalCalendar;
+import com.github.namrufus.harvest_time.seasonal_calendar.SeasonalConfiguration;
 
 public class HarvestTime extends JavaPlugin {
 	ConfigurationLoader configurationLoader;

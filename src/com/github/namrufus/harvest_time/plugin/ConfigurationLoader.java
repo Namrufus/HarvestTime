@@ -12,7 +12,7 @@ import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.SeasonalCrop
 import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.TendingConfiguration;
 import com.github.namrufus.harvest_time.farmland.FarmlandCreationConfiguration;
 import com.github.namrufus.harvest_time.rainfall_control.RainfallControlConfiguration;
-import com.github.namrufus.harvest_time.seasonal.SeasonalConfiguration;
+import com.github.namrufus.harvest_time.seasonal_calendar.SeasonalConfiguration;
 
 // loads all configuration data and provides a configuration dump utility
 

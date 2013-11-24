@@ -19,7 +19,7 @@ import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.util.CropYie
 import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.util.GrowthUtil;
 import com.github.namrufus.harvest_time.plugin.InteractionConfiguration;
 import com.github.namrufus.harvest_time.plugin.PlayerInteractionDelayer;
-import com.github.namrufus.harvest_time.seasonal.SeasonalCalendar;
+import com.github.namrufus.harvest_time.seasonal_calendar.SeasonalCalendar;
 
 public class SeasonalGrowthListener implements Listener {
 	InteractionConfiguration interactionConfiguration;

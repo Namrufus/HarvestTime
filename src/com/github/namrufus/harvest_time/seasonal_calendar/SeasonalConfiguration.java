@@ -1,4 +1,4 @@
-package com.github.namrufus.harvest_time.seasonal;
+package com.github.namrufus.harvest_time.seasonal_calendar;
 
 import java.util.logging.Logger;
 
