@@ -1,4 +1,4 @@
-package com.github.namrufus.harvest_time.crop_growth.seasonal.util;
+package com.github.namrufus.harvest_time.crop_growth.seasonal_growth.util;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
