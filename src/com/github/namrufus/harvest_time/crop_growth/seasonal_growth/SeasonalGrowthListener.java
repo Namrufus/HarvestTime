@@ -86,13 +86,12 @@ public class SeasonalGrowthListener implements Listener {
 		boolean allowedToGrow = cropGrowthConfiguration.isAllowedToGrow(growthStage, seasonalDay);
 				
 		player.sendMessage("§7[Harvest Time] Crop: §8"+blockMaterial.toString());
+		player.sendMessage("§7[Harvest Time] Growing season: day §8"+cropGrowthConfiguration.getStartDay() + " §7to§8 " + cropGrowthConfiguration.getFinalDay(stageCount));
 		player.sendMessage("§7[Harvest Time]   Year: §8" + calendar.getSeasonalYear() + "§7, Day: " + "§8" + seasonalDay);
 		player.sendMessage("§7[Harvest Time]   Current growth stage: §8"+ growthStage + "§7 / §8" + (stageCount-1));
 		player.sendMessage("§7[Harvest Time]   Target growth stage: §8" + targetStage + "§7 / §8" + (stageCount-1));
 		if (allowedToGrow) {
 			int finalViableSeasonalDay = cropGrowthConfiguration.getFinalViableSeasonalDay(growthStage);
-			
-			System.out.println("final seasonal day = " + finalViableSeasonalDay);
 			
 			Date date = calendar.getSeasonalDayStart(calendar.getSeasonalYear(), finalViableSeasonalDay + 1);
 			
