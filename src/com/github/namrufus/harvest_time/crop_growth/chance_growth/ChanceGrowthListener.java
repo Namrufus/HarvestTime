@@ -40,7 +40,7 @@ public class ChanceGrowthListener implements Listener {
 	@EventHandler
 	public void onBlockGrowthEvent(BlockGrowEvent event) {
 		Block block = event.getBlock();
-		Material blockMaterial = block.getType();
+		Material blockMaterial = event.getNewState().getType();
 		
 		// do nothing if the crop is not a chance growth type crop
 		if (!chanceCropList.containsBlockCrop(blockMaterial))

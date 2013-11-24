@@ -240,7 +240,7 @@ public class SeasonalGrowthListener implements Listener {
 	// cancel all growth events involving seasonal growth crops
 	@EventHandler
 	public void onBlockGrowEvent(BlockGrowEvent event) {
-		if (seasonalCropList.containsBlockCrop(event.getBlock().getType()))
+		if (seasonalCropList.containsBlockCrop(event.getNewState().getType()))
 			event.setCancelled(true);
 	}
 	
