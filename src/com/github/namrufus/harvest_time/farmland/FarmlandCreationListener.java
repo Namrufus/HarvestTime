@@ -1,6 +1,7 @@
 package com.github.namrufus.harvest_time.farmland;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -8,16 +9,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.github.namrufus.harvest_time.plugin.InteractionConfiguration;
 import com.github.namrufus.harvest_time.plugin.PlayerInteractionDelayer;
 
 public class FarmlandCreationListener implements Listener {
 	FarmlandCreationConfiguration config;
+	InteractionConfiguration interactionConfiguration;
 	
 	private PlayerInteractionDelayer playerInteractionDelayer;
 	
-	public FarmlandCreationListener(PlayerInteractionDelayer playerTimerSystem, FarmlandCreationConfiguration config) {
+	public FarmlandCreationListener(PlayerInteractionDelayer playerTimerSystem, FarmlandCreationConfiguration config, InteractionConfiguration interactionConfiguration) {
 		this.playerInteractionDelayer = playerTimerSystem;
 		this.config = config;
+		this.interactionConfiguration = interactionConfiguration;
 	}
 	
 	// handle events that turn dirt into farmland in order to extend the time it takes to create a farmland block
@@ -58,6 +62,10 @@ public class FarmlandCreationListener implements Listener {
 				event.setCancelled(true);
 			}
 		} else /* not enough time */ {
+			// play sound as the player hits the ground and hoeing is possible
+			if (interactionConfiguration.isSoundEnabled() && checkFertilizerBlocks(block, false))
+				event.getPlayer().playSound(block.getLocation(), Sound.DIG_GRAVEL, 1.0f, 1.0f);
+			
 			// don't create farmland
 			event.setCancelled(true);
 		}

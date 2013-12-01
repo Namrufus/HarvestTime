@@ -4,6 +4,8 @@ harvest_time:
     crop_growth_check_material: WATCH
     crop_yield_check_material: COMPASS
 
+    sound_enabled: true
+
   # == bonemeal ============================================
   bonemeal_disabled:
     materials:

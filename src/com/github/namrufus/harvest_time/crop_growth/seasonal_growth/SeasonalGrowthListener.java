@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -134,20 +135,30 @@ public class SeasonalGrowthListener implements Listener {
 		Material blockMaterial = block.getType();
 		CropSeasonalGrowthConfiguration cropGrowthConfiguration = seasonalCropList.getBlockCrop(blockMaterial);
 		
-		// delay event until the time determined by the type of tool
-		double tendingTime = tendingConfiguration.getToolTendingTime(toolMaterial);
-		if (!playerInteractionDelayer.canBreak(player, block, tendingTime, Math.min(tendingTime, 1.0)))
-			return;
-		
 		int seasonalDay = (int)calendar.getSeasonalDay();
 		int previousGrowth = GrowthUtil.getStage(block);
 		
+		// ............................................................................................................
+		// delay event until the time determined by the type of tool hitting the crop
+		
+		double tendingTime = tendingConfiguration.getToolTendingTime(toolMaterial);
+		if (!playerInteractionDelayer.canBreak(player, block, tendingTime, Math.min(tendingTime, 1.0))) {
+			// play a sound while hitting the plant if a growth event is forth-coming
+			if (interactionConfiguration.isSoundEnabled() && cropGrowthConfiguration.isAllowedToGrow(previousGrowth, seasonalDay))
+				player.playSound(block.getLocation(), Sound.DIG_GRAVEL, 1.0f, 1.0f);
+			return;
+		}
+		
+		// ............................................................................................................
+		// the correct amount of time has passed, now actually grow the crop
+		
 		// update the crop clicked
 		updateGrowth(block, seasonalDay, false);
-		
 		int currentGrowth =  GrowthUtil.getStage(block);
 		
+		// ............................................................................................................
 		// handle custom yields on the transition to the final stage
+		
 		if (previousGrowth != currentGrowth && currentGrowth == GrowthUtil.getStageCount(blockMaterial) - 1) {
 			
 			
@@ -169,7 +180,9 @@ public class SeasonalGrowthListener implements Listener {
 			}
 		}
 		
+		// ............................................................................................................
 		// update crops in a radius around the updated block, excluding crops that are transitioning to the final stage
+		
 		int y = block.getY();
 		int radius = tendingConfiguration.getRadius();
 		for (int x = block.getX() - radius; x <= block.getX() + radius; x++) {
@@ -180,6 +193,7 @@ public class SeasonalGrowthListener implements Listener {
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
+	
 	// update the crop at the given block to the corresponding growth stage for the given seasonal day
 	// will not update to the final stage if the "notFinalStage" flag is set
 	private void updateGrowth(Block block, int seasonalDay, boolean notFinalStage) {

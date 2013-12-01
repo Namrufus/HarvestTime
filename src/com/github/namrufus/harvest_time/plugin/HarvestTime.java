@@ -85,10 +85,12 @@ public class HarvestTime extends JavaPlugin {
 		this.getServer().getPluginManager().registerEvents(bonemealDisabledListener, this);
 		
 		// farmland creation listener
-		FarmlandCreationListener farmlandListener = new FarmlandCreationListener(playerInteractionDelayer, configurationLoader.getFarmlandCreationConfiguration());
+		FarmlandCreationListener farmlandListener = new FarmlandCreationListener(playerInteractionDelayer,
+																				 configurationLoader.getFarmlandCreationConfiguration(),
+																				 configurationLoader.getInteractionConfiguration());
 		this.getServer().getPluginManager().registerEvents(farmlandListener, this);
 	
-		// rainfall listener -- also set up the weather
+		// rainfall listener
 		RainfallControlListener rainfallControlListener = new RainfallControlListener(rainfallControlWorldUpdater, getLogger());
 		this.getServer().getPluginManager().registerEvents(rainfallControlListener, this);
 		
