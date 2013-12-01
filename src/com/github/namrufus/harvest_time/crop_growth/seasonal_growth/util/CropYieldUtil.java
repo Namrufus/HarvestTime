@@ -86,6 +86,11 @@ public class CropYieldUtil {
 		List<ItemStack> items = new LinkedList<ItemStack>();
 		for (Item item : yieldType.yieldUnit) {
 			int count = randomRound(item.count * netYield);
+			
+			// validate that the itemcount is positive and non-zero
+			if (count <= 0)
+				continue;
+			
 			ItemStack itemStack = new ItemStack(item.material, count);
 			itemStack.setData(new MaterialData(item.material, item.data));
 			items.add(itemStack);
