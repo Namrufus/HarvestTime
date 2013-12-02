@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import com.github.namrufus.harvest_time.crop_growth.environment.CropEnvironmentConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.global.BiomeAliasesConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.global.FreshWaterConfiguration;
+import com.github.namrufus.harvest_time.plugin.global.TextCode;
 
 public class CropChanceGrowthConfiguration {
 	// the base chance that this crop will succeed on a grow, breed, spawn, etc event
@@ -39,8 +40,8 @@ public class CropChanceGrowthConfiguration {
 	}
 	
 	public void displayState(Player player, Block block) {
-		player.sendMessage("§7[Harvest Time] Base Chance: §8" + String.format("%.2f%%", 100.0 * baseChance));
+		player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Base Chance: " + TextCode.VALUE + String.format("%.2f%%", 100.0 * baseChance));
 		cropEnvironmentConfiguration.displayState(player, block);
-		player.sendMessage("§7" + "[Harvest Time]   §3Total Chance: " + "§b" + String.format("%.2f%%", 100.0 * getGrowthChance(block)));
+		player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   " + TextCode.HIGHLIGHT + "Total Chance: " + TextCode.HIGHLIGHT_VALUE + String.format("%.2f%%", 100.0 * getGrowthChance(block)));
 	}
 }

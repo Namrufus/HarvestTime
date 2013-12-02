@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import com.github.namrufus.harvest_time.crop_growth.environment.CropEnvironmentConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.global.BiomeAliasesConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.global.FreshWaterConfiguration;
+import com.github.namrufus.harvest_time.plugin.global.TextCode;
 
 public class CustomYieldConfiguration {
 	// base yield count and environment modifiers
@@ -34,7 +35,7 @@ public class CustomYieldConfiguration {
 	}
 	
 	public void displayState(Player player, Block block) {
-		player.sendMessage("§7"/*light grey*/ + "[Harvest Time] Base Yield: " + "§8"/*dark grey*/ + String.format("%.2f", baseYield));
+		player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Base Yield: " + TextCode.VALUE + String.format("%.2f", baseYield));
 		environmentConfiguration.displayState(player, block);
 	}
 }

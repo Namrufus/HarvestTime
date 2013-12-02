@@ -16,6 +16,7 @@ import com.github.namrufus.harvest_time.bonemeal.BonemealDisabledListener;
 import com.github.namrufus.harvest_time.crop_growth.chance_growth.ChanceGrowthListener;
 import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.SeasonalGrowthListener;
 import com.github.namrufus.harvest_time.farmland.FarmlandCreationListener;
+import com.github.namrufus.harvest_time.plugin.global.TextCode;
 import com.github.namrufus.harvest_time.rainfall_control.RainfallControl;
 import com.github.namrufus.harvest_time.rainfall_control.RainfallControlListener;
 import com.github.namrufus.harvest_time.rainfall_control.RainfallControlWorldUpdater;
@@ -174,7 +175,7 @@ public class HarvestTime extends JavaPlugin {
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	private void timeCheckCommand(CommandSender sender, String[] args) {
-		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] " + getTimeSummary());
+		sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " " + getTimeSummary());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -184,11 +185,11 @@ public class HarvestTime extends JavaPlugin {
 		long hours = incrementTime / SeasonalCalendar.millisInHour;
 		long minutes = (incrementTime - hours * SeasonalCalendar.millisInHour) / SeasonalCalendar.millisInMinute;
 		
-		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] " + "GMT +" + hours + "h:" + minutes + "m");
+		sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " " + TextCode.VALUE + "GMT +" + hours + "h:" + minutes + "m");
 	}
 	
 	private void nextIncrementCommand(CommandSender sender, String[] args) {
-		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] " + seasonalCalendar.nextSeasonalDayIncrement());
+		sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " " + TextCode.VALUE + seasonalCalendar.nextSeasonalDayIncrement());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -215,15 +216,15 @@ public class HarvestTime extends JavaPlugin {
 		}
 		
 		seasonalCalendar.setReferenceTimestamp(seasonalYear, seasonalDay);
-		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] " + getTimeSummary());
+		sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " " + getTimeSummary());
 		
 		saveTimestamp(seasonalCalendar.getReferenceTimestamp());
-		sender.sendMessage("§c"/*light red*/  + "[Harvest Time] reference timestamp saved.");
+		sender.sendMessage(TextCode.WARNING + TextCode.MESSAGE_PREFIX + " reference timestamp saved.");
 	}
 	
 	private void timeIncrementCommand(CommandSender sender, String[] args) {
 		if (args.length != 2) {
-			sender.sendMessage("command requires 2 arguments.");
+			sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " command requires 2 arguments.");
 			return;
 		}
 		
@@ -231,7 +232,7 @@ public class HarvestTime extends JavaPlugin {
 		try {
 			increment = Long.parseLong(args[0]);
 		} catch (NumberFormatException e) {
-			sender.sendMessage("can't parse increment: "+args[0]);
+			sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " can't parse increment: " + TextCode.VALUE + args[0]);
 			return;
 		}
 		
@@ -251,27 +252,27 @@ public class HarvestTime extends JavaPlugin {
 		}
 			
 		seasonalCalendar.incrementReferenceTimestamp(increment);
-		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] " + getTimeSummary());
-		sender.sendMessage("§7"/*light grey*/ + "[Harvest Time] next increment: " + seasonalCalendar.nextSeasonalDayIncrement());
+		sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " " + TextCode.VALUE + getTimeSummary());
+		sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " next increment: " + TextCode.VALUE +  seasonalCalendar.nextSeasonalDayIncrement());
 
 		saveTimestamp(seasonalCalendar.getReferenceTimestamp());
-		sender.sendMessage("§c"/*light red*/  + "[Harvest Time] reference timestamp saved.");
+		sender.sendMessage(TextCode.WARNING + TextCode.MESSAGE_PREFIX + " reference timestamp saved.");
 	}
 	
 	private void rainCheckCommand(CommandSender sender, String[] args) {
 		if (!configurationLoader.getRainfallControlConfiguration().isEnabled())
-			sender.sendMessage("§7[Harvest Time] rainfall system not enabled, enable using the configuration file.");
+			sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " rainfall system not enabled, enable using the configuration file.");
 		
 		for (World world : getServer().getWorlds()) {
 			rainfallControlWorldUpdater.updateWeather(world);
 		}
 		
-		sender.sendMessage("§7[Harvest Time] target rainfall state: rain = " + rainfallControl.getRainState((int)seasonalCalendar.getAbsoluteSeasonalDay(), (int)seasonalCalendar.getSeasonalYear()));
+		sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " target rainfall state: rain = " + TextCode.VALUE + rainfallControl.getRainState((int)seasonalCalendar.getAbsoluteSeasonalDay(), (int)seasonalCalendar.getSeasonalYear()));
 	}
 	
 	private void rainClimateCheckCommand(CommandSender sender, String[] args) {
 		if (!configurationLoader.getRainfallControlConfiguration().isEnabled())
-			sender.sendMessage("§7[Harvest Time] rainfall system not enabled, enable using the configuration file.");
+			sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " rainfall system not enabled, enable using the configuration file.");
 		
 		for (World world : getServer().getWorlds()) {
 			rainfallControlWorldUpdater.updateWeather(world);

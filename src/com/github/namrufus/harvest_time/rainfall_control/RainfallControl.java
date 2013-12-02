@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.command.CommandSender;
 
+import com.github.namrufus.harvest_time.plugin.global.TextCode;
 import com.github.namrufus.harvest_time.util.noise.GeoRandom;
 
 // system that controls the rainfall state based on the configuration and time
@@ -56,6 +57,6 @@ public class RainfallControl {
 		
 		RainfallClimateState rainfallClimateState = rainfallControlConfiguration.sampleRainfallClimateState(yearlyState);
 		
-		sender.sendMessage("§7[Harvest Time] Rainfall Climate: " + rainfallClimateState);
+		sender.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Rainfall Climate: " + TextCode.VALUE + rainfallClimateState);
 	}
 }

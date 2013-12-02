@@ -20,6 +20,7 @@ import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.util.CropYie
 import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.util.GrowthUtil;
 import com.github.namrufus.harvest_time.plugin.InteractionConfiguration;
 import com.github.namrufus.harvest_time.plugin.PlayerInteractionDelayer;
+import com.github.namrufus.harvest_time.plugin.global.TextCode;
 import com.github.namrufus.harvest_time.seasonal_calendar.SeasonalCalendar;
 
 public class SeasonalGrowthListener implements Listener {
@@ -86,30 +87,30 @@ public class SeasonalGrowthListener implements Listener {
 		int targetStage = cropGrowthConfiguration.getCappedTargetStage(seasonalDay, stageCount);
 		boolean allowedToGrow = cropGrowthConfiguration.isAllowedToGrow(growthStage, seasonalDay);
 				
-		player.sendMessage("§7[Harvest Time] Crop: §8"+blockMaterial.toString());
-		player.sendMessage("§7[Harvest Time] Growing season: day §8"+cropGrowthConfiguration.getStartDay() + " §7to§8 " + cropGrowthConfiguration.getFinalDay(stageCount));
-		player.sendMessage("§7[Harvest Time]   Year: §8" + calendar.getSeasonalYear() + "§7, Day: " + "§8" + seasonalDay);
-		player.sendMessage("§7[Harvest Time]   Current growth stage: §8"+ growthStage + "§7 / §8" + (stageCount-1));
-		player.sendMessage("§7[Harvest Time]   Target growth stage: §8" + targetStage + "§7 / §8" + (stageCount-1));
+		player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Crop: " + TextCode.VALUE + blockMaterial.toString());
+		player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Growing season: day " + TextCode.VALUE + cropGrowthConfiguration.getStartDay() + TextCode.BASE + " to " + TextCode.VALUE + cropGrowthConfiguration.getFinalDay(stageCount));
+		player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   Year: " + TextCode.VALUE + calendar.getSeasonalYear() + TextCode.BASE + ", Day: " + TextCode.VALUE + seasonalDay);
+		player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   Current growth stage: " + TextCode.VALUE + growthStage + TextCode.BASE + " / " + TextCode.VALUE + (stageCount-1));
+		player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   Target growth stage: " + TextCode.VALUE + targetStage + TextCode.BASE + " / " + TextCode.VALUE + (stageCount-1));
 		if (allowedToGrow) {
 			int finalViableSeasonalDay = cropGrowthConfiguration.getFinalViableSeasonalDay(growthStage);
 			
 			Date date = calendar.getSeasonalDayStart(calendar.getSeasonalYear(), finalViableSeasonalDay + 1);
 			
-			player.sendMessage("§7[Harvest Time]   §3Crop is viable!§7 Tend within: " + "§8" + formatTimeDifference(date) + " (" + date + ")");
+			player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   " + TextCode.HIGHLIGHT + "Crop is viable!" + TextCode.BASE + " Tend within: " + TextCode.VALUE + formatTimeDifference(date) + " (" + date + ")");
 		} else if (cropGrowthConfiguration.isAtTargetStage(growthStage, seasonalDay, stageCount)) {
-			String message = "§7[Harvest Time]   §3Crop at target growth.";
+			String message = TextCode.BASE + TextCode.MESSAGE_PREFIX + "   " + TextCode.HIGHLIGHT + "Crop at target growth.";
 			if (!(growthStage == stageCount - 1)) {
 				Date date;
 					if (growthStage == 0)
 						date = calendar.getSeasonalDayStart(calendar.getSeasonalYear(), cropGrowthConfiguration.getStartDay() + 1);
 					else
 						date = calendar.nextSeasonalDayIncrement();
-				message += "§7 Next target growth update: " + "§8" + formatTimeDifference(date) + "(" + date + ")";
+				message += TextCode.BASE + " Next target growth update: " + TextCode.VALUE + formatTimeDifference(date) + "(" + date + ")";
 			}
 			player.sendMessage(message);
 		} else {
-			player.sendMessage("§7[Harvest Time]   §3Crop is not viable.");
+			player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   " + TextCode.HIGHLIGHT + "Crop is not viable.");
 		}		
 	}
 	
@@ -124,9 +125,9 @@ public class SeasonalGrowthListener implements Listener {
 		
 		double targetYield = cropGrowthConfiguration.getCustomYieldConfiguration().getYieldCount(block);
 		
-		player.sendMessage("§7" + "[Harvest Time] Crop: " + "§8"/*dark grey*/ + blockMaterial.toString());
+		player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Crop: " + TextCode.VALUE + blockMaterial.toString());
 		cropGrowthConfiguration.getCustomYieldConfiguration().displayState(player, block);
-		player.sendMessage("§7" + "[Harvest Time]   §3Total Yield: " + "§b" + String.format("%.2f", targetYield));
+		player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   " + TextCode.HIGHLIGHT + "Total Yield: " + TextCode.HIGHLIGHT_VALUE + String.format("%.2f", targetYield));
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -243,8 +244,8 @@ public class SeasonalGrowthListener implements Listener {
 			if (currentDay < startDay || currentDay > endDay) {
 				event.setCancelled(true);
 
-				event.getPlayer().sendMessage("§7[Harvest Time] planting season for " + blockMaterial + ": day §8" + startDay + " §7to §8" + endDay);
-				event.getPlayer().sendMessage("§7[Harvest Time] current day: §8" + calendar.getSeasonalDay());
+				event.getPlayer().sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " planting season for " + blockMaterial + ": day" + TextCode.VALUE + startDay + TextCode.BASE + " to " + TextCode.VALUE + endDay);
+				event.getPlayer().sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " current day: " + TextCode.VALUE + calendar.getSeasonalDay());
 			}
 		}
 	}

@@ -12,6 +12,7 @@ import com.github.namrufus.harvest_time.crop_growth.environment.local.CropBiomeC
 import com.github.namrufus.harvest_time.crop_growth.environment.local.CropFertilizerBlockConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.local.CropFreshWaterConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.environment.local.CropSunlightConfiguration;
+import com.github.namrufus.harvest_time.plugin.global.TextCode;
 
 public class CropEnvironmentConfiguration {
 	private boolean sunlightEnabled;
@@ -91,28 +92,28 @@ public class CropEnvironmentConfiguration {
 		if (sunlightEnabled) {
 			double sunlightMultiplier = sunlightConfiguration.getMultiplier(block);
 			if (sunlightMultiplier != 1.0)
-				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]  Sunlight: " + "§8"/*dark grey*/ + "x" + percentageFormat(sunlightMultiplier));
+				player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "  Sunlight: " + TextCode.VALUE + "x" + percentageFormat(sunlightMultiplier));
 		}
 		
 		if (freshWaterEnabled) {
 			double irrigationMultiplier = freshWaterConfiguration.getIrrigationMultiplier(block);
 			if (irrigationMultiplier != 1.0)
-				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Fresh Water Irrigation: " + "§8"/*dark grey*/ + "x" + percentageFormat(irrigationMultiplier));
+				player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   Fresh Water Irrigation: " + TextCode.VALUE + "x" + percentageFormat(irrigationMultiplier));
 			
 			double rainfallMultiplier = freshWaterConfiguration.getRainfallMultiplier(block);
 			if (rainfallMultiplier != 1.0)
-				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Rainfall: " + "§8"/*dark grey*/ + "x" + percentageFormat(rainfallMultiplier));
+				player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   Rainfall: " + TextCode.VALUE + "x" + percentageFormat(rainfallMultiplier));
 		}
 		
 		if (biomeEnabled) {
 			double multiplier = biomeConfiguration.getMultiplier(block.getBiome());
-			player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Biome: " + "§8"/*dark grey*/ + "x" + percentageFormat(multiplier));
+			player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   Biome: " + TextCode.VALUE + "x" + percentageFormat(multiplier));
 		}
 		
 		if (fertilizerBlockEnabled) {
 			double multiplier = fertilizerBlockConfiguration.getMultiplier(block);
 			if (multiplier != 1.0)
-				player.sendMessage("§7"/*light grey*/ + "[Harvest Time]   Fertilizer Blocks: " + "§8"/*dark grey*/ + "x" + percentageFormat(multiplier));
+				player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   Fertilizer Blocks: " + TextCode.VALUE + "x" + percentageFormat(multiplier));
 		}
 	}
 	

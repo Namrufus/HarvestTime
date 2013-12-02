@@ -20,6 +20,7 @@ import org.bukkit.event.world.StructureGrowEvent;
 
 import com.github.namrufus.harvest_time.crop_growth.crop_directory.TreeGrowthType;
 import com.github.namrufus.harvest_time.plugin.InteractionConfiguration;
+import com.github.namrufus.harvest_time.plugin.global.TextCode;
 
 // the purpose of this class is to prevent the growth of "chance" type crops with a frequency dependent on that
 // crop's environment and configuration.
@@ -144,20 +145,20 @@ public class ChanceGrowthListener implements Listener {
 			
 			// block type crops
 			if (chanceCropList.containsBlockCrop(blockMaterial)) {
-				player.sendMessage("§7[Harvest Time] Crop: §8block_"+blockMaterial.toString());
+				player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Crop: " + TextCode.VALUE + "block_"+blockMaterial.toString());
 				chanceCropList.getBlockCrop(blockMaterial).displayState(player, block);
 			}
 			
 			// tree type crops
 			TreeGrowthType treeGrowthType = TreeGrowthType.getTreeGrowthType(block);
 			if (treeGrowthType != null && chanceCropList.containsTreeCrop(treeGrowthType)) {
-				player.sendMessage("§7[Harvest Time] Crop: §8tree_" + treeGrowthType);
+				player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Crop:" + TextCode.VALUE + "tree_" + treeGrowthType);
 				chanceCropList.getTreeCrop(treeGrowthType).displayState(player, block);
 			}
 			
 			// fishing type crop
 			if (blockMaterial == Material.STATIONARY_WATER && chanceCropList.containsFishingCrop()) {
-				player.sendMessage("§7[Harvest Time] Crop: §8fishing");
+				player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Crop: " + TextCode.VALUE + "fishing");
 				chanceCropList.getFishingCrop().displayState(player, block);
 			}
 		}
@@ -179,12 +180,12 @@ public class ChanceGrowthListener implements Listener {
 		Block block = entity.getLocation().getBlock();
 		
 		if (chanceCropList.containsBreedingCrop(entityType)) {
-			player.sendMessage("§7[Harvest Time] Crop: §8breeding_" + entityType);
+			player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Crop: " + TextCode.VALUE + "breeding_" + entityType);
 			chanceCropList.getBreedingCrop(entityType).displayState(player, block);
 		}
 		
 		if (entityType == EntityType.CHICKEN && chanceCropList.containsEggHatchingCrop()) {
-			player.sendMessage("§7[Harvest Time] Crop: §8" + "egg hatching");
+			player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + " Crop: " + TextCode.VALUE + "egg hatching");
 			chanceCropList.getEggHatchingCrop().displayState(player, block);
 		}
 	}
