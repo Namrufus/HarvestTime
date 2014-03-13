@@ -11,7 +11,6 @@ import com.github.namrufus.harvest_time.crop_growth.environment.global.FreshWate
 import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.SeasonalCropListConfiguration;
 import com.github.namrufus.harvest_time.crop_growth.seasonal_growth.TendingConfiguration;
 import com.github.namrufus.harvest_time.farmland.FarmlandCreationConfiguration;
-import com.github.namrufus.harvest_time.rainfall_control.RainfallControlConfiguration;
 import com.github.namrufus.harvest_time.seasonal_calendar.SeasonalConfiguration;
 
 // loads all configuration data and provides a configuration dump utility
@@ -20,7 +19,6 @@ public class ConfigurationLoader {
 	private InteractionConfiguration interactionConfiguration;
 	private BonemealDisabledConfiguration bonemealDisabledConfiguration;
 	private SeasonalConfiguration seasonalConfiguration;
-	private RainfallControlConfiguration rainfallControlConfiguration;
 	private FarmlandCreationConfiguration farmlandCreationConfiguration;
 	private TendingConfiguration tendingConfiguration;
 	private FreshWaterConfiguration freshWaterConfiguration;
@@ -32,7 +30,6 @@ public class ConfigurationLoader {
 		interactionConfiguration = new InteractionConfiguration(config.getConfigurationSection("interaction"), log);
 		bonemealDisabledConfiguration = new BonemealDisabledConfiguration(config.getConfigurationSection("bonemeal_disabled"), log);
 		seasonalConfiguration = new SeasonalConfiguration(config.getConfigurationSection("seasonal"), log);
-		rainfallControlConfiguration = new RainfallControlConfiguration(config.getConfigurationSection("rainfall_control"), log);
 		farmlandCreationConfiguration = new FarmlandCreationConfiguration(config.getConfigurationSection("farmland_creation"), log);
 		tendingConfiguration = new TendingConfiguration(config.getConfigurationSection("tending"), log);
 		freshWaterConfiguration = new FreshWaterConfiguration(config.getConfigurationSection("fresh_water"), log);
@@ -45,7 +42,6 @@ public class ConfigurationLoader {
 	public InteractionConfiguration getInteractionConfiguration() { return interactionConfiguration; }
 	public BonemealDisabledConfiguration getBonemealDisabledConfiguration() { return bonemealDisabledConfiguration; }
 	public SeasonalConfiguration getSeasonalConfiguration() { return seasonalConfiguration; }
-	public RainfallControlConfiguration getRainfallControlConfiguration() { return rainfallControlConfiguration; }
 	public FarmlandCreationConfiguration getFarmlandCreationConfiguration() {return farmlandCreationConfiguration; }
 	public TendingConfiguration getTendingConfiguration() { return tendingConfiguration; }
 	public FreshWaterConfiguration getFreshWaterConfiguration() { return freshWaterConfiguration; }
@@ -59,7 +55,6 @@ public class ConfigurationLoader {
 		interactionConfiguration.dump(log);
 		bonemealDisabledConfiguration.dump(log);
 		seasonalConfiguration.dump(log);
-		rainfallControlConfiguration.dump(log);
 		farmlandCreationConfiguration.dump(log);
 		tendingConfiguration.dump(log);
 		freshWaterConfiguration.dump(log);

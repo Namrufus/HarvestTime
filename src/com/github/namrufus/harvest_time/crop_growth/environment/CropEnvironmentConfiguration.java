@@ -64,7 +64,6 @@ public class CropEnvironmentConfiguration {
 		
 		if (freshWaterEnabled) {
 			multiplier *= freshWaterConfiguration.getIrrigationMultiplier(block);
-			multiplier *= freshWaterConfiguration.getRainfallMultiplier(block);
 		}
 		
 		if (fertilizerBlockEnabled)
@@ -99,10 +98,6 @@ public class CropEnvironmentConfiguration {
 			double irrigationMultiplier = freshWaterConfiguration.getIrrigationMultiplier(block);
 			if (irrigationMultiplier != 1.0)
 				player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   Fresh Water Irrigation: " + TextCode.VALUE + "x" + percentageFormat(irrigationMultiplier));
-			
-			double rainfallMultiplier = freshWaterConfiguration.getRainfallMultiplier(block);
-			if (rainfallMultiplier != 1.0)
-				player.sendMessage(TextCode.BASE + TextCode.MESSAGE_PREFIX + "   Rainfall: " + TextCode.VALUE + "x" + percentageFormat(rainfallMultiplier));
 		}
 		
 		if (biomeEnabled) {

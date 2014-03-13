@@ -35,20 +35,6 @@ harvest_time:
   seasonal:
     days_in_seasonal_year: 20
 
-  # == seasonal rainfall control ===========================
-  rainfall_control:
-    enabled: true
-    seed: Mt.Augusta
-    MILD:
-      frequency: 0.50
-      rainfall_chance: 0.5
-    DROUGHT:
-      frequency: 0.25
-      rainfall_chance: 0.125
-    MONSOON:
-      frequency: 0.25
-      rainfall_chance: 0.875
-
   # == seasonal crop tending ===============================
   tending:
     radius: 2
@@ -68,9 +54,6 @@ harvest_time:
       max_y: 68
       radius: 5
       biomes: [RIVER, FROZEN_RIVER]
-
-    rainfall:
-      enabled: true
 
   # -- biome aliases ---------------------------------------
   biome_aliases:
@@ -109,7 +92,6 @@ harvest_time:
 
         fresh_water:
           irrigation_multiplier: 4.0
-          rainfall_multiplier: 4.0
 
         biome:
           cold_grassland: 0.125
@@ -145,7 +127,6 @@ harvest_time:
 
         fresh_water:
           irrigation_multiplier: 4.0
-          rainfall_multiplier: 4.0
 
         biome:
           cold_grassland: 0.125
@@ -181,7 +162,6 @@ harvest_time:
 
         fresh_water:
           irrigation_multiplier: 2.0
-          rainfall_multiplier: 2.0
 
         biome:
           cold_grassland: 0.125
@@ -218,7 +198,6 @@ harvest_time:
 
         fresh_water:
           irrigation_multiplier: 4.0
-          rainfall_multiplier: 4.0
 
         biome:
           cold_grassland: 0.75
@@ -254,7 +233,6 @@ harvest_time:
 
         fresh_water:
           irrigation_multiplier: 4.0
-          rainfall_multiplier: 4.0
 
         biome:
           cold_grassland: 0.0
@@ -291,7 +269,6 @@ harvest_time:
 
         fresh_water:
           irrigation_multiplier: 1.0
-          rainfall_multiplier: 4.0
 
         fertilizer_block:
           block_type: STATIONARY_LAVA
@@ -321,7 +298,6 @@ harvest_time:
 
         fresh_water:
           irrigation_multiplier: 1.0
-          rainfall_multiplier: 8.0
 
         fertilizer_block:
           block_type: VINE
