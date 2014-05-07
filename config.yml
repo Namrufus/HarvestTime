@@ -39,7 +39,6 @@ harvest_time:
 
   # == seasonal crop tending ===============================
   tending:
-    radius: 2
     tool_times:
       WOOD_HOE: 10.0
       STONE_HOE: 9.0

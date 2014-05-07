@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -180,17 +179,6 @@ public class SeasonalGrowthListener implements Listener {
 				}
 			}
 		}
-		
-		// ............................................................................................................
-		// update crops in a radius around the updated block, excluding crops that are transitioning to the final stage
-		
-		int y = block.getY();
-		int radius = tendingConfiguration.getRadius();
-		for (int x = block.getX() - radius; x <= block.getX() + radius; x++) {
-			for (int z = block.getZ() - radius; z <= block.getZ() + radius; z++) {
-				updateGrowth(block.getWorld(), x, y, z, seasonalDay, true);
-			}
-		}
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -215,15 +203,6 @@ public class SeasonalGrowthListener implements Listener {
 				GrowthUtil.setStage(block, targetStage);
 			}
 		}
-	}
-	private void updateGrowth(World world, int x, int y, int z, int seasonalDay, boolean notFinalStage) {
-		Block block = world.getBlockAt(x, y, z);
-		
-		// if the block does not exist, then do nothing
-		if (block == null)
-			return;
-		
-		updateGrowth(block, seasonalDay, notFinalStage);
 	}
 	
 	// ================================================================================================================

@@ -10,12 +10,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import com.github.namrufus.harvest_time.util.ConfigUtil;
 
 public class TendingConfiguration {
-	int radius;
 	private Map<Material, Double> toolTimes;
 	
 	public TendingConfiguration(ConfigurationSection config, Logger log) {
-		radius = config.getInt("radius");
-		
 		toolTimes = new HashMap<Material, Double>();
 		
 		ConfigurationSection toolSection = config.getConfigurationSection("tool_times");
@@ -30,8 +27,6 @@ public class TendingConfiguration {
 	}
 	
 	// ================================================================================================================
-	public int getRadius() { return radius; }
-	
 	public boolean isTendingTool(Material material) {
 		return toolTimes.containsKey(material);
 	}
