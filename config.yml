@@ -33,7 +33,9 @@ harvest_time:
 
   # == seasonal growth =====================================
   seasonal:
-    days_in_seasonal_year: 20
+    # 86400000 ms in a RL day
+    milliseconds_in_seasonal_day: 86400000
+    days_in_seasonal_year: 16
 
   # == seasonal crop tending ===============================
   tending:
@@ -87,7 +89,6 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
-          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -122,7 +123,6 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
-          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -157,7 +157,6 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
-          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -193,7 +192,6 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
-          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -228,7 +226,6 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
-          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -264,7 +261,6 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
-          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:
@@ -293,7 +289,6 @@ harvest_time:
 
         sunlight:
           min_sunlight_level: 15
-          glowstone_lighting_enabled: true
           multiplier: 4.0
 
         fresh_water:

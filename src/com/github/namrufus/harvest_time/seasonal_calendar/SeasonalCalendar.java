@@ -16,6 +16,7 @@ public class SeasonalCalendar {
 	// ----------------------------------------------------------------------------------------------------------------
 	// the number of IRL days in a game year
 	public long daysInSeasonalYear;
+	public long millisecondsInSeasonalDay;
 	// time zero (first instant of year 0, day 0
 	// unix time
 	public long referenceTimestamp;
@@ -79,7 +80,7 @@ public class SeasonalCalendar {
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// get the number of full days since the reference timestamp
-	public long getAbsoluteSeasonalDay() {
+	private long getAbsoluteSeasonalDay() {
 		return (System.currentTimeMillis() - referenceTimestamp) / millisInDay;
 	}
 	

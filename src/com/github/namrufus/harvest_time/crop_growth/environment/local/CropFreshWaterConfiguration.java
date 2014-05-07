@@ -7,8 +7,6 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import com.github.namrufus.harvest_time.crop_growth.environment.global.FreshWaterConfiguration;
 
-
-
 public class CropFreshWaterConfiguration {
 	// multiplier if this crop is exposed to fresh water
 	private FreshWaterConfiguration freshWaterConfiguration;

@@ -54,13 +54,3 @@ commands:
     permission: harvest_time.time_change
     description: move the current plugin-time (negative to move backwards in time). Updates timestamp file.
     usage: /ht-timemove increment {minutes, hours, days, weeks}
-
-  ht-rain-check:
-    permission: harvest_time.rain_check
-    description: check the current target rain state for the seasonal rainfall control system
-    usage: /ht-rain-check
-
-  ht-rain-climate-check:
-    permission: harvest_time.rain_check
-    description: check the current rain climate (drought, mild, monsoon)
-    usage: /ht-rain-climate-check
