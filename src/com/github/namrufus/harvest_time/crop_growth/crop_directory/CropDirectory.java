@@ -8,6 +8,8 @@ import org.bukkit.entity.EntityType;
 
 import com.github.namrufus.harvest_time.util.ConfigUtil;
 
+// provides methods for storing and retrieving data keyed to crop types.
+
 public class CropDirectory<K> {
 	protected static enum CropType {
 		BLOCK, TREE, BREEDING, EGG_HATCHING, FISHING;

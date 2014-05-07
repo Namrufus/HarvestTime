@@ -1,4 +1,4 @@
-package com.github.namrufus.harvest_time.crop_growth.seasonal_growth.util;
+package com.github.namrufus.harvest_time.crop_growth.seasonal_growth;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,6 +10,8 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
+
+// 
 
 public class CropYieldUtil {
 	private static class Item {
